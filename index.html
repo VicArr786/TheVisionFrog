@@ -109,7 +109,7 @@
             filter: brightness(1.3);
         }
 
-        /* ------------------ NAV (FIXED + BOLD + CLEAN) ------------------ */
+        /* ------------------ NAV (FIXED + TIMER / SLIDE) ------------------ */
         nav {
             position: fixed;
             top: 0;
@@ -127,6 +127,8 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
+            transform: translateY(0);          /* visible by default */
+            transition: transform 0.5s ease;   /* slide speed */
         }
 
         nav a {
@@ -139,8 +141,14 @@
             color: var(--accent);
         }
 
+        /* hidden state: slide off top */
+        nav.nav-hidden {
+            transform: translateY(-100%);
+        }
+
         #nav-spacer {
             height: 100px;
+            transition: height 0.5s ease;
         }
 
         /* ------------------ BANNER ------------------ */
@@ -264,6 +272,7 @@
         <a href="About.html">About</a>
     </nav>
 
+    <!-- spacer so content starts below fixed nav -->
     <div id="nav-spacer"></div>
 
     <!-- BANNER -->
@@ -284,5 +293,34 @@
     <footer>
         © 2025 Vision Frog LLC. All rights reserved.
     </footer>
+
+    <script>
+        const nav    = document.getElementById('navbar');
+        const spacer = document.getElementById('nav-spacer');
+
+        // Hide nav after 3 seconds (slide up + remove space)
+        setTimeout(() => {
+            nav.classList.add('nav-hidden');
+            spacer.style.height = "0px";
+        }, 3000);
+
+        // Show on scroll up, hide on scroll down
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+
+            if (currentScroll < lastScroll) {
+                // scrolling up → show nav + restore space
+                nav.classList.remove('nav-hidden');
+                spacer.style.height = "100px";
+            } else {
+                // scrolling down → hide nav + remove space
+                nav.classList.add('nav-hidden');
+                spacer.style.height = "0px";
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
 </body>
 </html>
