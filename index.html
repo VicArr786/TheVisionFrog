@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Vision Frog Productions</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="../Images/Logos/VF_Icon_3.png">
+    <link rel="apple-touch-icon" href="../Images/Logos/VF_Icon_3.png">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="/Fonts/fonts.css">
+
+    <style>
+        /* ------------------ FONTS ------------------ */
+        @font-face {
+            font-family: 'Apfel Grotezk';
+            src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Apfel Grotezk';
+            src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+            font-weight: 100;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'NHG Titles';
+            src: url('Fonts/neue-haas-grotesk-font-fanily-1758702237-0/neuehaasgrottextround-76bolditalic-trial.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* ------------------ GLOBAL ------------------ */
+        :root {
+            --bg: #000000;
+            --text: #f5f5f5;
+            --accent: #3dff02;
+            --card: #151515;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Apfel Grotezk', system-ui, sans-serif;
+            font-weight: 400;
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* ------------------ LOGO ------------------ */
+        .logo {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 100;
+        }
+
+        .logo img {
+            height: 53px;
+            width: auto;
+        }
+
+        /* ------------------ SOCIAL ICONS ------------------ */
+        .social-icons {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 100;
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icons .icon {
+            height: 53px;
+            width: 53px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: transform .2s ease, filter .2s ease, background-image .2s ease;
+        }
+
+        .ig {
+            background-image: url('Images/Social Media/Untitled design-10.png');
+        }
+        .ig:hover {
+            background-image: url('Images/Social Media/Most neon.png');
+        }
+
+        .yt {
+            background-image: url('Images/Social Media/Untitled design-11.png');
+        }
+        .yt:hover {
+            background-image: url('Images/Social Media/YTGreen.png');
+        }
+
+        .social-icons .icon:hover {
+            transform: scale(1.15);
+            filter: brightness(1.3);
+        }
+
+        /* ------------------ NAV (FIXED + BOLD + CLEAN) ------------------ */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: #000;
+            font-family: 'NHG Titles', 'Apfel Grotezk', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        nav a {
+            color: #7FC711;
+            text-decoration: none;
+            font-weight: inherit;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        #nav-spacer {
+            height: 100px;
+        }
+
+        /* ------------------ BANNER ------------------ */
+        .banner {
+            position: relative;
+            height: 100vh;
+            min-height: 260px;
+            display: grid;
+            place-items: center;
+            background: url('Images/Logos Banners/Banner.jpeg') center/cover no-repeat;
+        }
+
+        .scroll-center {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* ------------------ TILE SECTION ------------------ */
+        .line-wrap {
+            max-width: 1700px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+        }
+
+        .line {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tile-line {
+            position: relative;
+            flex: 1;
+            height: 60vh;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #202020;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: flex .35s ease;
+        }
+
+        .tile-line:hover {
+            flex: 2;
+        }
+
+        .tile-line::after {
+            content: attr(data-label);
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #05e205;
+            text-shadow: 0 2px 6px black;
+        }
+
+        /* MUSIC VIDEO */
+        .MusicVideo {
+            background-image: url('Images/Music Video Images/JozzyPic.png');
+        }
+        .MusicVideo:hover {
+            background-image: url('Images/Gifs/VIsionFrog (1).gif');
+        }
+
+        /* NARRATIVE */
+        .Narrative {
+            background-image: url('Images/Narrative Images/IMG_3525.jpg');
+        }
+        .Narrative:hover {
+            background-image: url('Images/Gifs/Narrative.gif');
+        }
+
+        /* COMMERCIALS */
+        .Commercials {
+            background-image: url('Images/Commercial Images/WhatsApp Image 2025-09-23 at 14.08.49.jpeg');
+        }
+        .Commercials:hover {
+            background-image: url('Images/Gifs/Commercial.gif');
+        }
+
+        /* PORTRAITS */
+        .Portraits {
+            background-image: url('Images/Portraits Images/51f867a1-49e0-449e-957b-9e058180a035_rw_3840.jpg');
+        }
+        .Portraits:hover {
+            background-image: url('Images/Gifs/Portraits.gif');
+        }
+
+        /* ------------------ FOOTER ------------------ */
+        footer {
+            text-align: center;
+            color: #bdbdbd;
+            padding: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LOGO -->
+    <div class="logo">
+        <a href="indextest.html">
+            <img src="Images/Logos/VF_Icon_3.png" alt="Vision Frog Logo">
+        </a>
+    </div>
+
+    <!-- SOCIAL ICONS -->
+    <div class="social-icons">
+        <a class="icon ig" href="https://www.instagram.com/thevisionfrog/" target="_blank"></a>
+        <a class="icon yt" href="https://www.youtube.com/@TheVisionFrog" target="_blank"></a>
+    </div>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <a href="#work">Projects</a>
+        <a href="About.html">About</a>
+    </nav>
+
+    <div id="nav-spacer"></div>
+
+    <!-- BANNER -->
+    <header class="banner">
+        <a href="#work" class="scroll-center">⌄</a>
+    </header>
+
+    <!-- TILES -->
+    <main id="work" class="line-wrap">
+        <div class="line">
+            <a class="tile-line MusicVideo" href="MusicVideos.html" data-label="Music Videos"></a>
+            <a class="tile-line Narrative" href="Narrative.html" data-label="Narrative"></a>
+            <a class="tile-line Commercials" href="Commercials.html" data-label="Commercials"></a>
+            <a class="tile-line Portraits" href="Portraits.html" data-label="Portraits"></a>
+        </div>
+    </main>
+
+    <footer>
+        © 2025 Vision Frog LLC. All rights reserved.
+    </footer>
+</body>
+</html>

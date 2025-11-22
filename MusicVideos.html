@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music Videos – The Vision Frog Productions</title>
+
+  <link rel="stylesheet" href="global.css">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
+  <link rel="apple-touch-icon" href="Images/Logos/VF_Icon_3.png">
+
+  <style>
+    /* ------------------ FONTS ------------------ */
+        /* ------------------ FONTS ------------------ */
+        @font-face {
+            font-family: 'Apfel Grotezk';
+            src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Apfel Grotezk';
+            src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+            font-weight: 100;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'NHG Titles';
+            src: url('Fonts/neue-haas-grotesk-font-fanily-1758702237-0/neuehaasgrottextround-76bolditalic-trial.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+
+    /* ------------------ GLOBAL ------------------ */
+
+    html, body {
+      margin: 0;
+      background: #0a0a0a;
+      color: #eaeaea;
+      font-family: 'Apfel Grotezk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 400;
+    }
+
+    :root{
+      --bg:#0a0a0a;
+      --pillText:#111;
+      --accent:#05e205;
+      --pillBg:#fff;
+      --gridGap: 12px;
+    }
+
+    * { box-sizing:border-box; }
+
+    /* page wrapper */
+    .wrap {
+      max-width:1200px;
+      margin:0 auto;
+      padding:24px 16px 48px;
+    }
+
+    /* ------------------ BACK BUTTON ------------------ */
+
+    .back-btn {
+      display:inline-block;
+      margin-bottom:25px;
+      background:#05e205;
+      padding:10px 18px;
+      border-radius:8px;
+      font-weight:700;
+      color:#000;
+      text-decoration:none;
+      box-shadow:0 2px 6px rgba(0,0,0,0.4);
+      transition:background .2s ease, transform .2s ease;
+    }
+
+    .back-btn:hover {
+      background:#06ff06;
+      transform:translateY(-2px);
+    }
+
+    /* ------------------ GRID ------------------ */
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:var(--gridGap);
+    }
+
+    @media (min-width:900px){
+      .grid{
+        grid-template-columns:repeat(3, 1fr);
+      }
+    }
+
+    .tile{
+      position:relative;
+      border:1px solid #222;
+      border-radius:6px;
+      width:100%;
+      height:40vh;
+      overflow:hidden;
+      background:#111;
+      aspect-ratio:16/9;
+    }
+
+    .tile img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:brightness(.92);
+      transition:transform .25s ease, filter .25s ease;
+    }
+
+    .tile:hover img{
+      transform:scale(1.03);
+      filter:brightness(1);
+    }
+
+    .tile .cap{
+      position:absolute;
+      left:8px;
+      bottom:8px;
+      background:rgba(0,0,0,.6);
+      color:#fff;
+      padding:.35rem .55rem;
+      border-radius:6px;
+      font-size:.9rem;
+      font-weight:700;
+      letter-spacing:.02em;
+      opacity:0;
+      transition:opacity .2s ease;
+    }
+
+    .tile:hover .cap{
+      opacity:1;
+    }
+
+    a { color:inherit; text-decoration:none; }
+  </style>
+
+</head>
+<body>
+
+  <div class="wrap">
+
+    <a class="back-btn" href="index.html">← Back</a>
+
+    <!-- GRID -->
+    <section class="grid">
+
+      <a class="tile" href="https://www.youtube.com/watch?v=V2-So-lgoZ4" target="_blank" rel="noopener">
+        <img src="Images/Music Video Images/Darrow_MinuteMaid.jpg" alt="DARROW - Minute Maid">
+        <span class="cap">DARROW - Minute Maid</span>
+      </a>
+
+      <a class="tile" href="https://www.youtube.com/watch?v=Pa0yBciwe1Y" target="_blank" rel="noopener">
+        <img src="Images/Music Video Images/ChinseKitty_TooMany.jpg" alt="Chinese Kitty - Too Many">
+        <span class="cap">Chinese Kitty - Too Many</span>
+      </a>
+
+      <a class="tile" href="https://www.youtube.com/watch?v=c71jSixjWrk" target="_blank" rel="noopener">
+        <img src="Images/Music Video Images/JozzyPic.png" alt="Jozzy – Maybe">
+        <span class="cap">Jozzy – Maybe</span>
+      </a>
+
+      <a class="tile" href="https://www.youtube.com/watch?v=758wutLeECc" target="_blank" rel="noopener">
+        <img src="Images/Music Video Images/4121eb4a-49a3-46f5-8466-cf9efa208c48_rw_1920.png" alt="Yanov – Green Mountain">
+        <span class="cap">Yanov – Green Mountain</span>
+      </a>
+
+      <a class="tile" href="https://www.youtube.com/watch?v=FMlAGVdvb1Y" target="_blank" rel="noopener">
+        <img src="Images/Music Video Images/9ed96011-39ec-4d88-afc6-e018e93aa98c_rw_1920.png" alt="Sina – What We Lost">
+        <span class="cap">Sina – What We Lost</span>
+      </a>
+
+      <a class="tile" href="https://www.youtube.com/watch?v=vF1sCTnGtxI" target="_blank" rel="noopener">
+        <img src="Images/Music Video Images/d818d2a5-229a-487a-808a-cbc75f4940bd_rw_3840.jpg" alt="Beno – Overthinking">
+        <span class="cap">Beno – Overthinking</span>
+      </a>
+
+    </section>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Narrative — VisionFrog</title>
+<link rel="icon" href="Images/favicon.png" />
+<link rel="stylesheet" href="global.css">
+<!-- Favicons -->
+<link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
+<link rel="apple-touch-icon" href="Images/Logos/VF_Icon_3.png">
+<link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
+
+<style>
+  /* BODY FONT — Apfel Grotezk */
+  @font-face {
+    font-family: 'Apfel Grotezk';
+    src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Apfel Grotezk';
+    src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* TITLES FONT — Neue Haas Grotesk Display XX Thin */
+  @font-face {
+    font-family: 'NHG Titles';
+    src: url('Fonts/neue-haas-grotesk-font-fanily-1758702237-0/neuehaasgrottextround-75bold-trial.otf')
+        format('opentype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root{
+    --bg:#0a0a0a; 
+    --text:#f5f5f5; 
+    --muted:#cfcfcf; 
+    --accent:#05e205;
+    --overlay:rgba(0,0,0,.45);
+  }
+
+  *{box-sizing:border-box}
+
+  /* Body uses Apfel */
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Apfel Grotezk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+  }
+
+  body{
+    overflow:hidden;
+  }
+
+  /* slider layout */
+  .slider{
+    position:relative; 
+    width:100vw; 
+    height:100vh; 
+    overflow:hidden;
+  }
+  .track{
+    display:flex; 
+    width:100%; 
+    height:100%; 
+    transition:transform .6s ease;
+  }
+  .slide{
+    position:relative; 
+    flex:0 0 100vw; 
+    height:100vh; 
+    background:#111 center/cover no-repeat;
+  }
+  .slide::after{
+    content:""; 
+    position:absolute; 
+    inset:0; 
+    background:var(--overlay);
+  }
+
+  .content{
+    position:relative; 
+    z-index:2; 
+    height:100%; 
+    display:grid; 
+    place-items:center; 
+    padding:2rem;
+  }
+
+  .card{
+    max-width:1160px; 
+    width:min(92vw,980px); 
+    background:rgba(0,0,0,.35); 
+    border:1px solid rgba(255,255,255,.15); 
+    border-radius:16px; 
+    padding:2.25rem 2.5rem; 
+    backdrop-filter:blur(3px); 
+    text-align:center;
+  }
+
+  h1{
+    margin:.2rem 0 1rem; 
+    font-size:clamp(1.8rem,4vw,3rem); 
+    letter-spacing:.06em; 
+    text-transform:uppercase;
+    font-family:'NHG Titles','Apfel Grotezk',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-weight:100;
+  }
+
+  h2{
+    margin:.2rem 0 .5rem; 
+    font-size:clamp(1.4rem,3vw,2.2rem); 
+    letter-spacing:.05em; 
+    text-transform:uppercase;
+    font-family:'NHG Titles','Apfel Grotezk',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-weight:100;
+  }
+
+  p{
+    margin:.5rem 0; 
+    line-height:1.6; 
+    color:var(--muted);
+  }
+
+  /* mini stills row */
+  .stills{
+    display:grid; 
+    grid-template-columns:repeat(3,1fr); 
+    gap:10px; 
+    margin-top:10px;
+  }
+  .stills img{
+    width:100%; 
+    aspect-ratio:16/9; 
+    object-fit:cover; 
+    border-radius:10px; 
+    border:1px solid rgba(255,255,255,.15);
+  }
+
+  .btn{
+    display:inline-block; 
+    margin-top:12px; 
+    padding:.7rem 1.1rem; 
+    border-radius:999px; 
+    font-weight:800; 
+    text-decoration:none; 
+    background:var(--accent); 
+    color:#000;
+  }
+
+  /* arrows */
+  .nav{
+    position:absolute; 
+    inset:0; 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    pointer-events:none; 
+    padding:0 10px;
+  }
+  .arrow{
+    pointer-events:auto; 
+    width:46px; 
+    height:46px; 
+    border:0; 
+    border-radius:8px; 
+    background:rgba(0,0,0,.6); 
+    color:#fff; 
+    font-size:22px; 
+    cursor:pointer;
+  }
+  .arrow:hover{
+    background:rgba(0,0,0,.8);
+  }
+
+  /* dots */
+  .dots{
+    position:absolute; 
+    left:50%; 
+    bottom:18px; 
+    transform:translateX(-50%); 
+    display:flex; 
+    gap:10px;
+  }
+  .dot{
+    width:10px; 
+    height:10px; 
+    border-radius:50%; 
+    background:#666; 
+    border:1px solid #222; 
+    cursor:pointer;
+  }
+  .dot.active{
+    background:var(--accent);
+  }
+
+  /* mobile tweaks */
+  @media (max-width:700px){
+    .stills{grid-template-columns:1fr 1fr}
+  }
+
+  /* optional back button styling if not in global.css */
+  .back-btn{
+    position:fixed;
+    top:16px;
+    left:16px;
+    z-index:10;
+    background:#05e205;
+    color:#000;
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:700;
+    box-shadow:0 2px 6px rgba(0,0,0,.4);
+    transition:background .2s ease, transform .2s ease;
+  }
+  .back-btn:hover{
+    background:#06ff06;
+    transform:translateY(-2px);
+  }
+
+</style>
+</head>
+<body>
+  <a href="index.html" class="back-btn">← Back</a>
+
+  <div class="slider" id="slider">
+    <div class="track" id="track">
+
+      <!-- ===== Film 1 ===== -->
+      <section class="slide" style="background-image:url('Images/hooper_bg.jpg')">
+        <div class="content">
+          <article class="card">
+            <h1>Narrative</h1>
+            <h2>Hooper’s Asylum</h2>
+            <p><em>Written / Directed by Oliver Stemmler</em></p>
+            <p>In the midst of March Madness, Marcus gets the call that shatters his world. Between grief and the biggest game of his life, he must choose what the jersey really means.</p>
+            <div class="stills">
+              <img src="Images/Narrative Images/452d1d7a-7a46-43f1-898f-e92b14b24628_rw_3840.jpg" alt="Hooper still 1">
+              <img src="Images/Narrative Images/d18ba5c9-db9c-4fb2-83b6-b8f92bf449b7_rw_3840.jpg" alt="Hooper still 2">
+              <img src="Images/Narrative Images/f387c407-6616-4405-8930-f15ce3aeb4f8_rw_3840.jpg" alt="Hooper still 3">
+            </div>
+            <a class="btn" href="https://youtu.be/VIDEO_ID_1" target="_blank" rel="noopener">Watch Trailer</a>
+          </article>
+        </div>
+      </section>
+
+      <!--
+      ===== Film 2 =====
+      <section class="slide" style="background-image:url('Images/film2_bg.jpg')">
+        <div class="content">
+          <article class="card">
+            <h2>Green Mountain</h2>
+            <p>Logline goes here. One or two sentences that sell the story and tone.</p>
+            <div class="stills">
+              <img src="Images/film2_1.jpg" alt="Film 2 still 1">
+              <img src="Images/film2_2.jpg" alt="Film 2 still 2">
+              <img src="Images/film2_3.jpg" alt="Film 2 still 3">
+            </div>
+            <a class="btn" href="https://youtu.be/VIDEO_ID_2" target="_blank" rel="noopener">Watch Trailer</a>
+          </article>
+        </div>
+      </section>
+
+      ===== Film 3 ===== 
+      <section class="slide" style="background-image:url('Images/film3_bg.jpg')">
+        <div class="content">
+          <article class="card">
+            <h2>Midnight Streets</h2>
+            <p>Short logline here. Replace with your copy.</p>
+            <div class="stills">
+              <img src="Images/film3_1.jpg" alt="Film 3 still 1">
+              <img src="Images/film3_2.jpg" alt="Film 3 still 2">
+              <img src="Images/film3_3.jpg" alt="Film 3 still 3">
+            </div>
+            <a class="btn" href="https://youtu.be/VIDEO_ID_3" target="_blank" rel="noopener">Watch Trailer</a>
+          </article>
+        </div>
+      </section>
+      -->
+
+    </div>
+
+    <!-- arrows -->
+    <div class="nav">
+      <button class="arrow" aria-label="Previous" onclick="prev()">&#10094;</button>
+      <button class="arrow" aria-label="Next" onclick="next()">&#10095;</button>
+    </div>
+
+    <!-- dots -->
+    <div class="dots" id="dots"></div>
+  </div>
+
+<script>
+  const track = document.getElementById('track');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.getElementById('dots');
+  let i = 0, autoTimer = null;
+
+  // dots
+  slides.forEach((_, idx) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (idx===0?' active':'');
+    d.onclick = () => goTo(idx);
+    dotsWrap.appendChild(d);
+  });
+
+  function update(){
+    track.style.transform = `translateX(-${i*100}vw)`;
+    dotsWrap.querySelectorAll('.dot').forEach((d,idx)=>
+      d.classList.toggle('active', idx===i)
+    );
+    restartAuto();
+  }
+
+  function goTo(idx){
+    i = (idx + slides.length) % slides.length;
+    update();
+  }
+
+  function next(){ goTo(i+1); }
+  function prev(){ goTo(i-1); }
+
+  // keyboard + swipe
+  window.addEventListener('keydown', e => {
+    if(e.key==='ArrowRight') next();
+    if(e.key==='ArrowLeft')  prev();
+  });
+
+  let startX=null;
+  track.addEventListener('touchstart', e=> {
+    startX = e.touches[0].clientX;
+  }, {passive:true});
+
+  track.addEventListener('touchmove', e=>{
+    if(startX==null) return;
+    const dx = e.touches[0].clientX - startX;
+    if(Math.abs(dx)>60){
+      dx<0 ? next() : prev();
+      startX=null;
+    }
+  }, {passive:true});
+
+  track.addEventListener('touchend', ()=> startX=null);
+
+  // auto-rotate
+  function restartAuto(){
+    clearInterval(autoTimer);
+    autoTimer = setInterval(next, 7000);
+  }
+  restartAuto();
+</script>
+</body>
+</html>

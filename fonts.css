@@ -1,0 +1,21 @@
+/* Apfel Grotezk — Regular (400) */
+@font-face {
+  font-family: 'Apfel Grotezk';
+  src: url('apfelGrotezk/ApfelGrotezk-Regular.woff2') format('woff2'),
+       url('apfelGrotezk/ApfelGrotezk-Regular.woff') format('woff'),
+       url('apfelGrotezk/ApfelGrotezk-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apfel Grotezk — Bold (700) from RegularBrukt */
+@font-face {
+  font-family: 'Apfel Grotezk';
+  src: url('apfelGrotezk/ApfelGrotezk-RegularBrukt.woff2') format('woff2'),
+       url('apfelGrotezk/ApfelGrotezk-RegularBrukt.woff') format('woff'),
+       url('apfelGrotezk/ApfelGrotezk-RegularBrukt.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

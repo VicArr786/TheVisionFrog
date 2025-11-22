@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portraits — The Vision Frog Productions</title>
+
+<link rel="icon" type="image/png" href="Images/favicon.png" />
+<link rel="stylesheet" href="global.css">
+<link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
+<link rel="apple-touch-icon" href="Images/Logos/VF_Icon_3.png">
+<link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
+
+<style>
+  /* BODY FONT — Apfel Grotezk */
+        /* ------------------ FONTS ------------------ */
+        @font-face {
+            font-family: 'Apfel Grotezk';
+            src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Apfel Grotezk';
+            src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+            font-weight: 100;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'NHG Titles';
+            src: url('Fonts/neue-haas-grotesk-font-fanily-1758702237-0/neuehaasgrottextround-76bolditalic-trial.otf') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+
+  :root{
+    --bg:#000;
+    --text:#f5f5f5;
+    --accent:#05e205;
+    --border:#202020;
+    --peek:clamp(12px, 3vw, 36px);     /* smaller side peek */
+    --gap:14px;                        /* spacing between slides */
+    --radius:16px;
+    --h:min(100vh, 980px);             /* TALLER + overall bigger */
+    --shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+
+  *{box-sizing:border-box;}
+
+  /* Body uses Apfel */
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Apfel Grotezk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+  }
+
+  .hero-title{
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 990;
+    pointer-events: none;
+    font-family: 'NHG Titles','Apfel Grotezk',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-weight: 100;
+    letter-spacing: .04em;
+    font-size: clamp(2rem, 2.4vw, 2.4rem);
+    color: var(--text);
+    opacity: .95;
+    text-shadow: 0 0 22px rgba(5,226,5,.15);
+    transition: opacity .45s ease, transform .45s ease;
+  }
+  .hero-title.fade{
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  /* Back button */
+  .back-btn{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: var(--accent);
+    color: #081408;
+    font-weight: 800;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(5,226,5,.25);
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .back-btn:hover{
+    box-shadow: 0 8px 25px rgba(5,226,5,.45);
+    transform: translateY(-2px);
+  }
+
+  .wrap{
+    max-width:1600px;
+    margin:84px auto 18px;
+    padding:0 16px;
+  }
+
+  h1{
+    margin:0 0 8px;
+    font-size:2rem;
+    letter-spacing:.04em;
+    font-family:'NHG Titles','Apfel Grotezk',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-weight:100;
+    text-transform:uppercase;
+  }
+
+  .sub{
+    opacity:.8;
+    margin-bottom:10px;
+  }
+
+  /* === CAROUSEL (scroll-snap based, robust + simple) === */
+  .carousel{
+    position:relative;
+    margin:8px 0 60px;
+  }
+
+  .viewport{
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding-inline:var(--peek);                /* small preview of neighbors */
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .viewport::-webkit-scrollbar{
+    display:none;
+  }
+
+  .track{
+    display:flex;
+    align-items:center;
+    gap:var(--gap);
+  }
+
+  .slide{
+    position:relative;
+    flex:0 0 calc(100% - (var(--peek) * 2));   /* one BIG slide visible */
+    height:var(--h);
+    border-radius:var(--radius);
+    overflow:hidden;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    scroll-snap-align:center;
+    background:#0e0e0e;
+    user-select:none;
+    cursor:pointer;
+  }
+
+  .slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transform:scale(1.00);
+    transition:transform .35s ease, filter .35s ease;
+    will-change:transform;
+  }
+  .slide:hover img{
+    transform:scale(1.04);
+  }
+
+  /* Caption chip */
+  .caption{
+    position:absolute;
+    left:14px;
+    bottom:14px;
+    z-index:2;
+    background:rgba(0,0,0,.55);
+    border:1px solid rgba(255,255,255,.15);
+    color:#fff;
+    font-weight:700;
+    letter-spacing:.02em;
+    padding:.5rem .75rem;
+    border-radius:10px;
+    opacity:0;
+    transition:opacity .2s ease;
+    pointer-events:none;
+  }
+  .slide:hover .caption{
+    opacity:1;
+  }
+
+  /* Nav buttons (thin, not covering much) */
+  .nav{
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:42px;
+    z-index:3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    background:linear-gradient(to right, rgba(0,0,0,.55), transparent);
+    border:0;
+    cursor:pointer;
+    padding:0;
+  }
+  .nav.next{
+    right:0;
+    transform:scaleX(-1);
+  }
+  .nav.prev{
+    left:0;
+  }
+  .nav svg{
+    width:28px;
+    height:28px;
+    opacity:.95;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));
+    transition:transform .2s ease;
+  }
+  .nav:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:-2px;
+  }
+  .nav:hover svg{
+    transform:translateX(-2px);
+  }
+  .nav.next:hover svg{
+    transform:translateX(2px);
+  }
+
+  @media (max-width:680px){
+    :root{
+      --peek: clamp(10px, 4vw, 24px);
+      --h: min(74vh, 760px);
+    }
+    .nav{ width:34px; }
+    .caption{ font-size:.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-title" aria-hidden="true">The Vision Frog</div>
+
+<a href="index.html" class="back-btn">← Back</a>
+
+<main class="wrap">
+  <h1>Portraits</h1>
+  <p class="sub"></p>
+
+  <section class="carousel" aria-roledescription="carousel">
+    <button class="nav prev" aria-label="Previous slide" title="Previous">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <div class="viewport" id="viewport">
+      <ul class="track" id="track" role="listbox" aria-label="Portraits">
+        <li class="slide" role="option" aria-label="Shakira at Global Citizen festival 2025">
+          <img src="Images/Portraits Images/Shakira FINALS - 2.jpg" alt="Shakira at Global Citizen festival 2025">
+          <span class="caption">Shakira — Global Citizen 2025</span>
+        </li>
+
+        <li class="slide" role="option" aria-label="Shakira at Global Citizen festival 2025">
+          <img src="Images/Portraits Images/Shakira FINALS - 4.jpg" alt="Shakira at Global Citizen festival 2025">
+          <span class="caption">Shakira — Global Citizen 2025</span>
+        </li>
+
+        <li class="slide" role="option" aria-label="Doja Cat at Global Citizen 2024">
+          <img src="Images/Portraits Images/949d8a7f-9ebf-4336-a511-b7efa1baa68a_rw_1920.jpg" alt="Doja Cat at Global Citizen 2024">
+          <span class="caption">Doja Cat — Global Citizen 2024</span>
+        </li>
+
+        <li class="slide" role="option" aria-label="Kanii at Sob's">
+          <img src="Images/Portraits Images/764fbadb-3c26-4cac-a36c-f3e0b7cc8bb1_rw_3840.JPG" alt="Kanii performing at SOB’s">
+          <span class="caption">Kanii — SOB’s</span>
+        </li>
+
+        <li class="slide" role="option" aria-label="Jozzy in the moment">
+          <img src="Images/Portraits Images/c335f4d0-540b-4147-88d2-5b34568e0b3e_rw_1920-2.jpg" alt="Jozzy in the moment">
+          <span class="caption">Jozzy — In the moment</span>
+        </li>
+
+        <li class="slide" role="option" aria-label="Fredro Starr X Bape Collaboration">
+          <img src="Images/Portraits Images/Fredro 5.JPG" alt="Fredro Starr x BAPE collaboration">
+          <span class="caption">Fredro Starr × BAPE</span>
+        </li>
+      </ul>
+    </div>
+
+    <button class="nav next" aria-label="Next slide" title="Next">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </section>
+</main>
+
+<script>
+/* Robust scroll-snap carousel:
+   - No transform math, works with any slide size.
+   - Buttons/keys move to nearest snap point.
+   - Clicking a partially visible slide centers it.
+*/
+(function(){
+  const viewport = document.getElementById('viewport');
+  const track    = document.getElementById('track');
+  const slides   = Array.from(track.children);
+  const prevBtn  = document.querySelector('.nav.prev');
+  const nextBtn  = document.querySelector('.nav.next');
+
+  function slideCenters(){
+    // Array of x positions to center each slide in the viewport
+    const vpW = viewport.clientWidth;
+    const vpRect = viewport.getBoundingClientRect();
+    return slides.map(s=>{
+      const rect = s.getBoundingClientRect();
+      const leftInViewport = rect.left - vpRect.left + viewport.scrollLeft;
+      const center = leftInViewport - (vpW - s.clientWidth)/2;
+      return Math.round(center);
+    });
+  }
+
+  function nearestIndex(){
+    const centers = slideCenters();
+    const scroll = viewport.scrollLeft;
+    let best = 0, bestDist = Infinity;
+    centers.forEach((pos,i)=>{
+      const d = Math.abs(pos - scroll);
+      if(d < bestDist){
+        bestDist = d;
+        best = i;
+      }
+    });
+    return best;
+  }
+
+  function goTo(i){
+    const centers = slideCenters();
+    const idx = (i + slides.length) % slides.length;
+    viewport.scrollTo({ left: centers[idx], behavior:'smooth' });
+    updateAria(idx);
+  }
+
+  function next(){ goTo(nearestIndex() + 1); }
+  function prev(){ goTo(nearestIndex() - 1); }
+
+  function updateAria(active){
+    slides.forEach((s,i)=>{
+      s.setAttribute('aria-selected', i===active ? 'true' : 'false');
+      s.tabIndex = i===active ? 0 : -1;
+    });
+  }
+
+  // Click a slide to center it
+  slides.forEach((s,i)=> s.addEventListener('click', ()=> goTo(i)));
+
+  // Buttons
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  // Keyboard
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowRight') next();
+    if(e.key === 'ArrowLeft')  prev();
+  });
+
+  // Re-center to nearest on resize (layout changes)
+  let rAF = null;
+  const onResize = ()=>{
+    if(rAF) cancelAnimationFrame(rAF);
+    rAF = requestAnimationFrame(()=> goTo(nearestIndex()));
+  };
+  window.addEventListener('resize', onResize);
+
+  // Initialize to first slide
+  goTo(0);
+})();
+</script>
+
+</body>
+</html>

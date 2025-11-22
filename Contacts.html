@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact — The Vision Frog Productions</title>
+<link rel="icon" href="Images/favicon.png" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Favicons -->
+<link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
+<link rel="apple-touch-icon" href="Images/Logos/VF_Icon_3.png">
+<link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
+
+<style>
+  /* BODY FONT — Apfel Grotezk */
+  @font-face {
+    font-family: 'Apfel Grotezk';
+    src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Apfel Grotezk';
+    src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* TITLES FONT — Neue Haas Grotesk Display XX Thin */
+  @font-face {
+    font-family: 'NHG Titles';
+    src: url('Fonts/neue-haas-grotesk-font-fanily-1758702237-0/neuehaasgrottextround-75bold-trial.otf')
+        format('opentype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Body uses Apfel */
+  html, body {
+    margin: 0;
+    background: #0a0a0a;
+    color: #eaeaea;
+    font-family: 'Apfel Grotezk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+  }
+
+  :root{
+    --bg:#0b0b0b; --paper:#121212; --rule:#242424;
+    --text:#f5f5f5; --muted:#bdbdbd; --accent:#05e205;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}
+
+  /* Back */
+  .back-btn{
+    position:fixed; top:20px; left:20px; z-index:9;
+    background:var(--accent); color:#081408; font-weight:800;
+    text-decoration:none; padding:10px 16px; border-radius:10px;
+    box-shadow:0 6px 20px rgba(5,226,5,.25);
+  }
+
+  /* Frame */
+  .wrap{max-width:980px;margin:88px auto 64px;padding:0 20px}
+  .card{
+    background:var(--paper); border:1px solid var(--rule); border-radius:16px;
+    box-shadow:0 24px 80px rgba(0,0,0,.45);
+    padding:28px 28px 24px;
+  }
+
+  /* Header */
+  .kicker{color:var(--muted); text-transform:uppercase; letter-spacing:.16em; font-size:.8rem; text-align:center}
+  h1{margin:.35rem 0 1rem; text-align:center; font-size:clamp(1.8rem,4vw,2.6rem); letter-spacing:.02em}
+  .sub{margin:-.2rem auto 1.4rem; text-align:center; color:#dcdcdc; max-width:60ch}
+
+  /* Grid of contact methods */
+  .grid{
+    display:grid; gap:14px;
+    grid-template-columns:1fr 1fr;
+  }
+  @media (max-width:720px){ .grid{grid-template-columns:1fr} }
+
+  .row{
+    display:flex; gap:14px; align-items:center;
+    background:#0f0f0f; border:1px solid var(--rule); border-radius:12px;
+    padding:14px 16px;
+  }
+  .ico{
+    width:40px;height:40px; display:grid; place-items:center;
+    border-radius:10px; background:#111; border:1px solid var(--rule);
+  }
+  .ico img{width:22px;height:22px; display:block}
+
+  .meta{line-height:1.35}
+  .label{color:var(--muted); font-size:.9rem}
+  .value a{color:var(--text); text-decoration:none; font-weight:600}
+  .value a:hover{color:var(--accent)}
+
+  /* Quick links row */
+  .links{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+    margin-top:18px; padding-top:16px; border-top:1px solid var(--rule);
+  }
+  .chip{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:.55rem .8rem; border-radius:999px; text-decoration:none;
+    background:#0f0f0f; border:1px solid var(--rule); color:var(--text); font-weight:600;
+    transition:transform .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .chip:hover{ transform:translateY(-1px); border-color:var(--accent); color:var(--accent); }
+
+  footer{margin-top:20px; color:var(--muted); text-align:center; font-size:.9rem}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-btn">← Back</a>
+
+<main class="wrap">
+  <section class="card">
+    <div class="kicker">Get in touch</div>
+    <h1>Contact Us</h1>
+    <p class="sub">For bookings, collaborations, or screeners, reach out via email or socials.</p>
+
+    <div class="grid">
+      <!-- Email -->
+      <div class="row">
+        <div class="ico"><img src="Images/Social Media/email-logo.jpg" alt=""></div>
+        <div class="meta">
+          <div class="label">Email</div>
+          <div class="value"><a href="mailto:thevisionfrog@gmail.com">thevisionfrog@gmail.com</a></div>
+        </div>
+      </div>
+
+      <!-- Instagram -->
+      <div class="row">
+        <div class="ico"><img src="Images/Social Media/instagram-vector-logo-icon-social-media-logotype-black-white_901408-391-2-2.png "alt=""></div>
+        <div class="meta">
+          <div class="label">Instagram</div>
+          <div class="value"><a href="https://instagram.com/thevisionfrog" target="_blank">@thevisionfrog</a></div>
+        </div>
+      </div>
+
+      <!-- TikTok -->
+      <div class="row">
+        <div class="ico"><img src="Images/Social Media/tiktok-icon-free-png.webp" alt=""></div>
+        <div class="meta">
+          <div class="label">TikTok</div>
+          <div class="value"><a href="https://tiktok.com/@thevisionfrog" target="_blank">@thevisionfrog</a></div>
+        </div>
+      </div>
+
+      <!-- YouTube -->
+      <div class="row">
+        <div class="ico"><img src="Images/Social Media/Youtube.jpeg" alt=""></div>
+        <div class="meta">
+          <div class="label">YouTube</div>
+          <div class="value"><a href="https://youtube.com/@thevisionfrog" target="_blank">VisionFrog Channel</a></div>
+        </div>
+      </div>
+    </div>
+
+
+    <footer>© 2025 Vision Frog LLC</footer>
+  </section>
+</main>
+
+</body>
+</html>
