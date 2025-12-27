@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vision Frog Merch</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="../Images/Logos/VF_Icon_3.png">
+  <link rel="apple-touch-icon" href="../Images/Logos/VF_Icon_3.png">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="/Fonts/fonts.css">
+
+  <style>
+    /* ------------------ FONTS ------------------ */
+    @font-face {
+      font-family: 'Apfel Grotezk';
+      src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Apfel Grotezk';
+      src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+      font-weight: 100;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'NHG Titles';
+      src: url('Fonts/neue-haas-grotesk-font-fanily-1758702237-0/neuehaasgrottextround-76bolditalic-trial.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ------------------ GLOBAL ------------------ */
+    :root{
+      --bg:#000;
+      --text:#f5f5f5;
+      --accent:#3dff02;
+      --card:#151515;
+      --muted:#bdbdbd;
+      --stroke:#202020;
+    }
+
+    html,body{
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Apfel Grotezk', system-ui, sans-serif;
+      font-weight:400;
+      scroll-behavior:smooth;
+    }
+
+    *{ box-sizing:border-box; }
+
+    a{ color:inherit; }
+
+    /* ------------------ LOGO ------------------ */
+    .logo{
+      position:fixed;
+      top:12px;
+      left:12px;
+      z-index:100;
+    }
+    .logo img{ height:53px; width:auto; }
+
+    /* ------------------ SOCIAL ICONS ------------------ */
+    .social-icons{
+      position:fixed;
+      top:12px;
+      right:12px;
+      z-index:100;
+      display:flex;
+      gap:12px;
+    }
+    .social-icons .icon{
+      height:53px;
+      width:53px;
+      background-size:contain;
+      background-repeat:no-repeat;
+      background-position:center;
+      transition:transform .2s ease, filter .2s ease, background-image .2s ease;
+    }
+
+    /* Keep your existing assets if you want */
+    .ig{ background-image:url('Images/Social Media/Untitled design-10.png'); }
+    .ig:hover{ background-image:url('Images/Social Media/Most neon.png'); }
+
+    .social-icons .icon:hover{
+      transform:scale(1.15);
+      filter:brightness(1.3);
+    }
+
+    /* ------------------ NAV (FIXED + TIMER / SLIDE) ------------------ */
+    nav{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index:20;
+      display:flex;
+      justify-content:center;
+      gap:3rem;
+      align-items:center;
+      padding:1.5rem 2rem;
+      background:#000;
+      font-family:'NHG Titles','Apfel Grotezk',sans-serif;
+      font-size:1.7rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      transform:translateY(0);
+      transition:transform 0.5s ease;
+    }
+    nav a{
+      color:#7FC711;
+      text-decoration:none;
+      font-weight:inherit;
+    }
+    nav a:hover{ color:var(--accent); }
+    nav.nav-hidden{ transform:translateY(-100%); }
+    #nav-spacer{ height:100px; transition:height 0.5s ease; }
+
+    /* ------------------ HERO ------------------ */
+    .hero{
+      min-height:5vh;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding: 1rem 1.25rem 2.5rem;
+      position:relative;
+      border-bottom:1px solid var(--stroke);
+      background:
+        radial-gradient(1200px 600px at 50% 0%, rgba(61,255,2,0.12), transparent 55%),
+        radial-gradient(900px 500px at 20% 40%, rgba(61,255,2,0.08), transparent 60%),
+        #000;
+    }
+
+    .hero h1{
+      font-family:'NHG Titles','Apfel Grotezk',sans-serif;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+      margin:0;
+      color:var(--accent);
+      text-shadow:0 8px 24px rgba(0,0,0,0.55);
+    }
+
+
+    .hero p{
+      margin:1rem auto 0;
+      max-width:720px;
+      color:var(--muted);
+      font-size:clamp(1rem, 1.4vw, 1.15rem);
+      line-height:1.5;
+    }
+
+    .hero .scroll-down{
+      position:absolute;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:2.25rem;
+      text-decoration:none;
+      color:var(--accent);
+      opacity:0.9;
+      transition:transform .2s ease, opacity .2s ease;
+    }
+    .hero .scroll-down:hover{
+      transform:translateX(-50%) translateY(2px);
+      opacity:1;
+    }
+
+    /* ------------------ MERCH GRID ------------------ */
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:3rem 1rem 4rem;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:1rem;
+      margin:0 0 1.25rem;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-family:'NHG Titles','Apfel Grotezk',sans-serif;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:clamp(1.6rem, 2.2vw, 2.2rem);
+      color:#7FC711;
+    }
+
+    .section-title .hint{
+      margin:0;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12, 1fr);
+      gap:14px;
+    }
+
+    .card{
+      grid-column:span 12;
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border:1px solid var(--stroke);
+      border-radius:16px;
+      overflow:hidden;
+      transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+      box-shadow:0 10px 30px rgba(0,0,0,0.35);
+      min-height:340px;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .card:hover{
+      transform:translateY(-2px);
+      border-color:rgba(61,255,2,0.35);
+      box-shadow:0 18px 40px rgba(0,0,0,0.55);
+    }
+
+    .card-media{
+      height:210px;
+      background:#0a0a0a;
+      border-bottom:1px solid var(--stroke);
+      position:relative;
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+    }
+
+    .badge{
+      position:absolute;
+      top:12px;
+      left:12px;
+      font-family:'NHG Titles','Apfel Grotezk',sans-serif;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:0.85rem;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(61,255,2,0.35);
+      background:rgba(0,0,0,0.5);
+      color:var(--accent);
+      backdrop-filter: blur(6px);
+    }
+
+    .card-body{
+      padding:14px 14px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      flex:1;
+    }
+
+    .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .name{
+      font-size:1.15rem;
+      font-weight:700;
+      margin:0;
+    }
+
+    .price{
+      font-family:'NHG Titles','Apfel Grotezk',sans-serif;
+      letter-spacing:0.08em;
+      color:var(--accent);
+      margin:0;
+      white-space:nowrap;
+    }
+
+    .desc{
+      margin:0;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:0.98rem;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:auto;
+    }
+
+    .pill{
+      font-size:0.85rem;
+      color:#d7d7d7;
+      border:1px solid #2a2a2a;
+      border-radius:999px;
+      padding:7px 10px;
+      background:rgba(255,255,255,0.02);
+    }
+
+    .card-actions{
+      display:flex;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:11px 14px;
+      border-radius:12px;
+      border:1px solid #2a2a2a;
+      background:#0e0e0e;
+      color:#f5f5f5;
+      text-decoration:none;
+      transition:transform .15s ease, border-color .15s ease, background .15s ease, color .15s ease;
+      flex:1;
+      font-family:'NHG Titles','Apfel Grotezk',sans-serif;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      font-size:0.95rem;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(61,255,2,0.35);
+    }
+
+    .btn.primary{
+      border-color:rgba(61,255,2,0.5);
+      background:rgba(61,255,2,0.08);
+      color:var(--accent);
+    }
+
+    /* responsive columns */
+    @media (min-width: 720px){
+      .card{ grid-column:span 6; }
+    }
+    @media (min-width: 1024px){
+      .card{ grid-column:span 4; }
+    }
+    .merch-bg {
+  position: relative;
+  background:
+    linear-gradient(
+      rgba(0,0,0,0.75),
+      rgba(0,0,0,0.85)
+    ),
+    url('Images/Logos Banners/Banner.jpeg') center / cover no-repeat;
+}
+
+    /* ------------------ CONTACT (BOTTOM) ------------------ */
+    .contact{
+      border-top:1px solid var(--stroke);
+      padding:3rem 1rem 2.5rem;
+      background:linear-gradient(180deg, transparent, rgba(61,255,2,0.05));
+      text-align:center;
+    }
+
+    .contact h3{
+      margin:0 0 0.6rem;
+      font-family:'NHG Titles','Apfel Grotezk',sans-serif;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:#7FC711;
+      font-size:1.6rem;
+    }
+
+    .contact p{
+      margin:0 auto 1.25rem;
+      max-width:720px;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .ig-contact{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      border:1px solid rgba(61,255,2,0.35);
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(0,0,0,0.35);
+      transition:transform .18s ease, filter .18s ease, border-color .18s ease;
+    }
+    .ig-contact:hover{
+      transform:translateY(-1px);
+      border-color:rgba(61,255,2,0.6);
+      filter:brightness(1.15);
+    }
+
+    .ig-mini{
+      height:28px;
+      width:28px;
+      background-size:contain;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-image:url('Images/Social Media/Untitled design-10.png');
+    }
+    .ig-contact:hover .ig-mini{
+      background-image:url('Images/Social Media/Most neon.png');
+    }
+
+    .ig-handle{
+      font-family:'NHG Titles','Apfel Grotezk',sans-serif;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      color:var(--accent);
+      font-size:1rem;
+      line-height:1;
+    }
+
+    /* ------------------ FOOTER ------------------ */
+    footer{
+      text-align:center;
+      color:var(--muted);
+      padding:1.75rem 1rem 2.25rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- LOGO -->
+  <div class="logo">
+    <a href="index.html">
+      <img src="Images/Logos/VF_Icon_3.png" alt="Vision Frog Logo">
+    </a>
+  </div>
+
+  <!-- SOCIAL ICONS (top right) -->
+  <div class="social-icons">
+    <a class="icon ig" href="https://www.instagram.com/thevisionfrog/" target="_blank" aria-label="Instagram"></a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#merch">Merch</a>
+    <a href="#contact">Contact</a>
+    <a href="index.html">Home</a>
+  </nav>
+
+  <div id="nav-spacer"></div>
+
+  <!-- HERO 
+  <header class="hero">
+    <div>
+      <h1>Merch</h1>
+      <p>
+        What’s available right now. DM on Instagram to order — tell us the item, size, and your city.
+      </p>
+    </div>
+    <a href="#merch" class="scroll-down" aria-label="Scroll to merch">⌄</a>
+  </header>
+  -->
+
+  <!-- MERCH -->
+<!-- MERCH -->
+<section id="merch" class="merch-bg">
+  <main class="wrap">
+
+    <div class="section-title">
+      <h2>Available Now</h2>
+      <p class="hint">Limited runs • DM to claim</p>
+    </div>
+
+    <section class="grid" aria-label="Merch products">
+      <!-- ITEM 1 -->
+      <article class="card">
+        <div class="card-media" style="background-image:url('Images/Merch/TSHIRT.png');">
+          <div class="badge">In Stock</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <p class="name">VF Logo Tee (Black)</p>
+            <p class="price">$50</p>
+          </div>
+          <p class="desc">Classic front logo print. Heavyweight feel. Clean + loud.</p>
+          <div class="meta">
+            <span class="pill">Sizes: S–XL</span>
+            <span class="pill">Color: Black</span>
+            <span class="pill">Unisex</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">DM to Order</a>
+            <a class="btn" href="#contact">How to Buy</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ITEM 2 -->
+      <article class="card">
+        <div class="card-media" style="background-image:url('Images/Merch/hoodie-green.jpg');">
+          <div class="badge">Low Stock</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <p class="name">Trucker Hat</p>
+            <p class="price">$35</p>
+          </div>
+          <p class="desc">Its a hat dawg</p>
+          <div class="meta">
+            <span class="pill"></span>
+            <span class="pill">Color: White/Black</span>
+            <span class="pill"></span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">DM to Order</a>
+            <a class="btn" href="#contact">How to Buy</a>
+          </div>
+        </div>
+      </article>
+<!--
+       ITEM 3 
+      <article class="card">
+        <div class="card-media" style="background-image:url('Images/Merch/cap.jpg');">
+          <div class="badge">In Stock</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <p class="name">VF Cap</p>
+            <p class="price">$25</p>
+          </div>
+          <p class="desc">Adjustable strapback. Minimal logo embroidery.</p>
+          <div class="meta">
+            <span class="pill">One size</span>
+            <span class="pill">Adjustable</span>
+            <span class="pill">Embroidered</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">DM to Order</a>
+            <a class="btn" href="#contact">How to Buy</a>
+          </div>
+        </div>
+      </article>
+
+      ITEM 4 
+      <article class="card">
+        <div class="card-media" style="background-image:url('Images/Merch/poster.jpg');">
+          <div class="badge">Pre-Order</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <p class="name">Vision Frog Poster</p>
+            <p class="price">$15</p>
+          </div>
+          <p class="desc">Limited print. Ships when the run closes.</p>
+          <div class="meta">
+            <span class="pill">18x24</span>
+            <span class="pill">Matte</span>
+            <span class="pill">Signed (select)</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">DM to Order</a>
+            <a class="btn" href="#contact">How to Buy</a>
+          </div>
+        </div>
+      </article>
+
+       ITEM 5 
+      <article class="card">
+        <div class="card-media" style="background-image:url('Images/Merch/stickers.jpg');">
+          <div class="badge">In Stock</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <p class="name">Sticker Pack</p>
+            <p class="price">$10</p>
+          </div>
+          <p class="desc">Set of 6. Waterproof + glossy. Throw them everywhere.</p>
+          <div class="meta">
+            <span class="pill">6 pcs</span>
+            <span class="pill">Waterproof</span>
+            <span class="pill">Gloss</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">DM to Order</a>
+            <a class="btn" href="#contact">How to Buy</a>
+          </div>
+        </div>
+      </article>
+
+      ITEM 6 
+      <article class="card">
+        <div class="card-media" style="background-image:url('Images/Merch/tote.jpg');">
+          <div class="badge">In Stock</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <p class="name">VF Tote</p>
+            <p class="price">$20</p>
+          </div>
+          <p class="desc">Canvas tote with logo print. Daily carry.</p>
+          <div class="meta">
+            <span class="pill">Canvas</span>
+            <span class="pill">Natural</span>
+            <span class="pill">Large</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">DM to Order</a>
+            <a class="btn" href="#contact">How to Buy</a>
+          </div>
+        </div>
+        -->
+      </article>
+    </section>
+  </main>
+
+  <!-- CONTACT (BOTTOM) -->
+  <section id="contact" class="contact">
+    <h3>Contact / Orders</h3>
+    <p>
+      To buy, DM us on Instagram with: <strong>item name</strong>, <strong>size</strong> (if needed), <strong>quantity</strong>, and <strong>shipping city</strong>.
+    </p>
+
+    <a class="ig-contact" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener" aria-label="DM on Instagram">
+      <span class="ig-mini" aria-hidden="true"></span>
+      <span class="ig-handle">@thevisionfrog</span>
+    </a>
+  </section>
+
+  <footer>
+    © 2025 Vision Frog LLC. All rights reserved.
+  </footer>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    const spacer = document.getElementById('nav-spacer');
+
+    // Hide nav after 3 seconds (slide up + remove space)
+    setTimeout(() => {
+      nav.classList.add('nav-hidden');
+      spacer.style.height = "0px";
+    }, 3000);
+
+    // Show on scroll up, hide on scroll down
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+
+      if (currentScroll < lastScroll) {
+        nav.classList.remove('nav-hidden');
+        spacer.style.height = "100px";
+      } else {
+        nav.classList.add('nav-hidden');
+        spacer.style.height = "0px";
+      }
+      lastScroll = currentScroll;
+    });
+  </script>
+</body>
+</html>
