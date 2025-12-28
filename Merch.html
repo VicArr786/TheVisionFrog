@@ -448,9 +448,10 @@
 
   <!-- NAV -->
   <nav id="navbar">
+    <a href="index.html">Home</a>
     <a href="#merch">Merch</a>
     <a href="#contact">Contact</a>
-    <a href="index.html">Home</a>
+    
   </nav>
 
   <div id="nav-spacer"></div>
@@ -496,7 +497,7 @@
           </div>
           <div class="card-actions">
             <a class="btn primary" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">DM to Order</a>
-            <a class="btn" href="#contact">How to Buy</a>
+            <!--<a class="btn" href="#contact">How to Buy</a>-->
           </div>
         </div>
       </article>
@@ -508,18 +509,18 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <p class="name">Trucker Hat</p>
+            <p class="name">Hat</p>
             <p class="price">$35</p>
           </div>
           <p class="desc">Its a hat dawg</p>
           <div class="meta">
-            <span class="pill"></span>
+            <!--<span class="pill"></span>-->
             <span class="pill">Color: White/Black</span>
-            <span class="pill"></span>
+            <!--<span class="pill"></span>-->
           </div>
           <div class="card-actions">
             <a class="btn primary" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">DM to Order</a>
-            <a class="btn" href="#contact">How to Buy</a>
+            <!--<a class="btn" href="#contact">How to Buy</a>-->
           </div>
         </div>
       </article>
@@ -623,7 +624,7 @@
   <section id="contact" class="contact">
     <h3>Contact / Orders</h3>
     <p>
-      To buy, DM us on Instagram with: <strong>item name</strong>, <strong>size</strong> (if needed), <strong>quantity</strong>, and <strong>shipping city</strong>.
+      All Proceeds will go to GoFundMe, To Buy DM us on Instagram with: <strong>item name</strong>, <strong>size</strong> (if needed), <strong>quantity</strong>, and <strong>shipping city</strong>.
     </p>
 
     <a class="ig-contact" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener" aria-label="DM on Instagram">
@@ -635,31 +636,42 @@
   <footer>
     © 2025 Vision Frog LLC. All rights reserved.
   </footer>
+<script>
+        const nav = document.getElementById('navbar');
+        const spacer = document.getElementById('nav-spacer');
 
-  <script>
-    const nav = document.getElementById('navbar');
-    const spacer = document.getElementById('nav-spacer');
+        // Initial Timer: Hide nav after 3 seconds
+        // It is okay to change height here because the user is not actively scrolling yet.
+        setTimeout(() => {
+            nav.classList.add('nav-hidden');
+            spacer.style.height = "0px";
+        }, 3000);
 
-    // Hide nav after 3 seconds (slide up + remove space)
-    setTimeout(() => {
-      nav.classList.add('nav-hidden');
-      spacer.style.height = "0px";
-    }, 3000);
+        // Scroll Handler
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
 
-    // Show on scroll up, hide on scroll down
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.scrollY;
+            // We add a buffer (e.g., 50px) so small movements don't trigger it
+            if (currentScroll <= 0) {
+                 // At the very top, ensure nav is shown and spacer is open
+                 nav.classList.remove('nav-hidden');
+                 spacer.style.height = "100px";
+            }
+            else if (currentScroll < lastScroll) {
+                // SCROLLING UP: Show Nav
+                // We do NOT change spacer height here to prevent bouncing.
+                // The Nav will simply slide over the content.
+                nav.classList.remove('nav-hidden');
+            } else {
+                // SCROLLING DOWN: Hide Nav
+                nav.classList.add('nav-hidden');
+                // Ensure spacer is collapsed if we are scrolling down
+                spacer.style.height = "0px";
+            }
 
-      if (currentScroll < lastScroll) {
-        nav.classList.remove('nav-hidden');
-        spacer.style.height = "100px";
-      } else {
-        nav.classList.add('nav-hidden');
-        spacer.style.height = "0px";
-      }
-      lastScroll = currentScroll;
-    });
-  </script>
+            lastScroll = currentScroll;
+        });
+    </script>
 </body>
 </html>

@@ -296,28 +296,37 @@
         © 2025 Vision Frog LLC. All rights reserved.
     </footer>
 
-    <script>
-        const nav    = document.getElementById('navbar');
+<script>
+        const nav = document.getElementById('navbar');
         const spacer = document.getElementById('nav-spacer');
 
-        // Hide nav after 3 seconds (slide up + remove space)
+        // Initial Timer: Hide nav after 3 seconds
+        // It is okay to change height here because the user is not actively scrolling yet.
         setTimeout(() => {
             nav.classList.add('nav-hidden');
             spacer.style.height = "0px";
         }, 3000);
 
-        // Show on scroll up, hide on scroll down
+        // Scroll Handler
         let lastScroll = 0;
         window.addEventListener('scroll', () => {
             const currentScroll = window.scrollY;
 
-            if (currentScroll < lastScroll) {
-                // scrolling up → show nav + restore space
+            // We add a buffer (e.g., 50px) so small movements don't trigger it
+            if (currentScroll <= 0) {
+                 // At the very top, ensure nav is shown and spacer is open
+                 nav.classList.remove('nav-hidden');
+                 spacer.style.height = "100px";
+            }
+            else if (currentScroll < lastScroll) {
+                // SCROLLING UP: Show Nav
+                // We do NOT change spacer height here to prevent bouncing.
+                // The Nav will simply slide over the content.
                 nav.classList.remove('nav-hidden');
-                spacer.style.height = "100px";
             } else {
-                // scrolling down → hide nav + remove space
+                // SCROLLING DOWN: Hide Nav
                 nav.classList.add('nav-hidden');
+                // Ensure spacer is collapsed if we are scrolling down
                 spacer.style.height = "0px";
             }
 
