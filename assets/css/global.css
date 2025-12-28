@@ -1,0 +1,20 @@
+.back-btn {
+  position: fixed; /* Keeps it stuck to the corner even when scrolling */
+  top: 20px;
+  left: 20px;
+  z-index: 1000;   /* High number ensures it sits on top of images */
+  background: var(--accent); /* Uses your neon green variable */
+  color: #081408;  /* Dark text for contrast */
+  font-family: 'Apfel Grotezk', sans-serif; /* Use the font we know works */
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(5,226,5,.25);
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.back-btn:hover {
+  box-shadow: 0 8px 25px rgba(5,226,5,.45);
+  transform: translateY(-2px);
+}

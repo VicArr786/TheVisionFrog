@@ -6,42 +6,37 @@
 <title>About — The Vision Frog Productions</title>
 
 <link rel="icon" href="Images/favicon.png" />
-<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="assets/css/global.css">
 
 <!-- Favicons -->
-<link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
-<link rel="apple-touch-icon" href="Images/Logos/VF_Icon_3.png">
-<link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
+<link rel="icon" type="image/png" href="assets/images/logos/VF_Icon_3.png">
+<link rel="apple-touch-icon" href="assets/images/logos/VF_Icon_3.png">
+<link rel="icon" type="image/png" href="assets/images/logos/VF_Icon_3.png">
 
 
 <style>
+   @font-face {
+      font-family: 'Apfel Grotezk';
+      src: url('assets/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Apfel Grotezk';
+      src: url('assets/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+      font-weight: 100;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'NHG Titles';
+      src: url('assets/fonts/NHG-BoldItalic.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
 
-  /* BODY FONT — Apfel Grotezk */
-  @font-face {
-    font-family: 'Apfel Grotezk';
-    src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Regular.otf') format('opentype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'Apfel Grotezk';
-    src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  /* TITLES FONT — Neue Haas Grotesk Display XX Thin */
-  @font-face {
-    font-family: 'NHG Titles';
-    src: url('Fonts/neue-haas-grotesk-font-fanily-1758702237-0/neuehaasgrottextround-75bold-trial.otf')
-        format('opentype');
-    font-weight: 100;
-    font-style: normal;
-    font-display: swap;
-  }
 
   /* Body uses Apfel */
   html, body {
@@ -53,7 +48,7 @@
   }
   @font-face {
   font-family: 'BackBtnFont';
-  src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+  src: url('assets/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -108,7 +103,7 @@
   /* Main h1 → Neue Haas */
 .bio h1{
   font-family: 'Apfel Grotezk', sans-serif;  /* or 'Apfel Grotezk' if you prefer */
-  font-weight: 200;                       /* bolder */
+  font-weight: 400;                       /* bolder */
   font-size: clamp(1.8rem, 4vw, 2.4rem);
   margin: 0 0 10px;
   letter-spacing: 0.02em;
@@ -205,6 +200,28 @@
     transition:transform .2s ease, opacity .2s ease;
   }
   .brand-item:hover img{ transform:scale(1.03); }
+  /* Paste this inside your <style> tags in the HTML file */
+
+.back-btn {
+  position: fixed; /* Keeps it stuck to the corner even when scrolling */
+  top: 20px;
+  left: 20px;
+  z-index: 1000;   /* High number ensures it sits on top of images */
+  background: var(--accent); /* Uses your neon green variable */
+  color: #081408;  /* Dark text for contrast */
+  font-family: 'Apfel Grotezk', sans-serif; /* Use the font we know works */
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(5,226,5,.25);
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.back-btn:hover {
+  box-shadow: 0 8px 25px rgba(5,226,5,.45);
+  transform: translateY(-2px);
+}
 
   /* MOBILE */
   @media (max-width:900px){
@@ -231,7 +248,7 @@
 <main class="about">
   <!-- LEFT: large image -->
   <figure class="photo">
-    <img src="Images/About Me/IMG_8238 2.JPG" alt="Founder at work, framing a shot on set">
+    <img src="assets/images/about/IMG_8238 2.JPG" alt="Founder at work, framing a shot on set">
   </figure>
 
   <!-- RIGHT: text -->
@@ -249,12 +266,12 @@
 <section class="brands">
   <h2>Selected Brands</h2>
   <div class="brand-grid">
-    <div class="brand-item"><img loading="lazy" src="Images/Logos/bodega logos-2.png" alt="Def Jam"></div>  
-    <div class="brand-item"><img loading="lazy" src="Images/Logos/IMG_5892.png" alt="7th Street Burger"></div>
-    <div class="brand-item"><img loading="lazy" src="Images/Logos/output-onlinepngtools-2.png" alt="Brand logo"></div>
-    <div class="brand-item"><img loading="lazy" src="Images/Logos/Brevite transparent.png" alt="Brevite"></div>
-    <div class="brand-item"><img loading="lazy" src="Images/Logos/Empire_Distribution_logo.svg.png" alt="Empire Distribution"></div>
-    <div class="brand-item"><img loading="lazy" src="Images/About Me/Bape.png" alt="Bape"></div>
+    <div class="brand-item"><img loading="lazy" src="assets/images/about/DefJam.png" alt="Def Jam"></div>  
+    <div class="brand-item"><img loading="lazy" src="assets/images/about/KittyGang.png" alt="7th Street Burger"></div>
+    <div class="brand-item"><img loading="lazy" src="assets/images/about/Wilson.png" alt="Brand logo"></div>
+    <div class="brand-item"><img loading="lazy" src="assets/images/about/Brevite transparent.png" alt="Brevite"></div>
+    <div class="brand-item"><img loading="lazy" src="assets/images/about/Empire_Distribution_logo.svg.png" alt="Empire Distribution"></div>
+    <div class="brand-item"><img loading="lazy" src="assets/images/about/Bape.png" alt="Bape"></div>
   </div>
 </section>
 

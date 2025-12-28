@@ -6,31 +6,31 @@
   <title>Vision Frog Merch</title>
 
   <!-- Favicons -->
-  <link rel="icon" type="image/png" href="../Images/Logos/VF_Icon_3.png">
-  <link rel="apple-touch-icon" href="../Images/Logos/VF_Icon_3.png">
+  <link rel="icon" type="image/png" href="assets/images/logos/VF_Icon_3.png">
+  <link rel="apple-touch-icon" href="assets/images/logos/VF_Icon_3.png">
 
   <!-- Fonts -->
-  <link rel="stylesheet" href="/Fonts/fonts.css">
+  <link rel="stylesheet" href="assets/css/fonts.css">
 
   <style>
     /* ------------------ FONTS ------------------ */
     @font-face {
       font-family: 'Apfel Grotezk';
-      src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+      src: url('assets/fonts/ApfelGrotezk-Regular.otf') format('opentype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Apfel Grotezk';
-      src: url('Fonts/apfel-grotezk-main/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+      src: url('assets/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
       font-weight: 100;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'NHG Titles';
-      src: url('Fonts/neue-haas-grotesk-font-fanily-1758702237-0/neuehaasgrottextround-76bolditalic-trial.otf') format('opentype');
+      src: url('assets/fonts/NHG-BoldItalic.otf') format('opentype');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -69,33 +69,35 @@
     }
     .logo img{ height:53px; width:auto; }
 
-    /* ------------------ SOCIAL ICONS ------------------ */
-    .social-icons{
-      position:fixed;
-      top:12px;
-      right:12px;
-      z-index:100;
-      display:flex;
-      gap:12px;
-    }
-    .social-icons .icon{
-      height:53px;
-      width:53px;
-      background-size:contain;
-      background-repeat:no-repeat;
-      background-position:center;
-      transition:transform .2s ease, filter .2s ease, background-image .2s ease;
-    }
+           /* ------------------ SOCIAL ICONS ------------------ */
+        .social-icons {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 100;
+            display: flex;
+            gap: 12px;
+        }
 
-    /* Keep your existing assets if you want */
-    .ig{ background-image:url('Images/Social Media/Untitled design-10.png'); }
-    .ig:hover{ background-image:url('Images/Social Media/Most neon.png'); }
+        .social-icons .icon {
+            height: 53px;
+            width: 53px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: transform .2s ease, filter .2s ease, background-image .2s ease;
+        }
 
-    .social-icons .icon:hover{
-      transform:scale(1.15);
-      filter:brightness(1.3);
-    }
-
+        .ig {
+            background-image: url('assets/images/social/Untitled design-10.png');
+        }
+        .ig:hover {
+            background-image: url('assets/images/social/Most neon.png');
+        }
+        .social-icons .icon:hover {
+            transform: scale(1.15);
+            filter: brightness(1.3);
+        }
     /* ------------------ NAV (FIXED + TIMER / SLIDE) ------------------ */
     nav{
       position:fixed;
@@ -359,7 +361,7 @@
       rgba(0,0,0,0.75),
       rgba(0,0,0,0.85)
     ),
-    url('Images/Logos Banners/Banner.jpeg') center / cover no-repeat;
+    url('assets/images/banners/Banner.jpeg') center / cover no-repeat;
 }
 
     /* ------------------ CONTACT (BOTTOM) ------------------ */
@@ -409,10 +411,10 @@
       background-size:contain;
       background-repeat:no-repeat;
       background-position:center;
-      background-image:url('Images/Social Media/Untitled design-10.png');
+      background-image:url('assets/images/social/Untitled design-10.png');
     }
     .ig-contact:hover .ig-mini{
-      background-image:url('Images/Social Media/Most neon.png');
+      background-image:url('assets/images/social/Most neon.png');
     }
 
     .ig-handle{
@@ -437,7 +439,7 @@
   <!-- LOGO -->
   <div class="logo">
     <a href="index.html">
-      <img src="Images/Logos/VF_Icon_3.png" alt="Vision Frog Logo">
+      <img src="assets/images/logos/VF_Icon_3.png" alt="Vision Frog Logo">
     </a>
   </div>
 
@@ -481,7 +483,7 @@
     <section class="grid" aria-label="Merch products">
       <!-- ITEM 1 -->
       <article class="card">
-        <div class="card-media" style="background-image:url('Images/Merch/TSHIRT.png');">
+        <div class="card-media" style="background-image:url('assets/images/merch/TSHIRT.png');">
           <div class="badge">In Stock</div>
         </div>
         <div class="card-body">
