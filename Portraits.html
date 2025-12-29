@@ -267,9 +267,12 @@
     background:#111;
   }
 
+  /* ---------- MOBILE ADJUSTMENTS ---------- */
   @media (max-width:680px){
     :root{
-      --peek: clamp(10px, 4vw, 24px);
+      /* Smaller peek value = wider main image */
+      --peek: 6px; 
+      --gap: 8px;
       --h: min(74vh, 760px);
     }
     .nav{ width:34px; }
@@ -315,7 +318,6 @@
   </section>
 </main>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" aria-modal="true" aria-hidden="true">
   <div class="lightbox-inner">
     <button class="lightbox-close" id="lightbox-close">&times;</button>

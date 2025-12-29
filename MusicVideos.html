@@ -7,7 +7,6 @@
 
   <link rel="stylesheet" href="global.css">
 
-  <!-- Favicons -->
   <link rel="icon" type="image/png" href="Images/Logos/VF_Icon_3.png">
   <link rel="apple-touch-icon" href="Images/Logos/VF_Icon_3.png">
 
@@ -140,6 +139,13 @@
       opacity:1;
     }
 
+    /* --- MEDIA QUERY FOR PHONE: Always show names --- */
+    @media (max-width: 768px) {
+      .tile .cap {
+        opacity: 1;
+      }
+    }
+
     a { color:inherit; text-decoration:none; }
   </style>
 
@@ -150,7 +156,6 @@
 
     <a class="back-btn" href="index.html">← Back</a>
 
-    <!-- GRID -->
     <section class="grid">
 
       <a class="tile" href="https://www.youtube.com/watch?v=V2-So-lgoZ4" target="_blank" rel="noopener">

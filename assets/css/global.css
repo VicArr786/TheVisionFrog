@@ -1,20 +1,223 @@
-.back-btn {
-  position: fixed; /* Keeps it stuck to the corner even when scrolling */
-  top: 20px;
-  left: 20px;
-  z-index: 1000;   /* High number ensures it sits on top of images */
-  background: var(--accent); /* Uses your neon green variable */
-  color: #081408;  /* Dark text for contrast */
-  font-family: 'Apfel Grotezk', sans-serif; /* Use the font we know works */
+/* ------------------ FONTS (KEPT) ------------------ */
+@font-face {
+  font-family: 'Apfel Grotezk';
+  src: url('assets/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apfel Grotezk';
+  src: url('assets/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NHG Titles';
+  src: url('assets/fonts/NHG-BoldItalic.otf') format('opentype');
   font-weight: 700;
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 10px;
-  box-shadow: 0 6px 20px rgba(5,226,5,.25);
-  transition: box-shadow .2s ease, transform .2s ease;
+  font-style: normal;
+  font-display: swap;
 }
 
-.back-btn:hover {
-  box-shadow: 0 8px 25px rgba(5,226,5,.45);
-  transform: translateY(-2px);
+/* ------------------ GLOBAL ------------------ */
+:root {
+  --bg: #000000;
+  --text: #f5f5f5;
+  --accent: #3dff02;
+  --card: #151515;
+  --border: #202020;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Apfel Grotezk', system-ui, sans-serif;
+  font-weight: 400;
+  scroll-behavior: smooth;
+}
+
+* { box-sizing: border-box; }
+a { color: inherit; text-decoration: none; }
+
+/* ------------------ LOGO ------------------ */
+.logo {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 101;
+}
+.logo img {
+  height: 53px;
+  width: auto;
+}
+
+/* ------------------ ICON BASE (FIXED) ------------------ */
+.icon {
+  height: 53px;
+  width: 53px;
+  display: inline-block; /* Changed to inline-block */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform .2s ease, filter .2s ease;
+}
+
+/* ------------------ SOCIAL ICONS ------------------ */
+.social-icons {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 101;
+  display: flex;
+  gap: 12px;
+}
+
+/* Default Images */
+.ig { background-image: url('assets/images/social/InstaGramFinalBlack.png'); }
+.yt { background-image: url('assets/images/social/YoutubeFinalBlack.png'); }
+
+/* Desktop Hovers */
+@media (min-width: 769px) {
+    .ig:hover { background-image: url('assets/images/social/InstaGreen.png'); }
+    .yt:hover { background-image: url('assets/images/social/YTGreen.png'); }
+    .icon:hover { transform: scale(1.15); filter: brightness(1.3); }
+}
+
+/* ------------------ NAV ------------------ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: #000;
+  font-family: 'NHG Titles', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: transform 0.5s ease;
+}
+
+nav a { color: #7FC711; }
+nav a:hover { color: var(--accent); }
+nav.nav-hidden { transform: translateY(-100%); }
+
+#nav-spacer { height: 80px; }
+
+/* ------------------ HAMBURGER ------------------ */
+.menu-btn {
+  display: none;
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 42px;
+  height: 42px;
+  background: #000;
+  border: 1px solid #222;
+  border-radius: 10px;
+  z-index: 102;
+}
+.menu-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--accent);
+  margin: 5px auto;
+}
+
+.nav-links { display: flex; gap: 3rem; align-items: center; }
+.mobile-socials { display: none; }
+
+/* ------------------ TILES (KEPT) ------------------ */
+.line-wrap { max-width: 1700px; margin: 4rem auto; padding: 0 1rem; }
+.line { display: flex; gap: 0.5rem; }
+.tile-line {
+  position: relative;
+  flex: 1;
+  height: 60vh;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background-size: cover;
+  background-position: center;
+  transition: flex .35s ease;
+}
+.tile-line:hover { flex: 2; }
+.tile-line::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 12px; bottom: 12px;
+  font-size: 1.5rem; font-weight: 700;
+  color: #05e205; text-shadow: 0 2px 6px black;
+}
+
+/* ------------------ MOBILE STYLES (FIXED ICONS) ------------------ */
+@media (max-width: 768px) {
+  .logo { left: 50%; transform: translateX(-50%); }
+  .social-icons { display: none; }
+  .menu-btn { display: block; }
+
+  nav { justify-content: flex-start; padding: 10px; }
+
+  .nav-links {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background: rgba(0,0,0,0.95);
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    gap: 1.5rem;
+    display: none;
+  }
+
+  nav.open .nav-links { display: flex; }
+
+  .nav-links > a {
+    font-size: 1.5rem;
+    padding: 15px;
+    background: #111;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .mobile-socials {
+    display: flex !important;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  /* Fixed mobile icon sizing and path */
+  .mobile-socials .icon {
+    display: block !important;
+    width: 55px !important;
+    height: 55px !important;
+    background-size: contain !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  /* Force Green icons for mobile menu visibility */
+  .mobile-socials .ig {
+    background-image: url('assets/images/social/InstaGreen.png') !important;
+  }
+  .mobile-socials .yt {
+    background-image: url('assets/images/social/YTGreen.png') !important;
+  }
+
+  .line { flex-direction: column; }
+  .tile-line { height: 220px; flex: none; }
 }

@@ -70,15 +70,32 @@
 
   .sub { opacity:.8; margin-bottom:24px; }
 
+  /* ------------------ BACK BUTTON ------------------ */
+  .back-btn {
+    position: fixed; /* Keeps it stuck to the corner even when scrolling */
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: var(--accent);
+    color: #081408;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(5,226,5,.25);
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+
+  .back-btn:hover {
+    box-shadow: 0 8px 25px rgba(5,226,5,.45);
+    transform: translateY(-2px);
+  }
+
   /* Grid */
   .grid {
     display:grid;
     grid-template-columns:repeat(2, 1fr);
     gap:18px;
-  }
-
-  @media (max-width:800px){
-    .grid { grid-template-columns:1fr; }
   }
 
   /* Image tiles */
@@ -91,6 +108,7 @@
     box-shadow:0 10px 28px rgba(0,0,0,.35);
     overflow:hidden;
     transition:transform .25s ease, box-shadow .25s ease;
+    display: block; /* Ensure anchor works as block */
   }
 
   .item:hover {
@@ -98,7 +116,7 @@
     box-shadow:0 16px 40px rgba(0,0,0,.45);
   }
 
-  /* Staggering */
+  /* Staggering (Desktop Only) */
   .item:nth-child(2){ margin-top:34px; }
   .item:nth-child(3){ margin-top:-24px; }
   .item:nth-child(4){ margin-top:26px; }
@@ -118,9 +136,27 @@
     border-radius:8px;
     opacity:0;
     transition:opacity .2s ease;
+    background: rgba(0,0,0,0.6); /* Added background for better readability */
   }
 
   .item:hover::after { opacity:1; }
+
+  /* ------------------ MOBILE PORT ------------------ */
+  @media (max-width:800px){
+    .grid { 
+      grid-template-columns:1fr; 
+    }
+    
+    /* Remove staggering on mobile for a clean vertical list */
+    .item:nth-child(n) { 
+      margin-top: 0; 
+    }
+
+    /* Always show text labels on phone */
+    .item::after {
+      opacity: 1;
+    }
+  }
 </style>
 </head>
 
