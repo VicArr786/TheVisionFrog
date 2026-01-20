@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — The Vision Frog Productions</title>
+
+  <link rel="icon" type="image/png" href="assets/images/logos/VF_Icon_3.png">
+  <link rel="apple-touch-icon" href="assets/images/logos/VF_Icon_3.png">
+
+  <link rel="stylesheet" href="assets/css/fonts.css">
+
+  <style>
+    /* ------------------ FONTS ------------------ */
+    @font-face {
+      font-family: 'Apfel Grotezk';
+      src: url('assets/fonts/ApfelGrotezk-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Apfel Grotezk';
+      src: url('assets/fonts/ApfelGrotezk-Brukt.otf') format('opentype');
+      font-weight: 100;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'NHG Titles';
+      src: url('assets/fonts/NHG-BoldItalic.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ------------------ GLOBAL ------------------ */
+    :root{
+      --bg:#000;
+      --text:#f5f5f5;
+      --accent:#3dff02;
+      --card:#151515;
+      --muted:#bdbdbd;
+      --border:#202020;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Apfel Grotezk', system-ui, sans-serif;
+      font-weight: 400;
+      scroll-behavior: smooth;
+    }
+
+    * { box-sizing: border-box; }
+
+    /* ------------------ LOGO ------------------ */
+    .logo {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 101;
+    }
+    .logo img { height: 53px; width: auto; }
+
+    /* ------------------ SOCIAL ICONS ------------------ */
+    .social-icons {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 101;
+      display: flex;
+      gap: 12px;
+    }
+    .social-icons .icon {
+      height: 53px;
+      width: 53px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: transform .2s ease, filter .2s ease, background-image .2s ease;
+    }
+    .ig { background-image: url('assets/images/social/InstaGramFinalBlack.png'); }
+    .ig:hover { background-image: url('assets/images/social/InstaGreen.png'); }
+    .yt { background-image: url('assets/images/social/YoutubeFinalBlack.png'); }
+    .yt:hover { background-image: url('assets/images/social/YTGreen.png'); }
+    .social-icons .icon:hover {
+      transform: scale(1.15);
+      filter: brightness(1.3);
+    }
+
+    /* ------------------ NAV ------------------ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: #000;
+      font-family: 'NHG Titles', 'Apfel Grotezk', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transform: translateY(0);
+      transition: transform 0.5s ease;
+    }
+    nav a { color: #7FC711; text-decoration: none; }
+    nav a:hover { color: var(--accent); }
+    nav.nav-hidden { transform: translateY(-100%); }
+
+    #nav-spacer { height: 80px; transition: height 0.5s ease; }
+
+    /* ------------------ HAMBURGER ------------------ */
+    .menu-btn {
+      display: none;
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      width: 42px;
+      height: 42px;
+      background: #000;
+      border: 1px solid #222;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 102;
+    }
+    .menu-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--accent);
+      margin: 5px auto;
+    }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+    }
+    .mobile-socials { display: none; }
+
+    /* ------------------ BANNER ------------------ */
+    .banner {
+      position: relative;
+      height: 45vh;
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      background: url('assets/images/banners/Banner.jpeg') center/cover no-repeat;
+    }
+    .banner::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.10), rgba(0,0,0,.65));
+    }
+    .banner-inner{
+      position: relative;
+      z-index: 1;
+      text-align:center;
+      padding: 0 1rem;
+    }
+    .banner-title{
+      font-family: 'NHG Titles', 'Apfel Grotezk', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin: 0 0 .5rem 0;
+    }
+    .banner-sub{
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 50ch;
+    }
+
+    /* ------------------ CONTACT LAYOUT ------------------ */
+    .wrap{
+      max-width: 1100px;
+      margin: 3rem auto 4rem;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 1rem;
+    }
+
+    .card{
+      background: rgba(21,21,21,.92);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    .card h2{
+      font-family: 'NHG Titles', 'Apfel Grotezk', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin: 0 0 .75rem 0;
+      font-size: 1.6rem;
+    }
+
+    .hint{
+      color: var(--muted);
+      margin: 0 0 1rem 0;
+      line-height: 1.5;
+    }
+
+    form{
+      display: grid;
+      gap: .8rem;
+      margin-top: .8rem;
+    }
+
+    label{
+      font-size: .95rem;
+      color: #dcdcdc;
+      display: grid;
+      gap: .35rem;
+    }
+
+    input, textarea, select{
+      width: 100%;
+      padding: .9rem .95rem;
+      border-radius: 12px;
+      border: 1px solid #2a2a2a;
+      background: #0c0c0c;
+      color: var(--text);
+      outline: none;
+      font: inherit;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(61,255,2,.6);
+      box-shadow: 0 0 0 3px rgba(61,255,2,.12);
+    }
+
+    textarea{ min-height: 160px; resize: vertical; }
+
+    .row{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .8rem;
+    }
+
+    .btn{
+      margin-top: .2rem;
+      padding: .95rem 1.1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(61,255,2,.45);
+      background: rgba(61,255,2,.10);
+      color: var(--accent);
+      font-family: 'NHG Titles', 'Apfel Grotezk', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(61,255,2,.16);
+      border-color: rgba(61,255,2,.65);
+    }
+
+    .fineprint{
+      margin: .2rem 0 0 0;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+
+    .contact-list{
+      display: grid;
+      gap: .9rem;
+      margin-top: 1rem;
+    }
+    .pill{
+      border: 1px solid #2a2a2a;
+      background: #0c0c0c;
+      border-radius: 14px;
+      padding: .9rem 1rem;
+      display: grid;
+      gap: .25rem;
+    }
+    .pill small{
+      color: var(--muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .75rem;
+    }
+    .pill a{
+      color: var(--text);
+      text-decoration: none;
+    }
+    .pill a:hover{ color: var(--accent); }
+
+    .status{
+      display:none;
+      margin-top:.8rem;
+      border-radius: 12px;
+      padding: .9rem 1rem;
+      border: 1px solid #2a2a2a;
+      background: #0c0c0c;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .status.ok{ border-color: rgba(61,255,2,.5); }
+    .status.err{ border-color: rgba(255,70,70,.6); }
+
+    /* ------------------ FOOTER ------------------ */
+    footer {
+      text-align: center;
+      color: #bdbdbd;
+      padding: 2rem;
+    }
+
+    /* ------------------ MOBILE ------------------ */
+    @media (max-width: 900px){
+      .wrap{ grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .logo { left: 50%; transform: translateX(-50%); }
+      .social-icons { display: none; }
+      .menu-btn { display: block; }
+      nav { justify-content: flex-start; padding: 10px; }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0,0,0,0.95);
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem;
+        gap: 1.5rem;
+        display: none;
+      }
+      nav.open .nav-links { display: flex; }
+
+      .nav-links > a {
+        font-size: 1.5rem;
+        padding: 15px;
+        background: #111;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .mobile-socials{
+        display:flex;
+        justify-content:center;
+        gap:30px;
+        margin-top:30px;
+        width:100%;
+      }
+      .mobile-socials .icon{
+        width:60px; height:60px;
+        background-size:contain;
+        background-repeat:no-repeat;
+        background-position:center;
+        transition: transform .2s ease;
+      }
+      .mobile-socials .icon:hover{ transform: scale(1.15); }
+      .mobile-socials .ig{ background-image: url('assets/images/social/InstaGreen.png'); }
+      .mobile-socials .yt{ background-image: url('assets/images/social/YTGreen.png'); }
+
+      .row{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="logo">
+    <a href="index.html">
+      <img src="assets/images/logos/VF_Icon_3.png" alt="Vision Frog Logo">
+    </a>
+  </div>
+
+  <div class="social-icons">
+    <a class="icon ig" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener"></a>
+    <a class="icon yt" href="https://www.youtube.com/@TheVisionFrog" target="_blank" rel="noopener"></a>
+  </div>
+
+  <nav id="navbar">
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav-links" id="navLinks">
+   <a href="index.html">Home</a>
+            <a href="index.html#work">Projects</a>
+            <a href="About.html">About</a>
+            <a href="Merch.html">Merch</a>
+            <a href="Contact.html">Contact</a>
+
+
+      <div class="mobile-socials">
+        <a class="icon ig" href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener"></a>
+        <a class="icon yt" href="https://www.youtube.com/@TheVisionFrog" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="nav-spacer"></div>
+
+  <header class="banner">
+    <div class="banner-inner">
+      <h1 class="banner-title">Contact</h1>
+      <p class="banner-sub">Tell us what you’re building. We’ll get back to you as soon as possible.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>Send a message</h2>
+      <p class="hint">Fill this out and it will send directly to your inbox (once you connect a form endpoint).</p>
+
+      <form id="contactForm" action="https://formspree.io/f/xykkdobz" method="POST">
+        <div class="row">
+          <label>
+            Name
+            <input name="name" autocomplete="name" required />
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+        </div>
+
+        <label>
+          What are you reaching out about?
+          <select name="topic" required>
+            <option value="" selected disabled>Select one</option>
+            <option>Music Video</option>
+            <option>Narrative / Short</option>
+            <option>Commercial / Brand</option>
+            <option>Portrait / Photo</option>
+            <option>Other</option>
+          </select>
+        </label>
+
+        <label>
+          Message
+          <textarea name="message" required placeholder="Give a quick overview + timeline + budget range (if you want)."></textarea>
+        </label>
+
+        <!-- Helpful metadata -->
+        <input type="hidden" name="_subject" value="Vision Frog — New Contact Form Submission" />
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <button class="btn" type="submit">Send</button>
+        <p class="fineprint">By sending, you agree we can reply to the email provided. No spam.</p>
+
+        <div class="status ok" id="okMsg">Sent ✅ We’ll get back to you soon.</div>
+        <div class="status err" id="errMsg">Something went wrong. Please try again, or email us directly.</div>
+      </form>
+    </section>
+
+    <aside class="card">
+      <h2>Direct</h2>
+      <p class="hint">Prefer email/DM? Use these:</p>
+
+      <div class="contact-list">
+        <div class="pill">
+          <small>Email</small>
+          <a href="mailto:thevisionfrog@gmail.com">thevisionfrog@gmail.com</a>
+        </div>
+
+        <div class="pill">
+          <small>Instagram</small>
+          <a href="https://www.instagram.com/thevisionfrog/" target="_blank" rel="noopener">@thevisionfrog</a>
+        </div>
+
+        <div class="pill">
+          <small>YouTube</small>
+          <a href="https://www.youtube.com/@TheVisionFrog" target="_blank" rel="noopener">@TheVisionFrog</a>
+        </div>
+      </div>
+
+      <p class="fineprint" style="margin-top: 1rem;">
+        Tip: If you’re booking production, include location, shoot date range, references, and deliverables.
+      </p>
+    </aside>
+  </main>
+
+  <footer>© 2025 Vision Frog LLC. All rights reserved.</footer>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    const spacer = document.getElementById('nav-spacer');
+    const btn = document.getElementById('menuBtn');
+
+    // Toggle mobile menu
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.onclick = () => {
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      };
+    });
+
+    // Initial Timer: Hide nav after 3 seconds (Desktop only behavior)
+    if (window.innerWidth > 768) {
+      setTimeout(() => {
+        if(!nav.classList.contains('open')) {
+          nav.classList.add('nav-hidden');
+          spacer.style.height = "0px";
+        }
+      }, 3000);
+    }
+
+    // Scroll Handler
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      if(nav.classList.contains('open')) return;
+
+      const currentScroll = window.scrollY;
+
+      if (currentScroll <= 0) {
+        nav.classList.remove('nav-hidden');
+        spacer.style.height = window.innerWidth > 768 ? "100px" : "60px";
+      } else if (currentScroll < lastScroll) {
+        nav.classList.remove('nav-hidden');
+      } else {
+        nav.classList.add('nav-hidden');
+        spacer.style.height = "0px";
+      }
+      lastScroll = currentScroll;
+    });
+
+    // Form UX: show success/error without leaving page (works with Formspree)
+    const form = document.getElementById('contactForm');
+    const okMsg = document.getElementById('okMsg');
+    const errMsg = document.getElementById('errMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      okMsg.style.display = 'none';
+      errMsg.style.display = 'none';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.reset();
+          okMsg.style.display = 'block';
+          okMsg.classList.add('ok');
+        } else {
+          errMsg.style.display = 'block';
+          errMsg.classList.add('err');
+        }
+      } catch (err) {
+        errMsg.style.display = 'block';
+        errMsg.classList.add('err');
+      }
+    });
+  </script>
+</body>
+</html>
