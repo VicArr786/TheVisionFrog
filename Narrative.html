@@ -226,7 +226,17 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(5,226,5,.45);
 }
+.btn.secondary{
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  margin-left: 10px;
+}
 
+.btn.secondary:hover{
+  background: var(--accent);
+  color: #000;
+}
   /* mobile tweaks */
   @media (max-width:700px){
     .stills{grid-template-columns:1fr 1fr}
@@ -245,17 +255,24 @@
       <!-- ===== Film 1 ===== -->
       <section class="slide" style="background-image:url('Images/hooper_bg.jpg')">
         <div class="content">
+
           <article class="card">
             <h1>Narrative</h1>
-            <h2>Hooper’s Asylum</h2>
+            <h2>HNowhere Near Home.</h2>
             <p><em>Written / Directed by Oliver Stemmler</em></p>
-            <p>In the midst of March Madness, Marcus gets the call that shatters his world. Between grief and the biggest game of his life, he must choose what the jersey really means.</p>
+            <p>I"Nowhere Near Home" tells the story of two feuding brothers who, after school, are left stranded, so they decide to hitchhike home</p>
             <div class="stills">
-              <img src="assets/images/narrative/452d1d7a-7a46-43f1-898f-e92b14b24628_rw_3840.jpg" alt="Hooper still 1">
-              <img src="assets/images/narrative/d18ba5c9-db9c-4fb2-83b6-b8f92bf449b7_rw_3840.jpg" alt="Hooper still 2">
-              <img src="assets/images/narrative/f387c407-6616-4405-8930-f15ce3aeb4f8_rw_3840.jpg" alt="Hooper still 3">
+              <img src="assets/images/narrative/2mfs.jpeg" alt="Hooper still 1">
+              <img src="assets/images/narrative/OliverLost.jpeg" alt="Hooper still 2">
+              <img src="assets/images/narrative/Shooting.jpeg" alt="Hooper still 3">
             </div>
-            <a class="btn" href="https://youtu.be/VIDEO_ID_1" target="_blank" rel="noopener">Watch Trailer</a>
+            <!--<a class="btn" href="https://youtu.be/VIDEO_ID_1" target="_blank" rel="noopener">Watch Trailer</a>-->
+            <a class="btn secondary"
+              href="https://www.gofundme.com/f/help-bring-olivers-nyu-thesis-film-to-life?attribution_id=sl%3A394c8e01-1291-4331-bb5a-a1f777024c55&lang=en_US&ts=1766605241&utm_campaign=man_activity_topbar&utm_content=amp17_tb&utm_medium=customer&utm_source=whatsapp"
+              target="_blank"
+              rel="noopener">
+              Support the Film
+            </a>
           </article>
         </div>
       </section>
