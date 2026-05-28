@@ -1,0 +1,113 @@
+.mv-page {
+  min-height: 100vh;
+}
+
+.mv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.mv-card {
+  display: block;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.mv-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(61, 255, 2, 0.3);
+  box-shadow: var(--shadow-soft), var(--shadow-glow);
+}
+
+.mv-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+.mv-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.3s ease;
+  filter: brightness(0.88);
+}
+
+.mv-card:hover .mv-card__media img {
+  transform: scale(1.06);
+  filter: brightness(1);
+}
+
+.mv-card__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mv-card__play::after {
+  content: "▶";
+  font-size: 1.3rem;
+  color: #fff;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 3px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.mv-card:hover .mv-card__play {
+  opacity: 1;
+}
+
+.mv-card:hover .mv-card__play::after {
+  transform: scale(1.1);
+  border-color: var(--accent);
+}
+
+.mv-card__info {
+  padding: 1rem 1.1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.mv-card__artist {
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+  color: var(--text);
+}
+
+.mv-card__title {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .mv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mv-card__play {
+    opacity: 0.85;
+  }
+}

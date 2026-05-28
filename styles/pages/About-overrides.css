@@ -1,0 +1,36 @@
+/* Theme-aligned overrides for About page */
+.about-page .photo {
+  border-radius: var(--radius-lg);
+  border-color: var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.about-page .bio h1 {
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.about-page .bio .pull {
+  border-left-color: var(--accent);
+  background: rgba(61, 255, 2, 0.08);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.about-page .brand-item {
+  border-radius: var(--radius-md);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.about-page .brand-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+}
+
+.about-page .nav .brand {
+  color: var(--accent-soft);
+}
+
+.about-page .nav .brand:hover {
+  color: var(--accent);
+}

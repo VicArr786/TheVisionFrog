@@ -1,0 +1,17 @@
+/* Neue Haas Grotesk – Regular (400) */
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('Fonts/NeueHaas/NeueHaas-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Neue Haas Grotesk – Bold (700) */
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('Fonts/NeueHaas/NeueHaas-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

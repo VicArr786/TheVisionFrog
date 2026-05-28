@@ -1,0 +1,123 @@
+.about-page .about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 3.5rem;
+  align-items: start;
+  margin-bottom: 4rem;
+}
+
+.about-page .about-photo {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.about-page .about-photo:hover {
+  border-color: rgba(61, 255, 2, 0.25);
+  box-shadow: var(--shadow-soft), 0 0 40px rgba(61, 255, 2, 0.08);
+}
+
+.about-page .about-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.about-page .about-bio h1 {
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin: 0 0 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.about-page .about-bio .lead {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.about-page .about-bio .lead strong {
+  color: var(--accent-soft);
+  font-weight: 400;
+}
+
+.about-page .about-bio p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #e0e0e0;
+  margin: 0 0 1rem;
+}
+
+.about-page .about-quote {
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  margin: 2.5rem 0 0;
+  padding: 1.75rem 2rem;
+  border-left: 4px solid var(--accent);
+  background: rgba(61, 255, 2, 0.08);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  max-width: 100%;
+}
+
+.about-page .about-brands {
+  padding-bottom: 4rem;
+  text-align: center;
+}
+
+.about-page .about-brands h2 {
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 1.75rem;
+}
+
+.about-page .about-brand-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-page .about-brand-item {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.about-page .about-brand-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft), 0 0 24px rgba(61, 255, 2, 0.1);
+}
+
+.about-page .about-brand-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .about-page .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .about-page .about-brand-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -24,7 +24,7 @@
 * **Core:** HTML5, CSS3, Vanilla JavaScript
 * **Styling:** CSS Variables, Flexbox, CSS Grid
 * **Fonts:** Apfel Grotezk, Neue Haas Grotesk (Self-hosted)
-* **Performance:** Lazy loading (`loading="lazy"`), Local Font Hosting
+
 
 ---
 

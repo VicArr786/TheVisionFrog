@@ -1,0 +1,300 @@
+/* Home page only — scoped under .home-page */
+
+.home-page .vf-nav__spacer {
+  height: 80px;
+}
+
+/* Banner */
+.home-page .home-banner {
+  position: relative;
+  height: 100vh;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: url("/assets/images/banners/Banner.jpeg") center/cover no-repeat;
+  flex-shrink: 0;
+}
+
+/* gradient overlay — explicit z-index so the video stacks correctly above it */
+.home-page .home-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(3, 3, 3, 0.25) 0%,
+    rgba(3, 3, 3, 0.6) 60%,
+    var(--bg) 100%
+  );
+  pointer-events: none;
+}
+
+/* YouTube player — floats above the banner overlay */
+.home-page .home-video-section {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 720px;
+  padding: 0 1.25rem;
+}
+
+.home-page .home-video-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(61, 255, 2, 0.12);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.home-page .home-video-player:hover {
+  border-color: rgba(61, 255, 2, 0.28);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(61, 255, 2, 0.1);
+}
+
+/* edge fades — top & bottom bleed into the banner's dark overlay */
+.home-page .home-video-player::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    linear-gradient(to bottom, rgba(3, 3, 3, 0.55) 0%, transparent 22%),
+    linear-gradient(to top,    rgba(3, 3, 3, 0.55) 0%, transparent 22%);
+  pointer-events: none;
+}
+
+.home-page .home-video-yt {
+  position: absolute;
+  inset: 0;
+}
+
+.home-page .home-video-yt iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
+}
+
+.home-page .home-video-controls {
+  position: absolute;
+  bottom: 0.6rem;
+  right: 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+  z-index: 2;
+}
+
+.home-page .home-video-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.home-page .home-video-btn:hover {
+  background: rgba(61, 255, 2, 0.2);
+  border-color: rgba(61, 255, 2, 0.5);
+  transform: scale(1.08);
+}
+
+.home-page .home-video-player:fullscreen {
+  aspect-ratio: unset;
+  width: 100vw;
+  height: 100vh;
+}
+
+.home-page .home-banner__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.home-page .home-banner__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.home-page .home-banner__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+}
+
+.home-page .home-banner__tagline {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+
+.home-page .home-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-size: 2rem;
+  color: var(--accent);
+  text-decoration: none;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(61, 255, 2, 0.4);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  animation: home-bounce 2s ease-in-out infinite;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.home-page .home-scroll:hover {
+  background: rgba(61, 255, 2, 0.15);
+  transform: translateX(-50%) scale(1.08);
+}
+
+@keyframes home-bounce {
+  0%, 100% { transform: translateX(-50%); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+/* Project tiles — must be block-level with real height (empty <a> collapses otherwise) */
+.home-page .home-work {
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+  flex-shrink: 0;
+}
+
+.home-page .home-tiles {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  min-height: 60vh;
+}
+
+.home-page .home-tile {
+  display: block;
+  position: relative;
+  flex: 1 1 0;
+  height: 60vh;
+  min-height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #202020;
+  background-color: #111;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+  transition: flex 0.35s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.home-page .home-tile__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.home-page .home-tile::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 2;
+  font-family: var(--font-display), "Apfel Grotezk", system-ui, sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.5rem);
+  font-weight: 100;
+  letter-spacing: 0.04em;
+  color: #05e205;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+
+.home-page .home-tile:hover {
+  flex: 2 1 40%;
+  border-color: rgba(61, 255, 2, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 30px rgba(61, 255, 2, 0.12);
+}
+
+.home-page .home-tile.MusicVideo {
+  background-image: url("/assets/images/music-videos/JozzyPic.png");
+}
+.home-page .home-tile.MusicVideo:hover {
+  background-image: url("/assets/images/gifs/FinalGifs/VIsionFrog-min-2.gif");
+}
+
+.home-page .home-tile.Narrative {
+  background-image: url("/assets/images/narrative/IMG_3525.jpg");
+}
+.home-page .home-tile.Narrative:hover {
+  background-image: url("/assets/images/gifs/FinalGifs/Gif_.gif");
+}
+
+.home-page .home-tile.Commercials {
+  background-image: url("/assets/images/commercials/WhatsApp Image 2025-09-23 at 14.08.49.jpeg");
+}
+.home-page .home-tile.Commercials:hover {
+  background-image: url("/assets/images/gifs/FinalGifs/Gif_Commercial-min.gif");
+}
+
+.home-page .home-tile.Portraits {
+  background-image: url("/assets/images/portraits/Shakira FINALS - 4.jpg");
+}
+.home-page .home-tile.Portraits:hover {
+  background-image: url("/assets/images/gifs/FinalGifs/Gif_Portraits_1-min.gif");
+}
+
+@media (max-width: 768px) {
+  .home-page .home-tiles {
+    flex-direction: column;
+    min-height: unset;
+  }
+
+  .home-page .home-tile {
+    width: 100%;
+    height: 220px;
+    min-height: 220px;
+    flex: none;
+  }
+
+  .home-page .home-tile:hover {
+    flex: none;
+  }
+}

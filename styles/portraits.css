@@ -1,0 +1,173 @@
+.portraits-page .portraits-carousel {
+  position: relative;
+  margin: 0 0 3rem;
+}
+
+.portraits-page .portraits-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-inline: clamp(12px, 3vw, 36px);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.portraits-page .portraits-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.portraits-page .portraits-track {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.portraits-page .portraits-slide {
+  position: relative;
+  flex: 0 0 calc(100% - clamp(24px, 6vw, 72px));
+  height: min(100vh, 900px);
+  max-height: 85vh;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  scroll-snap-align: center;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.portraits-page .portraits-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.portraits-page .portraits-slide:hover img {
+  transform: scale(1.03);
+}
+
+.portraits-page .portraits-caption {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.portraits-page .portraits-slide:hover .portraits-caption {
+  opacity: 1;
+}
+
+.portraits-page .portraits-arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 44px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.55), transparent);
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.portraits-page .portraits-arrow--next {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.portraits-page .portraits-arrow--prev {
+  left: 0;
+}
+
+.portraits-page .portraits-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 2000;
+}
+
+.portraits-page .portraits-lightbox--open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.portraits-page .portraits-lightbox__inner {
+  position: relative;
+  max-width: 92vw;
+  max-height: 92vh;
+}
+
+.portraits-page .portraits-lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: var(--radius-md);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.7);
+}
+
+.portraits-page .portraits-lightbox__caption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.portraits-page .portraits-lightbox__close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.portraits-page .portraits-lightbox__close:hover {
+  background: rgba(61, 255, 2, 0.15);
+  border-color: rgba(61, 255, 2, 0.5);
+  transform: scale(1.1);
+}
+
+@media (max-width: 680px) {
+  .portraits-page .portraits-slide {
+    flex: 0 0 calc(100% - 12px);
+    max-height: 74vh;
+  }
+  .portraits-page .portraits-caption {
+    opacity: 1;
+  }
+  .portraits-page .portraits-arrow {
+    width: 36px;
+  }
+}
