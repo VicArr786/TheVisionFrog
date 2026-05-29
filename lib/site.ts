@@ -1,7 +1,7 @@
 export const SITE = {
   name: "The Vision Frog",
   tagline: "The way to craft your vision.",
-  copyright: "© 2025 Vision Frog LLC. All rights reserved.",
+  copyright: "© 2026 Vision Frog LLC. All rights reserved.",
 } as const;
 
 export const SOCIAL = {
@@ -20,7 +20,6 @@ export type NavLink = {
 export const MAIN_NAV: NavLink[] = [
   { href: "/#work", label: "Projects", anchor: true },
   { href: "/About", label: "About" },
-  { href: "/Merch", label: "Merch" },
   { href: "/Contact", label: "Contact" },
 ];
 

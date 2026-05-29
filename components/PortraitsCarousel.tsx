@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+
 const slides = [
   { src: "/assets/images/portraits/Shakira FINALS - 4.jpg", caption: "Shakira — Global Citizen 2025" },
   { src: "/assets/images/portraits/Shakira FINALS - 2.jpg", caption: "Shakira — Global Citizen 2025" },
@@ -11,56 +12,7 @@ const slides = [
 ];
 
 export default function PortraitsCarousel() {
-  const viewportRef = useRef<HTMLDivElement>(null);
   const [lightbox, setLightbox] = useState<{ src: string; caption: string } | null>(null);
-
-  const getSlideEls = () => {
-    const track = viewportRef.current?.querySelector(".portraits-track");
-    if (!track) return [];
-    return Array.from(track.children) as HTMLLIElement[];
-  };
-
-  const slideCenters = useCallback(() => {
-    const viewport = viewportRef.current;
-    const slideEls = getSlideEls();
-    if (!viewport || !slideEls.length) return [];
-    const vpW = viewport.clientWidth;
-    const vpRect = viewport.getBoundingClientRect();
-    return slideEls.map((s) => {
-      const rect = s.getBoundingClientRect();
-      const leftInViewport = rect.left - vpRect.left + viewport.scrollLeft;
-      return Math.round(leftInViewport - (vpW - s.clientWidth) / 2);
-    });
-  }, []);
-
-  const nearestIndex = useCallback(() => {
-    const viewport = viewportRef.current;
-    const centers = slideCenters();
-    if (!viewport || !centers.length) return 0;
-    const scroll = viewport.scrollLeft;
-    let best = 0;
-    let bestDist = Infinity;
-    centers.forEach((pos, i) => {
-      const d = Math.abs(pos - scroll);
-      if (d < bestDist) {
-        bestDist = d;
-        best = i;
-      }
-    });
-    return best;
-  }, [slideCenters]);
-
-  const goTo = useCallback(
-    (i: number) => {
-      const viewport = viewportRef.current;
-      const slideEls = getSlideEls();
-      const centers = slideCenters();
-      if (!viewport || !centers.length) return;
-      const idx = (i + slideEls.length) % slideEls.length;
-      viewport.scrollTo({ left: centers[idx], behavior: "smooth" });
-    },
-    [slideCenters]
-  );
 
   const openLightbox = (src: string, caption: string) => {
     setLightbox({ src, caption });
@@ -74,68 +26,27 @@ export default function PortraitsCarousel() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (lightbox) {
-        if (e.key === "Escape") closeLightbox();
-        return;
-      }
-      if (e.key === "ArrowRight") goTo(nearestIndex() + 1);
-      if (e.key === "ArrowLeft") goTo(nearestIndex() - 1);
+      if (lightbox && e.key === "Escape") closeLightbox();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [lightbox, goTo, nearestIndex]);
-
-  useEffect(() => {
-    goTo(0);
-  }, [goTo]);
+  }, [lightbox]);
 
   return (
     <>
-      <section className="portraits-carousel" aria-roledescription="carousel">
-        <button
-          type="button"
-          className="portraits-arrow portraits-arrow--prev"
-          aria-label="Previous slide"
-          onClick={() => goTo(nearestIndex() - 1)}
-        >
-          <svg viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden>
-            <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </button>
-
-        <div className="portraits-viewport" ref={viewportRef}>
-          <ul className="portraits-track" role="list" aria-label="Portraits">
-            {slides.map((slide) => (
-              <li
-                key={slide.src}
-                className="portraits-slide"
-                onClick={(e) => {
-                  if ((e.target as HTMLElement).tagName === "IMG") {
-                    openLightbox(slide.src, slide.caption);
-                  } else {
-                    goTo(slides.indexOf(slide));
-                  }
-                }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={slide.src} alt={slide.caption} />
-                <span className="portraits-caption">{slide.caption}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <button
-          type="button"
-          className="portraits-arrow portraits-arrow--next"
-          aria-label="Next slide"
-          onClick={() => goTo(nearestIndex() + 1)}
-        >
-          <svg viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden>
-            <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </button>
-      </section>
+      <ul className="portraits-grid" role="list" aria-label="Portraits">
+        {slides.map((slide) => (
+          <li
+            key={slide.src}
+            className="portraits-grid__item"
+            onClick={() => openLightbox(slide.src, slide.caption)}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={slide.src} alt={slide.caption} />
+            <span className="portraits-caption">{slide.caption}</span>
+          </li>
+        ))}
+      </ul>
 
       <div
         className={`portraits-lightbox${lightbox ? " portraits-lightbox--open" : ""}`}

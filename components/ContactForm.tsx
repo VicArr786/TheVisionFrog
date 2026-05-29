@@ -65,7 +65,7 @@ export default function ContactForm() {
         <textarea
           name="message"
           required
-          placeholder="Give a quick overview + timeline + budget range (if you want)."
+          placeholder="Give a quick overview + timeline + budget range."
         />
       </label>
 
@@ -82,7 +82,7 @@ export default function ContactForm() {
         Send
       </button>
       <p style={{ color: "var(--text-muted)", fontSize: "0.9rem", margin: "0.5rem 0 0" }}>
-        By sending, you agree we can reply to the email provided. No spam.
+        By sending, you agree we can reply to the email provided.
       </p>
 
       <div

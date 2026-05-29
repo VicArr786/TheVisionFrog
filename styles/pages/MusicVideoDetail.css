@@ -84,7 +84,7 @@
 
 .mv-detail__still {
   margin: 0;
-  border-radius: var(--radius-md);
+  border-radius: 0;
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -112,7 +112,7 @@
 
 .mv-detail__placeholder {
   aspect-ratio: 4 / 3;
-  border-radius: var(--radius-md);
+  border-radius: 0;
   border: 1px dashed var(--border-strong);
   background: var(--surface);
   display: flex;
@@ -139,7 +139,7 @@
 .mv-detail__cta {
   text-align: center;
   padding: 2.5rem 1.5rem;
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
