@@ -23,6 +23,14 @@
   transform: translate(-50%, -50%);
 }
 
+.bape-video-local {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .bape-video-yt iframe {
   width: 100%;
   height: 100%;
@@ -84,6 +92,11 @@
 
 .bape-header {
   margin-bottom: 2.5rem;
+}
+
+/* pages without a video header — clear the fixed back button */
+.bape-body--no-video {
+  padding-top: 6.5rem;
 }
 
 .bape-header__eyebrow {

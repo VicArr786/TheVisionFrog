@@ -1,4 +1,21 @@
 /* Campaign listing — main Commercials page */
+
+/* fixed layer instead of background-attachment: fixed, which iOS ignores */
+.commercials-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(3, 3, 3, 0.6) 0%,
+      rgba(3, 3, 3, 0.75) 55%,
+      rgba(3, 3, 3, 0.92) 100%
+    ),
+    url("/assets/images/banners/Banner.jpeg") center/cover no-repeat;
+}
+
 .commercials-page .campaigns-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));

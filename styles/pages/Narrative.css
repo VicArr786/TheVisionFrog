@@ -42,7 +42,9 @@
     font-weight: 400;
   }
 
-  body{
+  /* scoped to the narrative page only — an unscoped rule here leaks to every
+     page after client-side navigation and locks scrolling site-wide */
+  body.narrative-body{
     overflow:hidden;
   }
 

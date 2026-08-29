@@ -24,6 +24,7 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
   const startX = useRef(0);
   const startPos = useRef(0);
   const moved = useRef(0);
+  const captured = useRef(false);
   const lastInteract = useRef(0);
 
   // responsive card size
@@ -68,20 +69,29 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
     startX.current = e.clientX;
     startPos.current = pos;
     moved.current = 0;
-    trackRef.current?.setPointerCapture(e.pointerId);
+    captured.current = false;
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragging) return;
     const dx = e.clientX - startX.current;
     moved.current = Math.max(moved.current, Math.abs(dx));
-    setPos(startPos.current - dx / gap);
+    // capture only once it's a real drag — capturing on pointerdown would
+    // retarget the click to the track and swallow the card links
+    if (!captured.current && moved.current > 8) {
+      captured.current = true;
+      trackRef.current?.setPointerCapture(e.pointerId);
+    }
+    if (captured.current) {
+      setPos(startPos.current - dx / gap);
+    }
   };
 
   const endDrag = () => {
     if (!dragging) return;
     touch();
     setDragging(false);
+    captured.current = false;
     setPos((p) => Math.round(p));
   };
 
