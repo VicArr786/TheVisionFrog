@@ -265,16 +265,24 @@
   .vf-nav {
     justify-content: flex-start;
     padding: 10px;
+    min-height: 62px;
   }
+  /* backdrop-filter on .vf-nav makes it the containing block for positioned
+     descendants, so "fixed" here would only fill the bar — size the overlay
+     off the nav's own top-of-viewport box instead */
   .vf-nav__links {
-    position: fixed;
-    inset: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     background: rgba(0, 0, 0, 0.96);
     flex-direction: column;
     justify-content: center;
     padding: 2rem;
     gap: 1.25rem;
     display: none;
+    overflow-y: auto;
   }
   .vf-nav--open .vf-nav__links {
     display: flex;
