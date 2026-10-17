@@ -1,21 +1,5 @@
 /* Campaign listing — main Commercials page */
 
-/* fixed layer instead of background-attachment: fixed, which iOS ignores */
-.commercials-page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(3, 3, 3, 0.6) 0%,
-      rgba(3, 3, 3, 0.75) 55%,
-      rgba(3, 3, 3, 0.92) 100%
-    ),
-    url("/assets/images/banners/Banner.jpeg") center/cover no-repeat;
-}
-
 .commercials-page .campaigns-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -45,6 +29,65 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, transparent 55%);
+}
+
+/* hover CTA — centered pill that fades up over a darkened card */
+.commercials-page .campaign-card__overlay {
+  transition: background var(--transition);
+}
+
+.commercials-page .campaign-card:hover .campaign-card__overlay,
+.commercials-page .campaign-card:focus-visible .campaign-card__overlay {
+  background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.82) 0%, transparent 55%),
+    rgba(0, 0, 0, 0.45);
+}
+
+.commercials-page .campaign-card__cta {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.3rem;
+  border: 1px solid rgba(61, 255, 2, 0.6);
+  border-radius: 999px;
+  background: rgba(3, 3, 3, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 12px));
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.commercials-page .campaign-card__arrow {
+  transition: transform var(--transition);
+}
+
+.commercials-page .campaign-card:hover .campaign-card__cta,
+.commercials-page .campaign-card:focus-visible .campaign-card__cta {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.commercials-page .campaign-card:hover .campaign-card__arrow {
+  transform: translateX(4px);
+}
+
+/* touch screens have no hover — keep the CTA visible */
+@media (hover: none) {
+  .commercials-page .campaign-card__cta {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .commercials-page .campaign-card__info {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageLayout from "@/components/layout/PageLayout";
-import MusicVideosCarousel from "@/components/MusicVideosCarousel";
+import VinylPlayer from "@/components/VinylPlayer";
 import "@/styles/pages/MusicVideos.css";
 
 export const metadata: Metadata = {
@@ -13,12 +13,12 @@ export default function MusicVideosPage() {
       className="mv-page"
       backHref="/"
       header={{
-        eyebrow: "Portfolio",
+        eyebrow: "Music",
         title: "Music Videos",
-        subtitle: "Select a project to view stills and watch the full video.",
+        subtitle: "Pick a record to spin it — open the project for stills and the full video.",
       }}
     >
-      <MusicVideosCarousel />
+      <VinylPlayer />
     </PageLayout>
   );
 }

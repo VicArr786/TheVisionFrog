@@ -152,10 +152,21 @@
   white-space: nowrap;
 }
 
-/* Five bracketed links + divider need room — tighten between tablet and wide desktop */
+/* Seven links + divider need room — tighten between tablet and wide desktop */
+@media (min-width: 1281px) and (max-width: 1600px) {
+  .vf-nav {
+    font-size: 1.05rem;
+    padding-left: 7rem;
+    padding-right: 9rem;
+  }
+  .vf-nav__links {
+    gap: 1.4rem;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1280px) {
   .vf-nav {
-    font-size: 0.95rem;
+    font-size: 0.82rem;
     padding-left: 6rem;
     padding-right: 8rem;
   }
@@ -168,9 +179,9 @@
   }
 }
 
-@media (min-width: 769px) and (max-width: 920px) {
+@media (min-width: 769px) and (max-width: 1040px) {
   .vf-nav {
-    font-size: 0.82rem;
+    font-size: 0.7rem;
     padding-left: 5.5rem;
     padding-right: 7.5rem;
   }

@@ -208,6 +208,20 @@
   box-shadow: var(--shadow-soft), var(--shadow-glow);
 }
 
+.bape-gallery__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.bape-gallery__open:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
 .bape-gallery__item img {
   display: block;
   width: 100%;

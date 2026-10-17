@@ -1,7 +1,6 @@
 .merch-page .merch-hero {
   position: relative;
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
-    url("/assets/images/banners/Banner.jpeg") center/cover no-repeat;
+  background: var(--bg);
   min-height: 100%;
 }
 

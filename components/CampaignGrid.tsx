@@ -13,6 +13,9 @@ export default function CampaignGrid() {
           style={{ backgroundImage: `url('${c.cover}')` }}
         >
           <div className="campaign-card__overlay" />
+          <span className="campaign-card__cta" aria-hidden="true">
+            Explore the vision <span className="campaign-card__arrow">→</span>
+          </span>
           <div className="campaign-card__info">
             <span className="campaign-card__label">{c.label}</span>
             <span className="campaign-card__count">{c.count} images</span>

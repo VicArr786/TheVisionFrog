@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Lightbox from "@/components/Lightbox";
 
 export type CampaignImage = { src: string; alt: string };
 
 export default function CampaignGallery({ images }: { images: CampaignImage[] }) {
   const [cols, setCols] = useState(2);
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
     <>
@@ -25,13 +27,22 @@ export default function CampaignGallery({ images }: { images: CampaignImage[] })
       </div>
 
       <section className="bape-gallery" style={{ columns: cols }}>
-        {images.map((img) => (
+        {images.map((img, i) => (
           <figure key={img.src} className="bape-gallery__item">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={img.src} alt={img.alt} loading="lazy" />
+            <button
+              type="button"
+              className="bape-gallery__open"
+              aria-label={`View larger: ${img.alt}`}
+              onClick={() => setOpen(i)}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={img.src} alt={img.alt} loading="lazy" />
+            </button>
           </figure>
         ))}
       </section>
+
+      <Lightbox images={images} index={open} onChange={setOpen} />
     </>
   );
 }

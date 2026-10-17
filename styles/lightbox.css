@@ -1,0 +1,94 @@
+/* Shared full-screen image viewer (components/Lightbox.tsx) */
+
+.vf-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3.5rem 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.94);
+  animation: vf-lightbox-in 0.2s ease;
+}
+
+@keyframes vf-lightbox-in {
+  from { opacity: 0; }
+}
+
+.vf-lightbox__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.vf-lightbox__img {
+  display: block;
+  max-width: min(88vw, 1600px);
+  max-height: 82vh;
+  object-fit: contain;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.7);
+  animation: vf-lightbox-img-in 0.25s ease;
+}
+
+@keyframes vf-lightbox-img-in {
+  from { opacity: 0; transform: scale(0.98); }
+}
+
+.vf-lightbox__caption {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+}
+
+.vf-lightbox__close,
+.vf-lightbox__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.vf-lightbox__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.vf-lightbox__nav {
+  width: 46px;
+  height: 46px;
+}
+
+.vf-lightbox__close:hover,
+.vf-lightbox__nav:hover {
+  background: rgba(61, 255, 2, 0.15);
+  border-color: rgba(61, 255, 2, 0.5);
+  color: var(--accent);
+  transform: scale(1.08);
+}
+
+/* phones: arrows float over the image instead of squeezing it */
+@media (max-width: 640px) {
+  .vf-lightbox__nav {
+    position: absolute;
+    bottom: 1.25rem;
+  }
+  .vf-lightbox__nav--prev { left: calc(50% - 60px); }
+  .vf-lightbox__nav--next { right: calc(50% - 60px); }
+  .vf-lightbox__img { max-width: 94vw; max-height: 72vh; }
+}

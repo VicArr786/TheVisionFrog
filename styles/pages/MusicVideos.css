@@ -1,159 +1,302 @@
+/* Music Videos — spinning vinyl player (components/VinylPlayer.tsx) */
+
 .mv-page {
   min-height: 100vh;
 }
 
-/* fixed layer instead of background-attachment: fixed, which iOS ignores */
-.mv-page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(3, 3, 3, 0.6) 0%,
-      rgba(3, 3, 3, 0.75) 55%,
-      rgba(3, 3, 3, 0.92) 100%
-    ),
-    url("/assets/images/banners/Banner.jpeg") center/cover no-repeat;
-}
-
-/* ── Carousel — full-bleed breakout ── */
-.mv-carousel {
-  position: relative;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  width: 100vw;
+.vinyl {
+  --s: min(420px, 36vw); /* sleeve edge */
   margin-bottom: 3rem;
 }
 
-.mv-carousel-viewport {
-  overflow-x: auto;
-  overflow-y: visible;
-  padding-inline: 0;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.mv-carousel-viewport::-webkit-scrollbar {
-  display: none;
-}
-
-.mv-carousel-track {
-  display: flex;
+.vinyl__main {
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 3px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: clamp(2rem, 5vw, 4.5rem);
 }
 
-.mv-carousel-slide {
+/* sleeve sits in front; the record hides behind it and slides out to the right */
+.vinyl__stage {
   position: relative;
-  flex: 0 0 clamp(180px, 42vw, 680px);
-  height: 62vh;
-  max-height: 62vh;
-  border-radius: 0;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
-  scroll-snap-align: center;
-  background: var(--surface);
-  transition: transform 0.45s ease, opacity 0.45s ease, box-shadow 0.45s ease;
-  transform-origin: center center;
-  transform: scale(0.92);
-  opacity: 0.45;
+  width: calc(var(--s) * 1.6);
+  height: var(--s);
 }
 
-.mv-carousel-slide--active {
-  transform: scale(1.06);
+.vinyl__sleeve {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--s);
   z-index: 2;
-  opacity: 1;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 18px 0 40px rgba(0, 0, 0, 0.6), 0 24px 60px rgba(0, 0, 0, 0.55);
 }
 
-.mv-carousel-link {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  position: relative;
-}
-
-.mv-carousel-slide img {
+.vinyl__sleeve img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.35s ease, filter 0.35s ease;
-  filter: brightness(0.75);
 }
 
-.mv-carousel-slide:hover img {
-  transform: scale(1.03);
-  filter: brightness(0.9);
-}
-
-.mv-carousel-info {
+/* printed-on ring wear + paper edge */
+.vinyl__sleeve::after {
+  content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 2.5rem 1.5rem 1.5rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  inset: 0;
   pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 44%, rgba(255, 255, 255, 0.07) 45.5%, transparent 47%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 40%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.mv-carousel-artist {
+.vinyl__record {
+  position: absolute;
+  top: calc(var(--s) * 0.02);
+  left: calc(var(--s) * 0.02);
+  width: calc(var(--s) * 0.96);
+  height: calc(var(--s) * 0.96);
+  z-index: 1;
+  border-radius: 50%;
+  transform: translateX(0);
+  transition: transform 0.38s cubic-bezier(0.6, 0, 0.3, 1);
+}
+
+.vinyl__stage--out .vinyl__record {
+  transform: translateX(58%);
+  transition-duration: 0.7s;
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.vinyl__disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%, #0b0b0b 0 1px, #161616 1.5px 2.5px, #0b0b0b 3px),
+    #0b0b0b;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 20px 50px rgba(0, 0, 0, 0.7);
+  animation: vinyl-spin 2.2s linear infinite;
+}
+
+/* lead-in / run-out bands */
+.vinyl__disc::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 33%,
+    rgba(255, 255, 255, 0.05) 33.5%,
+    transparent 35%,
+    transparent 94%,
+    rgba(255, 255, 255, 0.06) 94.5%,
+    transparent 96%
+  );
+}
+
+.vinyl__label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34%;
+  height: 34%;
+  border-radius: 50%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 3px #0b0b0b, 0 0 0 4px rgba(255, 255, 255, 0.08);
+}
+
+.vinyl__hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3.2%;
+  height: 3.2%;
+  border-radius: 50%;
+  background: var(--bg);
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* light reflection stays still while the grooves turn under it */
+.vinyl__sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: conic-gradient(
+    from 30deg,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.09) 25deg,
+    transparent 60deg,
+    transparent 180deg,
+    rgba(255, 255, 255, 0.07) 205deg,
+    transparent 240deg
+  );
+  mask: radial-gradient(circle, transparent 18%, #000 18.5%);
+  -webkit-mask: radial-gradient(circle, transparent 18%, #000 18.5%);
+}
+
+.vinyl__record:hover .vinyl__disc {
+  animation-duration: 1.4s;
+}
+
+.vinyl__record:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@keyframes vinyl-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vinyl__disc { animation: none; }
+  .vinyl__record { transition: none; }
+}
+
+/* ── Info column ── */
+.vinyl__info {
+  min-width: 0;
+}
+
+.vinyl__index {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--accent-soft);
+}
+
+.vinyl__artist {
+  margin: 0;
   font-family: var(--font-display);
   font-weight: 100;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
   letter-spacing: 0.04em;
-  color: #fff;
+  line-height: 1.05;
+  text-transform: uppercase;
 }
 
-.mv-carousel-title {
-  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
-  color: rgba(255, 255, 255, 0.7);
+.vinyl__title {
+  margin: 0.4rem 0 1.75rem;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
   letter-spacing: 0.03em;
 }
 
-.mv-carousel-arrow {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 44px;
-  z-index: 3;
+.vinyl__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.vinyl__arrows {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+}
+
+.vinyl__arrow {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.55), transparent);
-  border: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
   cursor: pointer;
+  transition: color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.vinyl__arrow:hover {
+  color: var(--accent);
+  border-color: rgba(61, 255, 2, 0.5);
+  transform: scale(1.06);
+}
+
+/* ── Crate: every cover ── */
+.vinyl__crate {
+  display: flex;
+  gap: 0.9rem;
+  list-style: none;
+  margin: 3.5rem 0 0;
+  padding: 0.5rem 0 1rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.vinyl__crate-item {
+  position: relative;
+  display: block;
+  width: 120px;
+  aspect-ratio: 1;
   padding: 0;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0.55;
+  transition: opacity var(--transition), transform var(--transition), border-color var(--transition);
 }
 
-.mv-carousel-arrow--next {
-  right: 0;
-  transform: scaleX(-1);
+.vinyl__crate-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.mv-carousel-arrow--prev {
+.vinyl__crate-artist {
+  position: absolute;
   left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.25rem 0.5rem 0.4rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  color: #fff;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-@media (max-width: 680px) {
-  .mv-carousel-slide {
-    flex: 0 0 68vw;
-    max-height: 68vh;
-  }
+.vinyl__crate-item:hover {
+  opacity: 0.9;
+  transform: translateY(-4px);
+}
 
-  .mv-carousel-arrow {
-    width: 36px;
+.vinyl__crate-item--active {
+  opacity: 1;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), var(--shadow-glow);
+}
+
+@media (max-width: 860px) {
+  .vinyl {
+    --s: min(58vw, 340px);
+  }
+  .vinyl__main {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+  .vinyl__actions,
+  .vinyl__arrows {
+    justify-content: center;
+  }
+  .vinyl__crate-item {
+    width: 96px;
   }
 }

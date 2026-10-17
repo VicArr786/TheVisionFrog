@@ -15,7 +15,7 @@ export default function PortraitsPage() {
       header={{
         eyebrow: "Portfolio",
         title: "Portraits",
-        subtitle: "Live events, artists, and editorial moments.",
+        subtitle: "Artist press shots, editorial portraiture, and live moments.",
       }}
     >
       <PortraitsCarousel />

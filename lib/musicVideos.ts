@@ -57,22 +57,20 @@ export const musicVideos: MusicVideo[] = [
     thumbnail: "/assets/images/music-videos/web/BenoOverThinking.jpg",
     stills: [],
   },
-  // ── New videos: fill in title/artist/youtubeUrl, then drop the thumbnail
-  //    image at the path below (public/assets/images/music-videos/) ──
   {
-    slug: "Chinese Kitty - Pop Shit (Official Video)",
-    title: "Pop Shit (Official Video)",
-    artist: "Chinese Kitty ",
-    youtubeUrl: "https://www.youtube.com/watch?v=XMDhAA2lZHE", // add YouTube link
-    thumbnail: "/assets/images/music-videos/NewVideo1.jpg", // add image
+    slug: "chinese-kitty-pop-shit",
+    title: "Pop Shit",
+    artist: "Chinese Kitty",
+    youtubeUrl: "https://www.youtube.com/watch?v=XMDhAA2lZHE",
+    thumbnail: "https://i.ytimg.com/vi/XMDhAA2lZHE/maxresdefault.jpg",
     stills: [],
   },
   {
-    slug: "new-video-2",
-    title: "Coming Soon",
-    artist: "New Video",
-    youtubeUrl: "https://www.youtube.com/watch?v=pKYv2QjkXco", // add YouTube link
-    thumbnail: "/assets/images/music-videos/NewVideo2.jpg", // add image
+    slug: "yanov-denim",
+    title: "Denim",
+    artist: "Yanov",
+    youtubeUrl: "https://www.youtube.com/watch?v=pKYv2QjkXco",
+    thumbnail: "https://i.ytimg.com/vi/pKYv2QjkXco/maxresdefault.jpg",
     stills: [],
   },
 ];

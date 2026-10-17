@@ -6,7 +6,7 @@ import BapeGallery from "@/components/BapeGallery";
 import "@/styles/pages/BapeCommercial.css";
 
 export const metadata: Metadata = {
-  title: "Fredro Starr × BAPE — The Vision Frog Productions",
+  title: "Def Jam × BAPE — The Vision Frog Productions",
 };
 
 export default function BapePage() {
@@ -19,8 +19,8 @@ export default function BapePage() {
       <main className="bape-body">
         <header className="bape-header">
           <span className="bape-header__eyebrow">Commercial</span>
-          <h1 className="bape-header__title">Fredro Starr x BAPE</h1>
-          <p className="bape-header__sub">Shot for BAPE featuring Fredro Starr.</p>
+          <h1 className="bape-header__title">Def Jam x BAPE</h1>
+          <p className="bape-header__sub">Official BAPE × Def Jam campaign featuring Fredro Starr, Redman and Onyx.</p>
         </header>
 
         <BapeGallery />
