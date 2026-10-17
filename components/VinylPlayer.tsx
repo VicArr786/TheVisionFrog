@@ -14,7 +14,8 @@ const DEG_PER_PX = 0.6;
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /** Music videos as records — the active cover is the sleeve and the spinning label.
-    Drag the record sideways (or hit Flip) to turn it over and read the credits. */
+    Drag sideways (or hit Show credits): the record slides into the sleeve and the
+    sleeve turns over to its credits. */
 export default function VinylPlayer() {
   const [active, setActive] = useState(0);
   const [shown, setShown] = useState(0);
@@ -86,6 +87,8 @@ export default function VinylPlayer() {
   const video = musicVideos[shown];
   const href = `/MusicVideos/${video.slug}`;
   const facingBack = Math.round(angle / 180) % 2 !== 0;
+  // the record tucks into the sleeve whenever the box is turning or showing credits
+  const recordOut = out && !dragging && !facingBack;
   const credits = video.credits ?? [];
 
   return (
@@ -93,7 +96,7 @@ export default function VinylPlayer() {
       <div className="vinyl__main">
         <div className="vinyl__deck">
           <div
-            className={`vinyl__stage${out ? " vinyl__stage--out" : ""}${dragging ? " vinyl__stage--dragging" : ""}`}
+            className={`vinyl__stage${recordOut ? " vinyl__stage--out" : ""}${dragging ? " vinyl__stage--dragging" : ""}`}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={endDrag}

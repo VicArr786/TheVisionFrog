@@ -22,7 +22,7 @@ const images = [
 export default function AmVibesPage() {
   return (
     <div className="vf-site bape-page">
-      <BackLink href="/Commercials" fixed />
+      <BackLink href="/Commercials#creators" fixed />
 
       <CampaignYouTubeHeader videoId="NFflMSXJ7Zg" playerId="yt-amvibes-player" />
 

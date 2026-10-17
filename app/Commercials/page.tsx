@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageLayout from "@/components/layout/PageLayout";
-import CampaignGrid from "@/components/CampaignGrid";
+import CampaignTabs from "@/components/CampaignTabs";
 import "@/styles/pages/Commercials.css";
 
 export const metadata: Metadata = {
@@ -15,10 +15,10 @@ export default function CommercialsPage() {
       header={{
         eyebrow: "Branded",
         title: "Commercials",
-        subtitle: "Brand campaigns, collaborations, and commercial shoots.",
+        subtitle: "Brand campaigns, collaborations, and work with creators.",
       }}
     >
-      <CampaignGrid />
+      <CampaignTabs />
     </PageLayout>
   );
 }

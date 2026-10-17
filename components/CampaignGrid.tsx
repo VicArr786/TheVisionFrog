@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { campaigns } from "@/lib/commercials";
+import { campaigns, type Campaign } from "@/lib/commercials";
 
 /** Commercial campaign cards — styled by Commercials.css (.commercials-page) */
-export default function CampaignGrid() {
+export default function CampaignGrid({ category }: { category?: Campaign["category"] }) {
+  const items = category ? campaigns.filter((c) => c.category === category) : campaigns;
+
   return (
     <section className="campaigns-grid">
-      {campaigns.map((c) => (
+      {items.map((c) => (
         <Link
           key={c.slug}
           href={`/Commercials/${c.slug}`}
