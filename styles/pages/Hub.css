@@ -1,4 +1,4 @@
-/* VF Originals hub — keeps the site banner behind a Narrative / Visions split */
+/* Split-panel hubs (VF Originals, Commercials). Only VF Originals keeps the site banner. */
 
 .originals-page::before {
   content: "";
@@ -10,17 +10,17 @@
     url("/assets/images/banners/Banner.jpeg") center/cover no-repeat;
 }
 
-.originals {
+.hub {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 6rem 1.25rem 3rem;
 }
 
-.originals__head {
+.hub__head {
   margin-bottom: 2rem;
 }
 
-.originals__title {
+.hub__title {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 100;
@@ -30,14 +30,14 @@
   line-height: 1;
 }
 
-.originals__split {
+.hub__split {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--hub-cols, 3), 1fr);
   gap: 1.25rem;
   height: min(68vh, 640px);
 }
 
-.originals__panel {
+.hub__panel {
   position: relative;
   display: block;
   overflow: hidden;
@@ -48,8 +48,8 @@
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
-.originals__panel img,
-.originals__panel video {
+.hub__panel img,
+.hub__panel video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -60,14 +60,14 @@
   transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
 }
 
-.originals__panel::after {
+.hub__panel::after {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%);
 }
 
-.originals__panel-body {
+.hub__panel-body {
   position: absolute;
   left: 1.75rem;
   right: 1.75rem;
@@ -78,7 +78,7 @@
   gap: 0.4rem;
 }
 
-.originals__panel-title {
+.hub__panel-title {
   font-family: var(--font-display);
   font-weight: 100;
   font-size: clamp(1.8rem, 3.4vw, 2.8rem);
@@ -88,12 +88,12 @@
   color: #fff;
 }
 
-.originals__panel-blurb {
+.hub__panel-blurb {
   color: var(--text-muted);
   max-width: 36ch;
 }
 
-.originals__panel-cta {
+.hub__panel-cta {
   margin-top: 0.6rem;
   color: var(--accent);
   font-size: 0.8rem;
@@ -105,39 +105,39 @@
   transition: opacity var(--transition), transform var(--transition);
 }
 
-.originals__panel:hover,
-.originals__panel:focus-visible {
+.hub__panel:hover,
+.hub__panel:focus-visible {
   border-color: rgba(61, 255, 2, 0.45);
   box-shadow: var(--shadow-soft), var(--shadow-glow);
 }
 
-.originals__panel:hover img,
-.originals__panel:hover video,
-.originals__panel:focus-visible img,
-.originals__panel:focus-visible video {
+.hub__panel:hover img,
+.hub__panel:hover video,
+.hub__panel:focus-visible img,
+.hub__panel:focus-visible video {
   transform: scale(1.07);
   filter: brightness(0.7) saturate(1);
 }
 
-.originals__panel:hover .originals__panel-cta,
-.originals__panel:focus-visible .originals__panel-cta {
+.hub__panel:hover .hub__panel-cta,
+.hub__panel:focus-visible .hub__panel-cta {
   opacity: 1;
   transform: none;
 }
 
 @media (hover: none) {
-  .originals__panel-cta {
+  .hub__panel-cta {
     opacity: 1;
     transform: none;
   }
 }
 
 @media (max-width: 760px) {
-  .originals__split {
+  .hub__split {
     grid-template-columns: 1fr;
     height: auto;
   }
-  .originals__panel {
+  .hub__panel {
     height: 42vh;
   }
 }

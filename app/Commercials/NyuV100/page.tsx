@@ -21,7 +21,7 @@ const images = [
 export default function NyuV100Page() {
   return (
     <div className="vf-site bape-page">
-      <BackLink href="/Commercials" fixed />
+      <BackLink href="/Commercials/Brands" fixed />
 
       <CampaignVideoHeader src={`${BASE}/v100_trailer_web.mp4`} />
 

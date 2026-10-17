@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function BapePage() {
   return (
     <div className="vf-site bape-page">
-      <BackLink href="/Commercials" fixed />
+      <BackLink href="/Commercials/Brands" fixed />
 
       <BapeVideoHeader />
 

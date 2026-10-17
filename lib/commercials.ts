@@ -4,14 +4,9 @@ export type Campaign = {
   label: string;
   count: number;
   cover: string;
-  /** which tab on /Commercials it sits under */
+  /** which /Commercials page lists it: Brands or Creators */
   category: "commercials" | "creators";
 };
-
-export const CAMPAIGN_TABS = [
-  { id: "commercials", label: "Commercials" },
-  { id: "creators", label: "Creators" },
-] as const;
 
 export const campaigns: Campaign[] = [
   {

@@ -26,7 +26,7 @@ const images = [
 export default function BapeSpecPage() {
   return (
     <div className="vf-site bape-page">
-      <BackLink href="/Commercials" fixed />
+      <BackLink href="/Commercials/Brands" fixed />
 
       <CampaignYouTubeHeader videoId="BN9bn9N3Auk" playerId="yt-bapespec-player" />
 
