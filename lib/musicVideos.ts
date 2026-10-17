@@ -30,7 +30,7 @@ export const musicVideos: MusicVideo[] = [
     title: "Maybe",
     artist: "Jozzy",
     youtubeUrl: "https://www.youtube.com/watch?v=c71jSixjWrk",
-    thumbnail: "/assets/images/music-videos/JozzyPic.png",
+    thumbnail: "/assets/images/music-videos/web/JozzyPic.jpg",
     stills: [],
   },
   {
@@ -38,7 +38,7 @@ export const musicVideos: MusicVideo[] = [
     title: "Green Mountain",
     artist: "Yanov",
     youtubeUrl: "https://www.youtube.com/watch?v=758wutLeECc",
-    thumbnail: "/assets/images/music-videos/YanovGreenMountain.png",
+    thumbnail: "/assets/images/music-videos/web/YanovGreenMountain.jpg",
     stills: [],
   },
   {
@@ -46,7 +46,7 @@ export const musicVideos: MusicVideo[] = [
     title: "What We Lost",
     artist: "Sina",
     youtubeUrl: "https://www.youtube.com/watch?v=FMlAGVdvb1Y",
-    thumbnail: "/assets/images/music-videos/SinaWhatWeLost.png",
+    thumbnail: "/assets/images/music-videos/web/SinaWhatWeLost.jpg",
     stills: [],
   },
   {
@@ -54,7 +54,25 @@ export const musicVideos: MusicVideo[] = [
     title: "Overthinking",
     artist: "Beno",
     youtubeUrl: "https://www.youtube.com/watch?v=vF1sCTnGtxI",
-    thumbnail: "/assets/images/music-videos/BenoOverThinking.jpg",
+    thumbnail: "/assets/images/music-videos/web/BenoOverThinking.jpg",
+    stills: [],
+  },
+  // ── New videos: fill in title/artist/youtubeUrl, then drop the thumbnail
+  //    image at the path below (public/assets/images/music-videos/) ──
+  {
+    slug: "Chinese Kitty - Pop Shit (Official Video)",
+    title: "Pop Shit (Official Video)",
+    artist: "Chinese Kitty ",
+    youtubeUrl: "https://www.youtube.com/watch?v=XMDhAA2lZHE", // add YouTube link
+    thumbnail: "/assets/images/music-videos/NewVideo1.jpg", // add image
+    stills: [],
+  },
+  {
+    slug: "new-video-2",
+    title: "Coming Soon",
+    artist: "New Video",
+    youtubeUrl: "https://www.youtube.com/watch?v=pKYv2QjkXco", // add YouTube link
+    thumbnail: "/assets/images/music-videos/NewVideo2.jpg", // add image
     stills: [],
   },
 ];

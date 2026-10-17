@@ -30,7 +30,7 @@ export default function AboutPage() {
       <div className="about-grid">
         <figure className="about-photo">
           <img
-            src="/assets/images/about/IMG_8238 2.JPG"
+            src="/assets/images/about/web/IMG_8238 2.jpg"
             alt="Founder at work, framing a shot on set"
           />
         </figure>
@@ -40,12 +40,23 @@ export default function AboutPage() {
             <strong>Vision Frog</strong> — the way to craft your vision.
           </p>
           <p>
-            I&apos;m a senior undergraduate at NYU Tisch School of the Arts studying Film &amp; TV.
-            With a multicultural background — born and raised in Spain and Germany, and now living in
-            the U.S. — I&apos;ve always been drawn to storytelling, beginning with my first experiments
-            in stop-motion animation with LEGO. My passion lies in crafting inspiring narratives that
-            resonate across cultures and in collaborating with others to bring visionary projects to
-            life.
+            I&apos;m an NYU Tisch Film &amp; TV alum based in the U.S., with roots in Spain and
+            Germany. Alongside a team of filmmakers, visionaries, producers, and storytellers, we
+            direct and produce narrative, music, and commercial work for brands and artists shaping
+            modern culture.
+          </p>
+          <p>
+            What started with early stop-motion LEGO animation has grown into a full-service creative
+            studio that handles campaign, narrative, and branded content end to end. From initial
+            concept and multi-location shoots to cross-platform campaign strategy, we&apos;ve
+            delivered work for major labels and global lifestyle powerhouses—including Reebok, Taco
+            Bell, Anna Sui, Wilson, Bape, Def Jam, 300 Entertainment, Empire Records, Fiat, Brevité,
+            RBC Records, and Kitty Gang Music.
+          </p>
+          <p>
+            We bring visionary ideas to life through seamless collaboration, high-production
+            execution, and culturally resonant storytelling. We don&apos;t just chase temporary
+            virality. We build work engineered to trend today and stay in the conversation forever.
           </p>
           <p className="about-quote">&ldquo;Take Small Steps&rdquo;</p>
         </section>

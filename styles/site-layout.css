@@ -134,8 +134,49 @@
 
 .vf-nav__links {
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
   align-items: center;
+}
+
+.vf-nav__links a.vf-nav__link--active {
+  color: var(--accent);
+}
+
+.vf-nav__divider {
+  width: 1px;
+  height: 1.4em;
+  background: var(--border-strong);
+}
+
+.vf-nav__links a {
+  white-space: nowrap;
+}
+
+/* Five bracketed links + divider need room — tighten between tablet and wide desktop */
+@media (min-width: 769px) and (max-width: 1280px) {
+  .vf-nav {
+    font-size: 0.95rem;
+    padding-left: 6rem;
+    padding-right: 8rem;
+  }
+  .vf-nav__links {
+    gap: 1.1rem;
+  }
+  /* logo already links home */
+  .vf-nav__home {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 920px) {
+  .vf-nav {
+    font-size: 0.82rem;
+    padding-left: 5.5rem;
+    padding-right: 7.5rem;
+  }
+  .vf-nav__links {
+    gap: 0.75rem;
+  }
 }
 
 .vf-nav__links a {
@@ -286,6 +327,11 @@
   }
   .vf-nav--open .vf-nav__links {
     display: flex;
+  }
+  .vf-nav__divider {
+    width: 40%;
+    height: 1px;
+    margin: 0.5rem 0;
   }
   .vf-nav__links > a {
     font-size: 1.35rem;

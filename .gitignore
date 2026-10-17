@@ -17,3 +17,6 @@ next-env.d.ts
 
 # compressed web video used by /Commercials/NyuV100 — keep despite *.mp4 rule
 !assets/images/Commercial/NYU?V100?TRAILER/v100_trailer_web.mp4
+
+# web-sized loops made by scripts/optimize-media.mjs (GIF -> mp4)
+!assets/images/**/web/*.mp4

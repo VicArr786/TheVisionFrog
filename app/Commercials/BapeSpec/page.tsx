@@ -33,7 +33,7 @@ export default function BapeSpecPage() {
       <main className="bape-body">
         <header className="bape-header">
           <span className="bape-header__eyebrow">Commercial</span>
-          <h1 className="bape-header__title">BAPE × Def Jam — Spec</h1>
+          <h1 className="bape-header__title">BAPE x Def Jam - Spec</h1>
           <p className="bape-header__sub">Spec commercial for BAPE × Def Jam.</p>
         </header>
 

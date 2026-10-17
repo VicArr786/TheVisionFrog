@@ -78,7 +78,7 @@ export default function NarrativeSlider() {
   }, [next]);
 
   return (
-    <>
+    <div className="narrative-root">
       <BackLink href="/" fixed />
       <div className="slider" id="slider">
         <div className="track" id="track" ref={trackRef}>
@@ -99,7 +99,7 @@ export default function NarrativeSlider() {
                 </p>
                 <div className="stills">
                   <img src="/assets/images/narrative/2mfs.jpeg" alt="Hooper still 1" />
-                  <img src="/assets/images/narrative/OliverLost.jpeg" alt="Hooper still 2" />
+                  <img src="/assets/images/narrative/web/OliverLost.jpg" alt="Hooper still 2" />
                   <img src="/assets/images/narrative/Shooting.jpeg" alt="Hooper still 3" />
                 </div>
                 <a
@@ -128,9 +128,9 @@ export default function NarrativeSlider() {
                 </p>
                 {/* Drop the image files at these paths in public/assets/images/narrative/ */}
                 <div className="stills">
-                  <img src="assets/images/narrative/452d1d7a-7a46-43f1-898f-e92b14b24628_rw_3840.jpg" alt="Hoopers Asylum still 1" />
-                  <img src="assets/images/narrative/d18ba5c9-db9c-4fb2-83b6-b8f92bf449b7_rw_3840.jpg" alt="Hoopers Asylum still 2" />
-                  <img src="assets/images/narrative/f387c407-6616-4405-8930-f15ce3aeb4f8_rw_3840.jpg" alt="Hoopers Asylum still 3" />
+                  <img src="/assets/images/narrative/web/452d1d7a-7a46-43f1-898f-e92b14b24628_rw_3840.jpg" alt="Hoopers Asylum still 1" />
+                  <img src="/assets/images/narrative/web/d18ba5c9-db9c-4fb2-83b6-b8f92bf449b7_rw_3840.jpg" alt="Hoopers Asylum still 2" />
+                  <img src="/assets/images/narrative/web/f387c407-6616-4405-8930-f15ce3aeb4f8_rw_3840.jpg" alt="Hoopers Asylum still 3" />
                 </div>
                 <a
                   className="btn"
@@ -169,6 +169,6 @@ export default function NarrativeSlider() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

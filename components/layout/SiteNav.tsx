@@ -1,15 +1,38 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { MAIN_NAV, SOCIAL } from "@/lib/site";
+import { INFO_NAV, SOCIAL, WORK_NAV, type NavLink } from "@/lib/site";
 
 type SiteNavProps = {
   /** Show Home link (Contact, Merch) */
   showHome?: boolean;
 };
 
+function isActive(item: NavLink, pathname: string) {
+  return [item.href, ...(item.match ?? [])].some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`)
+  );
+}
+
 export default function SiteNav({ showHome = false }: SiteNavProps) {
+  const pathname = usePathname() ?? "/";
+
+  const renderLink = (item: NavLink) => {
+    const active = isActive(item, pathname);
+    return (
+      <Link
+        key={item.href}
+        href={item.href}
+        className={active ? "vf-nav__link--active" : undefined}
+        aria-current={active ? "page" : undefined}
+      >
+        <span className="vf-nav__label">{item.label}</span>
+      </Link>
+    );
+  };
+
   useEffect(() => {
     const nav = document.getElementById("vf-navbar");
     const spacer = document.getElementById("vf-nav-spacer");
@@ -58,7 +81,7 @@ export default function SiteNav({ showHome = false }: SiteNavProps) {
       lastScroll = y;
     };
 
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       btn.removeEventListener("click", onMenuClick);
       window.removeEventListener("scroll", onScroll);
@@ -83,18 +106,14 @@ export default function SiteNav({ showHome = false }: SiteNavProps) {
           <span />
         </button>
         <div className="vf-nav__links">
-          {showHome ? <Link href="/">Home</Link> : null}
-          {MAIN_NAV.map((item) =>
-            item.anchor ? (
-              <a key={item.href} href={item.href}>
-                {item.label}
-              </a>
-            ) : (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            )
-          )}
+          {showHome ? (
+            <Link href="/" className="vf-nav__home">
+              <span className="vf-nav__label">Home</span>
+            </Link>
+          ) : null}
+          {WORK_NAV.map(renderLink)}
+          <span className="vf-nav__divider" aria-hidden="true" />
+          {INFO_NAV.map(renderLink)}
           <div className="vf-nav__mobile-social">
             <a
               className="vf-icon vf-icon--ig"

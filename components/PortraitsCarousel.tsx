@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 const NEW = "/assets/images/PORTRAITS/web";
 
 const slides = [
-  { src: "/assets/images/portraits/Shakira FINALS - 4.jpg", caption: "Shakira — Global Citizen 2025" },
-  { src: "/assets/images/portraits/Shakira FINALS - 2.jpg", caption: "Shakira — Global Citizen 2025" },
-  { src: "/assets/images/portraits/949d8a7f-9ebf-4336-a511-b7efa1baa68a_rw_1920.jpg", caption: "Doja Cat — Global Citizen 2024" },
-  { src: "/assets/images/portraits/764fbadb-3c26-4cac-a36c-f3e0b7cc8bb1_rw_3840.JPG", caption: "Kanii — SOB's" },
-  { src: "/assets/images/portraits/c335f4d0-540b-4147-88d2-5b34568e0b3e_rw_1920-2.jpg", caption: "Jozzy — In the moment" },
-  { src: "/assets/images/portraits/Fredro 5.JPG", caption: "Fredro Starr × BAPE" },
+  { src: "/assets/images/portraits/web/Shakira FINALS - 4.jpg", caption: "Shakira — Global Citizen 2025" },
+  { src: "/assets/images/portraits/web/Shakira FINALS - 2.jpg", caption: "Shakira — Global Citizen 2025" },
+  { src: "/assets/images/portraits/web/949d8a7f-9ebf-4336-a511-b7efa1baa68a_rw_1920.jpg", caption: "Doja Cat — Global Citizen 2024" },
+  { src: "/assets/images/portraits/web/764fbadb-3c26-4cac-a36c-f3e0b7cc8bb1_rw_3840.jpg", caption: "Kanii — SOB's" },
+  { src: "/assets/images/portraits/web/c335f4d0-540b-4147-88d2-5b34568e0b3e_rw_1920-2.jpg", caption: "Jozzy — In the moment" },
+  { src: "/assets/images/portraits/web/Fredro 5.jpg", caption: "Fredro Starr × BAPE" },
   { src: `${NEW}/1 pic yachty 2.jpg`, caption: "Lil Yachty" },
   { src: `${NEW}/50 Cent Edit 4.jpg`, caption: "50 Cent" },
   { src: `${NEW}/meek mill 7.jpg`, caption: "Meek Mill" },
@@ -33,6 +33,9 @@ const slides = [
   { src: `${NEW}/BE5208AC-C49D-4155-8CE3-813C216AFC1F.jpg`, caption: "Portrait" },
   { src: `${NEW}/IMG_8491.jpg`, caption: "Portrait" },
 ];
+
+// grid tiles load the 800px thumb/ copy; the lightbox loads the full web/ copy
+const thumbOf = (src: string) => src.replace("/web/", "/thumb/");
 
 export default function PortraitsCarousel() {
   const [lightbox, setLightbox] = useState<{ src: string; caption: string } | null>(null);
@@ -65,7 +68,7 @@ export default function PortraitsCarousel() {
             onClick={() => openLightbox(slide.src, slide.caption)}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={slide.src} alt={slide.caption} loading="lazy" />
+            <img src={thumbOf(slide.src)} alt={slide.caption} loading="lazy" decoding="async" />
             <span className="portraits-caption">{slide.caption}</span>
           </li>
         ))}

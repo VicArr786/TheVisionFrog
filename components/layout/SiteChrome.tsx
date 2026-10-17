@@ -6,7 +6,7 @@ export default function SiteChrome() {
     <div className="vf-chrome" aria-hidden={false}>
       <div className="vf-chrome__logo">
         <Link href="/">
-          <img src="/assets/images/logos/VF_Icon_3.png" alt="Vision Frog Logo" />
+          <img src="/assets/images/logos/web/VF_Icon_3.png" alt="Vision Frog Logo" />
         </Link>
       </div>
       <div className="vf-chrome__social">

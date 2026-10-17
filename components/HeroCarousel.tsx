@@ -7,8 +7,8 @@ export type HeroCard = {
   label: string;
   href: string;
   img: string;
-  /** Optional animated loop shown when the card is front & center */
-  gif?: string;
+  /** Optional muted mp4 loop shown when the card is front & center */
+  loop?: string;
 };
 
 const AUTO_ADVANCE_MS = 5000;
@@ -170,8 +170,8 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
               onClick={(e) => onCardClick(e, off)}
             >
               <img className="hero-card__img" src={card.img} alt={card.label} draggable={false} />
-              {card.gif && Math.abs(off) < 0.6 && (
-                <img className="hero-card__gif" src={card.gif} alt="" draggable={false} />
+              {card.loop && Math.abs(off) < 0.6 && (
+                <video className="hero-card__gif" src={card.loop} autoPlay muted loop playsInline aria-hidden="true" />
               )}
               <span className="hero-card__label">{card.label}</span>
             </Link>

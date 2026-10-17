@@ -59,7 +59,7 @@ export default function NavbarScroll({
       lastScroll = currentScroll;
     };
 
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       btn.removeEventListener("click", onMenuClick);
       window.removeEventListener("scroll", onScroll);

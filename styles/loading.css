@@ -1,0 +1,56 @@
+.vf-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--bg) url("/assets/images/banners/Banner.jpeg") center/cover no-repeat;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: clamp(3rem, 10vh, 6rem);
+  opacity: 1;
+  transition: opacity 0.7s ease;
+}
+
+/* dark wash so the text stays readable, matching the home banner overlay */
+.vf-loading::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(3, 3, 3, 0.35),
+    rgba(3, 3, 3, 0.55) 70%,
+    rgba(3, 3, 3, 0.8)
+  );
+}
+
+.vf-loading--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vf-loading__text {
+  position: relative;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text);
+  animation: vf-loading-pulse 1.4s ease-in-out infinite;
+}
+
+.vf-loading__text::after {
+  content: "…";
+}
+
+@keyframes vf-loading-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}

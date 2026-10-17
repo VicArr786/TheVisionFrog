@@ -14,26 +14,26 @@ const HERO_CARDS: HeroCard[] = [
   {
     label: "Music Videos",
     href: "/MusicVideos",
-    img: "/assets/images/music-videos/JozzyPic.png",
-    gif: "/assets/images/gifs/FinalGifs/VIsionFrog-min-2.gif",
+    img: "/assets/images/music-videos/web/JozzyPic.jpg",
+    loop: "/assets/images/gifs/FinalGifs/web/VIsionFrog-min-2.mp4",
   },
   {
     label: "Commercials",
     href: "/Commercials",
     img: "/assets/images/commercials/WhatsApp Image 2025-09-23 at 14.08.49.jpeg",
-    gif: "/assets/images/gifs/FinalGifs/Gif_Commercial-min.gif",
+    loop: "/assets/images/gifs/FinalGifs/web/Gif_Commercial-min.mp4",
   },
   {
     label: "Narrative",
     href: "/Narrative",
     img: "/assets/images/narrative/IMG_3525.jpg",
-    gif: "/assets/images/gifs/FinalGifs/Gif_.gif",
+    loop: "/assets/images/gifs/FinalGifs/web/Gif_.mp4",
   },
   {
     label: "Portraits",
     href: "/Portraits",
-    img: "/assets/images/portraits/Shakira FINALS - 4.jpg",
-    gif: "/assets/images/gifs/FinalGifs/Gif_Portraits_1-min.gif",
+    img: "/assets/images/portraits/web/Shakira FINALS - 4.jpg",
+    loop: "/assets/images/gifs/FinalGifs/web/Gif_Portraits_1-min.mp4",
   },
 ];
 
@@ -48,8 +48,8 @@ export default function HomePage() {
 
         <div className="home-hero__text">
           <p className="home-hero__eyebrow">The Vision Frog</p>
-          <h1 className="home-hero__title">A Full Service Film &amp; Production Company</h1>
-          <p className="home-hero__tagline">Music Videos · Narrative · Commercials · Portraits</p>
+          <h1 className="home-hero__title">A Full Service Film and Production Company</h1>
+          <p className="home-hero__tagline">Branded &amp; Music · VF Originals · Stills</p>
           <Link href="/About" className="home-hero__cta">
             About Us
           </Link>

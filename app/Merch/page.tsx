@@ -19,7 +19,7 @@ const products = [
     name: "VF Hat",
     price: "$35",
     desc: "Embroidered frog logo.",
-    image: "/assets/images/merch/Visión hay.jpg",
+    image: "/assets/images/merch/web/Visión hay.jpg",
     tags: ["Adjustable", "Color: White/Black"],
   },
 ];

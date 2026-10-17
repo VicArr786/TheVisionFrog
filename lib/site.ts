@@ -13,12 +13,19 @@ export const SOCIAL = {
 export type NavLink = {
   href: string;
   label: string;
-  /** In-page anchor on home */
-  anchor?: boolean;
+  /** Legacy routes that belong to this section (for active state) */
+  match?: string[];
 };
 
-export const MAIN_NAV: NavLink[] = [
-  { href: "/#work", label: "Projects", anchor: true },
+/** Work sections — rendered left of the divider */
+export const WORK_NAV: NavLink[] = [
+  { href: "/Work", label: "Branded & Music", match: ["/Commercials", "/MusicVideos"] },
+  { href: "/Originals", label: "VF Originals", match: ["/Narrative"] },
+  { href: "/Stills", label: "Stills", match: ["/Portraits"] },
+];
+
+/** Studio sections — rendered right of the divider */
+export const INFO_NAV: NavLink[] = [
   { href: "/About", label: "About" },
   { href: "/Contact", label: "Contact" },
 ];
