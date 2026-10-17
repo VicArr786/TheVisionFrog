@@ -18,9 +18,15 @@ const SECTIONS: { href: string; title: string; blurb: string; img: string; loop?
   {
     href: "/Visions",
     title: "Visions",
-    blurb: "Experimental and visual pieces.",
+    blurb: "Capturing and documenting the next visionaries.",
     img: "/assets/images/narrative/IMG_3525.jpg",
     loop: "/assets/images/gifs/FinalGifs/web/VIsionFrog-min-2.mp4",
+  },
+  {
+    href: "/Portraits",
+    title: "Portraits",
+    blurb: "Artist press shots, editorial portraiture, and live moments.",
+    img: "/assets/images/portraits/web/Shakira FINALS - 4.jpg",
   },
 ];
 

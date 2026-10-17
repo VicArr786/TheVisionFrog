@@ -11,9 +11,9 @@ export default function PortraitsPage() {
   return (
     <PageLayout
       className="portraits-page"
-      backHref="/"
+      backHref="/Originals"
       header={{
-        eyebrow: "Portfolio",
+        eyebrow: "VF Originals",
         title: "Portraits",
         subtitle: "Artist press shots, editorial portraiture, and live moments.",
       }}

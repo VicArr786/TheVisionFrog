@@ -15,7 +15,7 @@ export default function VisionsPage() {
       header={{
         eyebrow: "VF Originals",
         title: "Visions",
-        subtitle: "Experimental and visual pieces from The Vision Frog.",
+        subtitle: "Capturing and documenting the next visionaries.",
       }}
     >
       {visions.length === 0 ? (

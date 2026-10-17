@@ -49,7 +49,7 @@ export default function HomePage() {
         <div className="home-hero__text">
           <p className="home-hero__eyebrow">The Vision Frog</p>
           <h1 className="home-hero__title">A Full Service Film and Production Company</h1>
-          <p className="home-hero__tagline">Commercials · Music Videos · Verticals · VF Originals · Portraits</p>
+          <p className="home-hero__tagline">Music Videos · Commercials · Verticals · VF Originals</p>
           <Link href="/About" className="home-hero__cta">
             About Us
           </Link>
