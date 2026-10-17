@@ -33,7 +33,7 @@ export const campaigns: Campaign[] = [
   {
     slug: "AmVibes",
     label: "AM Vibes - “Gems” EP Trailer",
-    count: 5,
+    count: 4,
     cover: "/assets/images/Commercial/AM VIBES - EP TRAILER GEMS ON YOUTUBE/web/Still 2026-05-12 002348_3.1.1.jpg",
     category: "creators",
   },

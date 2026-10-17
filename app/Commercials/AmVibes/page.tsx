@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 const BASE = "/assets/images/Commercial/AM VIBES - EP TRAILER GEMS ON YOUTUBE";
 
 const images = [
-  { src: `${BASE}/web/Still 2026-05-12 002348_1.10.2.jpg`, alt: "AM Vibes — Gems EP Trailer" },
   { src: `${BASE}/web/Still 2026-05-12 002348_1.10.3.jpg`, alt: "AM Vibes — Gems EP Trailer" },
   { src: `${BASE}/web/Still 2026-05-12 002348_2.4.1.jpg`, alt: "AM Vibes — Gems EP Trailer" },
   { src: `${BASE}/web/Still 2026-05-12 002348_3.1.1.jpg`, alt: "AM Vibes — Gems EP Trailer" },
