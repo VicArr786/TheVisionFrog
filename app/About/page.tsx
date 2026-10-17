@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageLayout from "@/components/layout/PageLayout";
+import BrandCarousel, { type Brand } from "@/components/BrandCarousel";
 import { SITE } from "@/lib/site";
 import "@/styles/about.css";
 
@@ -7,7 +8,8 @@ export const metadata: Metadata = {
   title: "About — The Vision Frog Productions",
 };
 
-const brands = [
+// 6 per page (3 x 2) — anything past 6 lands on a new swipeable page
+const brands: Brand[] = [
   { src: "/assets/images/about/DefJam.png", alt: "Def Jam" },
   { src: "/assets/images/about/KittyGang.png", alt: "Kitty Gang Music" },
   { src: "/assets/images/about/Wilson.png", alt: "Wilson" },
@@ -64,13 +66,7 @@ export default function AboutPage() {
 
       <section className="about-brands">
         <h2>Selected Brands</h2>
-        <div className="about-brand-grid">
-          {brands.map((brand) => (
-            <div key={brand.src} className="about-brand-item">
-              <img loading="lazy" src={brand.src} alt={brand.alt} />
-            </div>
-          ))}
-        </div>
+        <BrandCarousel brands={brands} />
       </section>
     </PageLayout>
   );

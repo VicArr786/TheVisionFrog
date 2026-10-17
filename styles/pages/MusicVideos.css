@@ -21,6 +21,123 @@
   position: relative;
   width: calc(var(--s) * 1.6);
   height: var(--s);
+  perspective: 1600px;
+  cursor: grab;
+  touch-action: pan-y; /* horizontal drags flip, vertical still scrolls the page */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.vinyl__stage--dragging {
+  cursor: grabbing;
+}
+
+/* drag-to-flip card: front = sleeve + record, back = credits */
+.vinyl__card {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.vinyl__stage--dragging .vinyl__card {
+  transition: none;
+}
+
+.vinyl__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.vinyl__face--back {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  overflow-y: auto;
+  border: 1px solid var(--border-strong);
+  background:
+    repeating-radial-gradient(circle at 100% 50%, transparent 0 2px, rgba(255, 255, 255, 0.025) 2.5px 3px),
+    #0b0b0b;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.vinyl__back-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.vinyl__back-artist {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 100;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+
+.vinyl__back-title {
+  margin: 0.2rem 0 1.25rem;
+  color: var(--text-muted);
+}
+
+.vinyl__credits {
+  margin: 0;
+}
+
+.vinyl__credit {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border-strong);
+}
+
+.vinyl__credit dt {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.vinyl__credit dd {
+  margin: 0 0 0 auto;
+  text-align: right;
+}
+
+.vinyl__credits-empty {
+  margin: auto 0;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.vinyl__hint {
+  margin: 1rem 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.vinyl__flip {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-soft);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.vinyl__flip:hover {
+  color: var(--accent);
 }
 
 .vinyl__sleeve {

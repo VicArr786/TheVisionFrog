@@ -89,6 +89,62 @@
   margin: 0 auto;
 }
 
+/* swipeable 3x2 pages */
+.about-page .brand-carousel {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-page .brand-carousel__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.about-page .brand-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* snapping fights the mouse drag — turn it off until release */
+.about-page .brand-carousel__track--dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.about-page .brand-carousel__page {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  padding: 6px 2px;
+  box-sizing: border-box;
+}
+
+.about-page .brand-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1.25rem;
+}
+
+.about-page .brand-carousel__dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: #444;
+  cursor: pointer;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.about-page .brand-carousel__dot--active {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
 .about-page .about-brand-item {
   background: #fff;
   border: 1px solid #e6e6e6;
@@ -118,6 +174,10 @@
     gap: 2rem;
   }
   .about-page .about-brand-grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  .about-page .about-brand-item {
+    height: 80px;
+    padding: 0.6rem;
   }
 }

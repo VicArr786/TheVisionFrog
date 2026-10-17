@@ -92,6 +92,31 @@ a {
   z-index: 1000;
 }
 
+/* VF monogram pinned top right on inner pages (rendered by BackLink) */
+.vf-corner-logo {
+  position: fixed;
+  top: 1rem;
+  right: 1.25rem;
+  z-index: 1000;
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.vf-corner-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.vf-corner-logo:hover {
+  transform: scale(1.08) rotate(-6deg);
+  box-shadow: 0 0 0 2px var(--accent), 0 0 18px var(--accent-glow);
+}
+
 .page-shell {
   max-width: var(--max-width);
   margin: 0 auto;

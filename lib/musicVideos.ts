@@ -1,3 +1,5 @@
+export type Credit = { role: string; name: string };
+
 export type MusicVideo = {
   slug: string;
   title: string;
@@ -6,6 +8,8 @@ export type MusicVideo = {
   thumbnail: string;
   /** BTS / stills — add paths when images are ready */
   stills: string[];
+  /** shown on the back of the record — drag the vinyl to flip it */
+  credits?: Credit[];
 };
 
 export const musicVideos: MusicVideo[] = [

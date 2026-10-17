@@ -18,8 +18,17 @@ export default function BackLink({
     .join(" ");
 
   return (
-    <Link href={href} className={classes}>
-      {label}
-    </Link>
+    <>
+      <Link href={href} className={classes}>
+        {label}
+      </Link>
+      {/* every inner page pins a fixed back button — pair it with the monogram, top right */}
+      {fixed ? (
+        <Link href="/" className="vf-corner-logo" aria-label="The Vision Frog — home">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/assets/images/logos/web/Vision_Frog_Monogram_Logo-02.png" alt="" />
+        </Link>
+      ) : null}
+    </>
   );
 }
