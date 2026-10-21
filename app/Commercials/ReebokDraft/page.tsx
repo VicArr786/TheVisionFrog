@@ -12,6 +12,11 @@ export const metadata: Metadata = {
 const BASE = "/assets/images/Commercial/REEBOK X NBA DRAFT 26";
 
 const images = [
+  { src: `${BASE}/web/WhatsApp Image 2026-10-21 at 21.09.50(2).jpg`, alt: "Darius Acuff Jr. - Reebok x NBA Draft '26" },
+  { src: `${BASE}/web/WhatsApp Image 2026-10-21 at 21.09.50.jpg`, alt: "Darius Acuff Jr. - Reebok x NBA Draft '26" },
+  { src: `${BASE}/web/WhatsApp Image 2026-10-21 at 21.09.50(1).jpg`, alt: "Darius Acuff Jr. - Reebok x NBA Draft '26" },
+  { src: `${BASE}/web/WhatsApp Image 2026-10-21 at 21.09.50(3).jpg`, alt: "Darius Acuff Jr. - Reebok x NBA Draft '26" },
+  { src: `${BASE}/web/WhatsApp Image 2026-10-21 at 21.09.51.jpg`, alt: "Darius Acuff Jr. - Reebok x NBA Draft '26" },
   { src: `${BASE}/web/still_4.jpg`, alt: "Reebok x NBA Draft '26" },
   { src: `${BASE}/web/still_14.jpg`, alt: "Reebok x NBA Draft '26" },
   { src: `${BASE}/web/still_26.jpg`, alt: "Reebok x NBA Draft '26" },

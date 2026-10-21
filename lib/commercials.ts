@@ -34,8 +34,8 @@ export const campaigns: Campaign[] = [
   {
     slug: "ReebokDraft",
     label: "Reebok x NBA Draft '26",
-    count: 4,
-    cover: "/assets/images/Commercial/REEBOK X NBA DRAFT 26/web/still_4.jpg",
+    count: 9,
+    cover: "/assets/images/Commercial/REEBOK X NBA DRAFT 26/web/WhatsApp Image 2026-10-21 at 21.09.50(2).jpg",
     category: "commercials",
   },
   {
@@ -56,6 +56,13 @@ export const campaigns: Campaign[] = [
     slug: "HyperoptimizedEngineer",
     label: "Hyperoptimized Engineer 2026",
     cover: "/assets/images/Commercial/HYPEROPTIMIZED ENGINEER 2026/web/cover.jpg",
+    category: "creators",
+  },
+  {
+    slug: "ClassInSession",
+    label: "Bunch of Friends - Class in Session",
+    count: 4,
+    cover: "/assets/images/Commercial/Bunch Of friends call in session/web/WhatsApp Image 2026-10-21 at 21.09.24(2).jpg",
     category: "creators",
   },
 ];
