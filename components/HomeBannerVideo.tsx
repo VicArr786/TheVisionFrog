@@ -17,12 +17,7 @@ declare global {
         options: {
           videoId: string;
           playerVars?: Record<string, number | string>;
-          events?: {
-            onReady?: (e: { target: YTPlayer }) => void;
-            /** e.data === 1 once the video is actually playing */
-            onStateChange?: (e: { data: number }) => void;
-            onError?: () => void;
-          };
+          events?: { onReady?: (e: { target: YTPlayer }) => void };
         }
       ) => YTPlayer;
     };

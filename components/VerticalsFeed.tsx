@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import PageLoader from "@/components/PageLoader";
 import { SOCIAL } from "@/lib/site";
 import { igReelId, verticals } from "@/lib/verticals";
 
@@ -14,12 +13,6 @@ export default function VerticalsFeed() {
   const [current, setCurrent] = useState(0);
   const [muted, setMuted] = useState(true);
   const [paused, setPaused] = useState(false);
-  const [firstReady, setFirstReady] = useState(!verticals[0]?.src);
-
-  // the first reel may finish loading before hydration attaches onLoadedData
-  useEffect(() => {
-    if ((videoRefs.current[0]?.readyState ?? 0) >= 2) setFirstReady(true);
-  }, []);
 
   useEffect(() => {
     const feed = feedRef.current;
@@ -82,7 +75,6 @@ export default function VerticalsFeed() {
 
   return (
     <div className="verticals-feed" ref={feedRef}>
-      <PageLoader ready={firstReady} />
       {verticals.map((reel, i) => (
         <section key={reel.slug} className="reel" data-idx={i} aria-label={`${reel.client} — ${reel.title}`}>
           <div className="reel__frame">
@@ -98,7 +90,6 @@ export default function VerticalsFeed() {
                 loop
                 playsInline
                 preload={i < 2 ? "auto" : "metadata"}
-                onLoadedData={i === 0 ? () => setFirstReady(true) : undefined}
                 onClick={() => togglePlay(i)}
               />
             ) : (
