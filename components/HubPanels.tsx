@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SLOW_RATE, setLoopSpeed } from "@/lib/loopSpeed";
 import BackLink from "@/components/BackLink";
 import SiteFooter from "@/components/SiteFooter";
 import "@/styles/pages/Hub.css";
@@ -32,8 +33,8 @@ export default function HubPanels({ title, sections, className = "" }: HubPanels
               key={s.href}
               href={s.href}
               className="hub__panel"
-              onMouseEnter={(e) => e.currentTarget.querySelector("video")?.pause()}
-              onMouseLeave={(e) => e.currentTarget.querySelector("video")?.play().catch(() => {})}
+              onMouseEnter={(e) => setLoopSpeed(e.currentTarget, SLOW_RATE)}
+              onMouseLeave={(e) => setLoopSpeed(e.currentTarget, 1)}
             >
               {s.loop ? (
                 <video src={s.loop} poster={s.img} autoPlay muted loop playsInline />

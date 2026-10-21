@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { SLOW_RATE, setLoopSpeed } from "@/lib/loopSpeed";
 
 export type HeroCard = {
   label: string;
@@ -168,8 +169,8 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
               tabIndex={front ? 0 : -1}
               aria-hidden={hidden}
               onClick={(e) => onCardClick(e, off)}
-              onMouseEnter={(e) => e.currentTarget.querySelector("video")?.pause()}
-              onMouseLeave={(e) => e.currentTarget.querySelector("video")?.play().catch(() => {})}
+              onMouseEnter={(e) => setLoopSpeed(e.currentTarget, SLOW_RATE)}
+              onMouseLeave={(e) => setLoopSpeed(e.currentTarget, 1)}
             >
               <img className="hero-card__img" src={card.img} alt={card.label} draggable={false} />
               {card.loop && Math.abs(off) < 0.6 && (
