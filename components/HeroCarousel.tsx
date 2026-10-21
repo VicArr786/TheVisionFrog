@@ -168,6 +168,8 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
               tabIndex={front ? 0 : -1}
               aria-hidden={hidden}
               onClick={(e) => onCardClick(e, off)}
+              onMouseEnter={(e) => e.currentTarget.querySelector("video")?.pause()}
+              onMouseLeave={(e) => e.currentTarget.querySelector("video")?.play().catch(() => {})}
             >
               <img className="hero-card__img" src={card.img} alt={card.label} draggable={false} />
               {card.loop && Math.abs(off) < 0.6 && (

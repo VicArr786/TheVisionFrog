@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import BackLink from "@/components/BackLink";
 import SiteFooter from "@/components/SiteFooter";
@@ -26,7 +28,13 @@ export default function HubPanels({ title, sections, className = "" }: HubPanels
 
         <div className="hub__split" style={{ "--hub-cols": sections.length } as React.CSSProperties}>
           {sections.map((s) => (
-            <Link key={s.href} href={s.href} className="hub__panel">
+            <Link
+              key={s.href}
+              href={s.href}
+              className="hub__panel"
+              onMouseEnter={(e) => e.currentTarget.querySelector("video")?.pause()}
+              onMouseLeave={(e) => e.currentTarget.querySelector("video")?.play().catch(() => {})}
+            >
               {s.loop ? (
                 <video src={s.loop} poster={s.img} autoPlay muted loop playsInline />
               ) : (
