@@ -81,68 +81,46 @@
   margin: 0 0 1.75rem;
 }
 
-.about-page .about-brand-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-/* swipeable 3x2 pages */
+/* endless two-row strip (components/BrandCarousel.tsx) — tiles are sized so a
+   slice of the next column always peeks in from the right */
 .about-page .brand-carousel {
-  max-width: 900px;
+  --brand-col: clamp(150px, calc((min(100vw, 1100px) - 4rem) / 3.4), 300px);
+  max-width: 1100px;
   margin: 0 auto;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
 }
 
 .about-page .brand-carousel__track {
   display: flex;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   cursor: grab;
+  padding: 6px 0;
 }
 
 .about-page .brand-carousel__track::-webkit-scrollbar {
   display: none;
 }
 
-/* snapping fights the mouse drag — turn it off until release */
 .about-page .brand-carousel__track--dragging {
-  scroll-snap-type: none;
   cursor: grabbing;
   user-select: none;
 }
 
-.about-page .brand-carousel__page {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
-  padding: 6px 2px;
-  box-sizing: border-box;
-}
-
-.about-page .brand-carousel__dots {
+.about-page .brand-carousel__set {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 1.25rem;
+  flex: none;
 }
 
-.about-page .brand-carousel__dot {
-  width: 9px;
-  height: 9px;
-  padding: 0;
-  border-radius: 50%;
-  border: 1px solid var(--border-strong);
-  background: #444;
-  cursor: pointer;
-  transition: background var(--transition), box-shadow var(--transition);
-}
-
-.about-page .brand-carousel__dot--active {
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent-glow);
+.about-page .brand-carousel__col {
+  display: grid;
+  grid-template-rows: repeat(2, 110px);
+  gap: 1.25rem;
+  width: var(--brand-col);
+  margin-right: 1.25rem;
+  flex: none;
 }
 
 .about-page .about-brand-item {
@@ -173,8 +151,13 @@
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  .about-page .about-brand-grid {
+  .about-page .brand-carousel {
+    --brand-col: calc((100vw - 2.5rem) / 2.4);
+  }
+  .about-page .brand-carousel__col {
+    grid-template-rows: repeat(2, 80px);
     gap: 0.6rem;
+    margin-right: 0.6rem;
   }
   .about-page .about-brand-item {
     height: 80px;

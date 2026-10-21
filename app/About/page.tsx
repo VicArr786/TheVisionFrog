@@ -1,22 +1,13 @@
 import type { Metadata } from "next";
 import PageLayout from "@/components/layout/PageLayout";
-import BrandCarousel, { type Brand } from "@/components/BrandCarousel";
+import BrandCarousel from "@/components/BrandCarousel";
+import { brands } from "@/lib/brands";
 import { SITE } from "@/lib/site";
 import "@/styles/about.css";
 
 export const metadata: Metadata = {
   title: "About — The Vision Frog Productions",
 };
-
-// 6 per page (3 x 2) — anything past 6 lands on a new swipeable page
-const brands: Brand[] = [
-  { src: "/assets/images/about/DefJam.png", alt: "Def Jam" },
-  { src: "/assets/images/about/KittyGang.png", alt: "Kitty Gang Music" },
-  { src: "/assets/images/about/Wilson.png", alt: "Wilson" },
-  { src: "/assets/images/about/Brevite transparent.png", alt: "Brevite" },
-  { src: "/assets/images/about/Empire_Distribution_logo.svg.png", alt: "Empire Distribution" },
-  { src: "/assets/images/about/Bape.png", alt: "Bape" },
-];
 
 export default function AboutPage() {
   return (

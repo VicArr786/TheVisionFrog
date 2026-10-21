@@ -24,6 +24,8 @@ export default function VinylPlayer() {
   const [dragging, setDragging] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const drag = useRef<{ x: number; start: number; moved: boolean } | null>(null);
+  const backRef = useRef<HTMLDivElement>(null);
+  const [moreBelow, setMoreBelow] = useState(false);
 
   const select = useCallback((idx: number) => {
     const next = (idx + N) % N;
@@ -47,6 +49,20 @@ export default function VinylPlayer() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [active, select]);
+
+  // long credit lists scroll — fade the bottom edge while there's more below
+  const checkMore = useCallback(() => {
+    const el = backRef.current;
+    if (el) setMoreBelow(el.scrollTop + el.clientHeight < el.scrollHeight - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = backRef.current;
+    if (el) el.scrollTop = 0;
+    checkMore();
+    window.addEventListener("resize", checkMore);
+    return () => window.removeEventListener("resize", checkMore);
+  }, [shown, checkMore]);
 
   const flip = () => setAngle((a) => Math.round(a / 180) * 180 + 180);
 
@@ -86,7 +102,8 @@ export default function VinylPlayer() {
 
   const video = musicVideos[shown];
   const href = `/MusicVideos/${video.slug}`;
-  const facingBack = Math.round(angle / 180) % 2 !== 0;
+  // past 90° the back is toward the viewer — also tracks the live angle while dragging
+  const facingBack = Math.cos((angle * Math.PI) / 180) < 0;
   // the record tucks into the sleeve whenever the box is turning or showing credits
   const recordOut = out && !dragging && !facingBack;
   const credits = video.credits ?? [];
@@ -103,7 +120,10 @@ export default function VinylPlayer() {
             onPointerCancel={endDrag}
             onDragStart={(e) => e.preventDefault()}
           >
-            <div className="vinyl__card" style={{ transform: `rotateY(${angle}deg)` }}>
+            <div
+              className={`vinyl__card${facingBack ? " vinyl__card--back" : ""}`}
+              style={{ transform: `rotateY(${angle}deg)` }}
+            >
               <div className="vinyl__face vinyl__face--front" aria-hidden={facingBack}>
                 <Link
                   href={href}
@@ -125,12 +145,17 @@ export default function VinylPlayer() {
                 </Link>
               </div>
 
-              <div className="vinyl__face vinyl__face--back" aria-hidden={!facingBack}>
+              <div
+                ref={backRef}
+                className={`vinyl__face vinyl__face--back${moreBelow ? " vinyl__face--more" : ""}`}
+                aria-hidden={!facingBack}
+                onScroll={checkMore}
+              >
                 <span className="vinyl__back-tag">Side B</span>
                 <h3 className="vinyl__back-artist">{video.artist}</h3>
                 <p className="vinyl__back-title">{video.title}</p>
                 {credits.length ? (
-                  <dl className="vinyl__credits">
+                  <dl className={`vinyl__credits${credits.length > 5 ? " vinyl__credits--dense" : ""}`}>
                     {credits.map((c) => (
                       <div key={c.role} className="vinyl__credit">
                         <dt>{c.role}</dt>

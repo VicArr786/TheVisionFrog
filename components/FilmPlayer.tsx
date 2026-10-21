@@ -3,7 +3,17 @@
 import { useState } from "react";
 
 /** Poster first, YouTube iframe only after the click — keeps the page light */
-export default function FilmPlayer({ youtubeId, poster, title }: { youtubeId?: string; poster: string; title: string }) {
+export default function FilmPlayer({
+  youtubeId,
+  poster,
+  title,
+  label = "Play film",
+}: {
+  youtubeId?: string;
+  poster: string;
+  title: string;
+  label?: string;
+}) {
   const [playing, setPlaying] = useState(false);
 
   if (playing && youtubeId) {
@@ -26,7 +36,7 @@ export default function FilmPlayer({ youtubeId, poster, title }: { youtubeId?: s
           <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">
             <path d="M8 5v14l11-7z" />
           </svg>
-          <span>Play film</span>
+          <span>{label}</span>
         </button>
       ) : null}
     </div>

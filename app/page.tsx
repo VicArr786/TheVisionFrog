@@ -4,6 +4,7 @@ import SiteChrome from "@/components/layout/SiteChrome";
 import SiteNav from "@/components/layout/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import HeroCarousel, { type HeroCard } from "@/components/HeroCarousel";
+import LogoMarquee from "@/components/LogoMarquee";
 import "@/styles/home.css";
 
 export const metadata: Metadata = {
@@ -54,6 +55,8 @@ export default function HomePage() {
             About Us
           </Link>
         </div>
+
+        <LogoMarquee />
       </header>
 
       <SiteFooter />
