@@ -189,3 +189,16 @@
     display: none;
   }
 }
+
+/* Instagram embed fallback for reels without a local mp4 */
+.reel__embed {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #fff;
+}
+
+.reel__video--landscape {
+  object-fit: contain;
+}

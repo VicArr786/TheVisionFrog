@@ -3,7 +3,14 @@
 import { useRef, useState } from "react";
 
 /** Full-bleed looping video header for a local mp4 — same chrome as BapeVideoHeader */
-export default function CampaignVideoHeader({ src }: { src: string }) {
+export default function CampaignVideoHeader({
+  src,
+  vertical,
+}: {
+  src: string;
+  /** 9:16 footage — taller header, letterboxed instead of cropped */
+  vertical?: boolean;
+}) {
   const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -20,7 +27,7 @@ export default function CampaignVideoHeader({ src }: { src: string }) {
   };
 
   return (
-    <div className="bape-video-wrap" ref={wrapRef}>
+    <div className={`bape-video-wrap${vertical ? " bape-video-wrap--vertical" : ""}`} ref={wrapRef}>
       <video
         ref={videoRef}
         className="bape-video-local"

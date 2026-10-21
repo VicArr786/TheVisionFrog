@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SOCIAL } from "@/lib/site";
-import { verticals } from "@/lib/verticals";
+import { igReelId, verticals } from "@/lib/verticals";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -22,9 +22,9 @@ export default function VerticalsFeed() {
         entries.forEach((entry) => {
           const idx = Number((entry.target as HTMLElement).dataset.idx);
           const video = videoRefs.current[idx];
+          if (entry.isIntersecting) setCurrent(idx);
           if (!video) return;
           if (entry.isIntersecting) {
-            setCurrent(idx);
             setPaused(false);
             video.currentTime = 0;
             video.play().catch(() => setPaused(true));
@@ -78,19 +78,30 @@ export default function VerticalsFeed() {
       {verticals.map((reel, i) => (
         <section key={reel.slug} className="reel" data-idx={i} aria-label={`${reel.client} — ${reel.title}`}>
           <div className="reel__frame">
-            <video
-              ref={(el) => {
-                videoRefs.current[i] = el;
-              }}
-              className="reel__video"
-              src={reel.src}
-              poster={reel.poster}
-              muted
-              loop
-              playsInline
-              preload={i < 2 ? "auto" : "metadata"}
-              onClick={() => togglePlay(i)}
-            />
+            {reel.src ? (
+              <video
+                ref={(el) => {
+                  videoRefs.current[i] = el;
+                }}
+                className={`reel__video${reel.landscape ? " reel__video--landscape" : ""}`}
+                src={reel.src}
+                poster={reel.poster}
+                muted
+                loop
+                playsInline
+                preload={i < 2 ? "auto" : "metadata"}
+                onClick={() => togglePlay(i)}
+              />
+            ) : (
+              <iframe
+                className="reel__embed"
+                src={`https://www.instagram.com/reel/${igReelId(reel.instagram ?? "")}/embed/`}
+                title={`${reel.client} — ${reel.title}`}
+                loading="lazy"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            )}
 
             {paused && current === i ? (
               <span className="reel__paused" aria-hidden="true">
@@ -100,45 +111,50 @@ export default function VerticalsFeed() {
               </span>
             ) : null}
 
-            <div className="reel__info">
-              <span className="reel__client">{reel.client}</span>
-              <h2 className="reel__title">{reel.title}</h2>
-              <a
-                className="reel__ig"
-                href={reel.instagram ?? SOCIAL.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View on Instagram →
-              </a>
-            </div>
+            {/* Instagram's embed brings its own caption and controls */}
+            {reel.src ? (
+              <>
+                <div className="reel__info">
+                  <span className="reel__client">{reel.client}</span>
+                  <h2 className="reel__title">{reel.title}</h2>
+                  <a
+                    className="reel__ig"
+                    href={reel.instagram ?? SOCIAL.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View on Instagram →
+                  </a>
+                </div>
 
-            <div className="reel__rail">
-              <button
-                type="button"
-                className="reel__btn"
-                aria-label={muted ? "Unmute" : "Mute"}
-                onClick={() => setMuted((m) => !m)}
-              >
-                {muted ? (
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-                    <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                    <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-                    <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                )}
-              </button>
-              <span className="reel__count">
-                {pad(i + 1)}
-                <br />
-                {pad(verticals.length)}
-              </span>
-            </div>
+                <div className="reel__rail">
+                  <button
+                    type="button"
+                    className="reel__btn"
+                    aria-label={muted ? "Unmute" : "Mute"}
+                    onClick={() => setMuted((m) => !m)}
+                  >
+                    {muted ? (
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                        <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                    )}
+                  </button>
+                  <span className="reel__count">
+                    {pad(i + 1)}
+                    <br />
+                    {pad(verticals.length)}
+                  </span>
+                </div>
+              </>
+            ) : null}
           </div>
         </section>
       ))}

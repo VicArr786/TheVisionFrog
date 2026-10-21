@@ -20,7 +20,7 @@ export default function CampaignGrid({ category }: { category?: Campaign["catego
           </span>
           <div className="campaign-card__info">
             <span className="campaign-card__label">{c.label}</span>
-            <span className="campaign-card__count">{c.count} images</span>
+            <span className="campaign-card__count">{c.count ? `${c.count} images` : "Video"}</span>
           </div>
         </Link>
       ))}

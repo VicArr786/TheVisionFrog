@@ -31,6 +31,14 @@
   object-fit: cover;
 }
 
+.bape-video-wrap--vertical {
+  height: 85vh;
+}
+
+.bape-video-wrap--vertical .bape-video-local {
+  object-fit: contain;
+}
+
 .bape-video-yt iframe {
   width: 100%;
   height: 100%;

@@ -2,7 +2,8 @@
 export type Campaign = {
   slug: string;
   label: string;
-  count: number;
+  /** gallery size; omit for video-only pages */
+  count?: number;
   cover: string;
   /** which /Commercials page lists it: Brands or Creators */
   category: "commercials" | "creators";
@@ -31,10 +32,30 @@ export const campaigns: Campaign[] = [
     category: "commercials",
   },
   {
+    slug: "ReebokDraft",
+    label: "Reebok x NBA Draft '26",
+    count: 4,
+    cover: "/assets/images/Commercial/REEBOK X NBA DRAFT 26/web/still_4.jpg",
+    category: "commercials",
+  },
+  {
+    slug: "TacoBell",
+    label: "Taco Bell - Decades Menu",
+    count: 10,
+    cover: "/assets/images/Commercial/TacoBell/web/793258298_17939873535345386_3953360796027995563_n.jpg",
+    category: "commercials",
+  },
+  {
     slug: "AmVibes",
     label: "AM Vibes - “Gems” EP Trailer",
     count: 4,
     cover: "/assets/images/Commercial/AM VIBES - EP TRAILER GEMS ON YOUTUBE/web/Still 2026-05-12 002348_3.1.1.jpg",
+    category: "creators",
+  },
+  {
+    slug: "HyperoptimizedEngineer",
+    label: "Hyperoptimized Engineer 2026",
+    cover: "/assets/images/Commercial/HYPEROPTIMIZED ENGINEER 2026/web/cover.jpg",
     category: "creators",
   },
 ];

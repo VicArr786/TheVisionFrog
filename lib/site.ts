@@ -21,8 +21,8 @@ export type NavLink = {
 export const WORK_NAV: NavLink[] = [
   { href: "/MusicVideos", label: "Music Videos" },
   { href: "/Commercials", label: "Commercials" },
-  { href: "/Verticals", label: "Verticals" },
   { href: "/Originals", label: "VF Originals", match: ["/Narrative", "/Visions", "/Portraits", "/Stills"] },
+  { href: "/Verticals", label: "Verticals" },
 ];
 
 /** Studio sections — rendered right of the divider */
