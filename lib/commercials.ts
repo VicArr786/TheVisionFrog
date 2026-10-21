@@ -55,6 +55,7 @@ export const campaigns: Campaign[] = [
   {
     slug: "HyperoptimizedEngineer",
     label: "Hyperoptimized Engineer 2026",
+    count: 9,
     cover: "/assets/images/Commercial/HYPEROPTIMIZED ENGINEER 2026/web/cover.jpg",
     category: "creators",
   },
