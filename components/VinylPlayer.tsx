@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import PageLoader from "@/components/PageLoader";
 import { musicVideos } from "@/lib/musicVideos";
 
 const N = musicVideos.length;
@@ -24,6 +25,13 @@ export default function VinylPlayer() {
   const [dragging, setDragging] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const drag = useRef<{ x: number; start: number; moved: boolean } | null>(null);
+  const sleeveImg = useRef<HTMLImageElement>(null);
+  const [coverReady, setCoverReady] = useState(false);
+
+  // the cover may finish loading before hydration attaches onLoad
+  useEffect(() => {
+    if (sleeveImg.current?.complete) setCoverReady(true);
+  }, []);
 
   const select = useCallback((idx: number) => {
     const next = (idx + N) % N;
@@ -93,6 +101,7 @@ export default function VinylPlayer() {
 
   return (
     <section className="vinyl" aria-roledescription="carousel" aria-label="Music videos">
+      <PageLoader ready={coverReady} />
       <div className="vinyl__main">
         <div className="vinyl__deck">
           <div
@@ -121,7 +130,14 @@ export default function VinylPlayer() {
 
                 <Link href={href} className="vinyl__sleeve" tabIndex={-1} aria-hidden="true">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={video.thumbnail} alt="" draggable={false} />
+                  <img
+                    ref={sleeveImg}
+                    src={video.thumbnail}
+                    alt=""
+                    draggable={false}
+                    onLoad={() => setCoverReady(true)}
+                    onError={() => setCoverReady(true)}
+                  />
                 </Link>
               </div>
 

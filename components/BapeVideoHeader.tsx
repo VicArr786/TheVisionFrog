@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import PageLoader from "@/components/PageLoader";
 
 interface YTPlayer {
   mute(): void;
@@ -17,7 +18,12 @@ declare global {
         options: {
           videoId: string;
           playerVars?: Record<string, number | string>;
-          events?: { onReady?: (e: { target: YTPlayer }) => void };
+          events?: {
+            onReady?: (e: { target: YTPlayer }) => void;
+            /** e.data === 1 once the video is actually playing */
+            onStateChange?: (e: { data: number }) => void;
+            onError?: () => void;
+          };
         }
       ) => YTPlayer;
     };
@@ -27,6 +33,7 @@ declare global {
 
 export default function BapeVideoHeader() {
   const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const playerRef = useRef<YTPlayer | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -50,6 +57,10 @@ export default function BapeVideoHeader() {
             playerRef.current = e.target;
             e.target.playVideo();
           },
+          onStateChange: (e) => {
+            if (e.data === 1) setPlaying(true);
+          },
+          onError: () => setPlaying(true),
         },
       });
     };
@@ -84,6 +95,7 @@ export default function BapeVideoHeader() {
 
   return (
     <div className="bape-video-wrap" ref={wrapRef}>
+      <PageLoader ready={playing} />
       <div id="yt-bape-player" className="bape-video-yt" />
       <div className="bape-video-controls">
         <button

@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import PageLoader from "@/components/PageLoader";
 
 /** Full-bleed looping video header for a local mp4 — same chrome as BapeVideoHeader */
 export default function CampaignVideoHeader({
@@ -12,8 +13,14 @@ export default function CampaignVideoHeader({
   vertical?: boolean;
 }) {
   const [muted, setMuted] = useState(true);
+  const [ready, setReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+
+  // the video may finish loading before hydration attaches onLoadedData
+  useEffect(() => {
+    if ((videoRef.current?.readyState ?? 0) >= 2) setReady(true);
+  }, []);
 
   const toggleMute = () => {
     const v = videoRef.current;
@@ -28,6 +35,7 @@ export default function CampaignVideoHeader({
 
   return (
     <div className={`bape-video-wrap${vertical ? " bape-video-wrap--vertical" : ""}`} ref={wrapRef}>
+      <PageLoader ready={ready} />
       <video
         ref={videoRef}
         className="bape-video-local"
@@ -36,6 +44,8 @@ export default function CampaignVideoHeader({
         loop
         muted
         playsInline
+        onLoadedData={() => setReady(true)}
+        onError={() => setReady(true)}
       />
       <div className="bape-video-controls">
         <button
