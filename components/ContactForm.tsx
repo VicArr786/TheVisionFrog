@@ -2,6 +2,8 @@
 
 import { FormEvent, useState } from "react";
 
+const TOPICS = ["Music Video", "Narrative / Short", "Commercial / Brand", "Portrait / Photo", "Other"];
+
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "ok" | "err">("idle");
 
@@ -46,19 +48,17 @@ export default function ContactForm() {
         </label>
       </div>
 
-      <label>
-        What are you reaching out about?
-        <select name="topic" required defaultValue="">
-          <option value="" disabled>
-            Select one
-          </option>
-          <option>Music Video</option>
-          <option>Narrative / Short</option>
-          <option>Commercial / Brand</option>
-          <option>Portrait / Photo</option>
-          <option>Other</option>
-        </select>
-      </label>
+      <fieldset className="contact-topics">
+        <legend>What are you reaching out about?</legend>
+        <div className="contact-topics__opts">
+          {TOPICS.map((t) => (
+            <label key={t} className="contact-topic">
+              <input type="radio" name="topic" value={t} required />
+              <span>{t}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       <label>
         Message
@@ -78,12 +78,12 @@ export default function ContactForm() {
         autoComplete="off"
       />
 
-      <button className="btn-primary btn-primary--solid" type="submit">
-        Send
-      </button>
-      <p style={{ color: "var(--text-muted)", fontSize: "0.9rem", margin: "0.5rem 0 0" }}>
-        By sending, you agree we can reply to the email provided.
-      </p>
+      <div className="contact-submit">
+        <button className="btn-primary btn-primary--solid" type="submit">
+          Send
+        </button>
+        <p>By sending, you agree we can reply to the email provided.</p>
+      </div>
 
       <div
         className={`contact-status contact-status--ok${status === "ok" ? " contact-status--show" : ""}`}

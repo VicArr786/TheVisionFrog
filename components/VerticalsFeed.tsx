@@ -61,10 +61,17 @@ export default function VerticalsFeed() {
     return () => window.removeEventListener("keydown", onKey);
   }, [current]);
 
-  const togglePlay = (idx: number) => {
+  // while muted, a tap on the video unmutes it; after that taps pause / play
+  const onTap = (idx: number) => {
     const v = videoRefs.current[idx];
     if (!v) return;
-    if (v.paused) {
+    if (muted) {
+      setMuted(false);
+      if (v.paused) {
+        v.play();
+        setPaused(false);
+      }
+    } else if (v.paused) {
       v.play();
       setPaused(false);
     } else {
@@ -90,7 +97,7 @@ export default function VerticalsFeed() {
                 loop
                 playsInline
                 preload={i < 2 ? "auto" : "metadata"}
-                onClick={() => togglePlay(i)}
+                onClick={() => onTap(i)}
               />
             ) : (
               <iframe
@@ -102,6 +109,17 @@ export default function VerticalsFeed() {
                 allowFullScreen
               />
             )}
+
+            {muted && reel.src ? (
+              <span className="reel__unmute" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                  <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+                Tap to unmute
+              </span>
+            ) : null}
 
             {paused && current === i ? (
               <span className="reel__paused" aria-hidden="true">

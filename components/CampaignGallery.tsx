@@ -3,10 +3,19 @@
 import { useState } from "react";
 import Lightbox from "@/components/Lightbox";
 
-export type CampaignImage = { src: string; alt: string };
+/** `thumb` is a smaller copy shown in the grid; the lightbox always opens `src` */
+export type CampaignImage = { src: string; alt: string; thumb?: string };
 
-export default function CampaignGallery({ images }: { images: CampaignImage[] }) {
-  const [cols, setCols] = useState(2);
+type CampaignGalleryProps = {
+  images: CampaignImage[];
+  initialCols?: number;
+  maxCols?: number;
+  /** lightbox wraps from the last image back to the first */
+  loop?: boolean;
+};
+
+export default function CampaignGallery({ images, initialCols = 2, maxCols = 5, loop = true }: CampaignGalleryProps) {
+  const [cols, setCols] = useState(initialCols);
   const [open, setOpen] = useState<number | null>(null);
 
   return (
@@ -16,7 +25,7 @@ export default function CampaignGallery({ images }: { images: CampaignImage[] })
         <input
           type="range"
           min={1}
-          max={5}
+          max={maxCols}
           step={1}
           value={cols}
           onChange={(e) => setCols(Number(e.target.value))}
@@ -36,13 +45,13 @@ export default function CampaignGallery({ images }: { images: CampaignImage[] })
               onClick={() => setOpen(i)}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.src} alt={img.alt} loading="lazy" />
+              <img src={img.thumb ?? img.src} alt={img.alt} loading="lazy" />
             </button>
           </figure>
         ))}
       </section>
 
-      <Lightbox images={images} index={open} onChange={setOpen} />
+      <Lightbox images={images} index={open} onChange={setOpen} loop={loop} />
     </>
   );
 }

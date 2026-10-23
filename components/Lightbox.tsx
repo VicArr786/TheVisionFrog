@@ -10,16 +10,22 @@ type LightboxProps = {
   /** index of the open image, or null when closed */
   index: number | null;
   onChange: (index: number | null) => void;
+  /** wrap from the last image to the first (and back); false stops at the ends */
+  loop?: boolean;
 };
 
 /** Full-screen image viewer — Esc closes, ←/→ step through the set */
-export default function Lightbox({ images, index, onChange }: LightboxProps) {
+export default function Lightbox({ images, index, onChange, loop = true }: LightboxProps) {
   const open = index !== null;
   const count = images.length;
+  const go = (i: number) => {
+    if (loop) onChange((i + count) % count);
+    else if (i >= 0 && i < count) onChange(i);
+  };
 
   useEffect(() => {
     if (!open) return;
-    const step = (d: number) => onChange(((index ?? 0) + d + count) % count);
+    const step = (d: number) => go((index ?? 0) + d);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onChange(null);
       if (e.key === "ArrowRight") step(1);
@@ -31,7 +37,7 @@ export default function Lightbox({ images, index, onChange }: LightboxProps) {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [open, index, count, onChange]);
+  }, [open, index, count, loop, onChange]);
 
   if (!open) return null;
   const img = images[index];
@@ -55,7 +61,8 @@ export default function Lightbox({ images, index, onChange }: LightboxProps) {
           type="button"
           className="vf-lightbox__nav vf-lightbox__nav--prev"
           aria-label="Previous image"
-          onClick={() => onChange((index - 1 + count) % count)}
+          disabled={!loop && index === 0}
+          onClick={() => go(index - 1)}
         >
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
             <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -76,7 +83,8 @@ export default function Lightbox({ images, index, onChange }: LightboxProps) {
           type="button"
           className="vf-lightbox__nav vf-lightbox__nav--next"
           aria-label="Next image"
-          onClick={() => onChange((index + 1) % count)}
+          disabled={!loop && index === count - 1}
+          onClick={() => go(index + 1)}
         >
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
             <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />

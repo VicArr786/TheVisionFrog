@@ -74,6 +74,28 @@
   pointer-events: none;
 }
 
+.reel__unmute {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
 .reel__info {
   position: absolute;
   left: 0;
@@ -184,6 +206,10 @@
     width: 100vw;
     aspect-ratio: auto;
     border: 0;
+  }
+  /* clear the page title that floats over the full-screen frame */
+  .reel__unmute {
+    top: 4.75rem;
   }
   .verticals-nav {
     display: none;

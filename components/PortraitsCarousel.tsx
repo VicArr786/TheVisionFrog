@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import CampaignGallery from "@/components/CampaignGallery";
 
 const NEW = "/assets/images/PORTRAITS/web";
 
@@ -35,74 +33,9 @@ const slides = [
 ];
 
 // grid tiles load the 800px thumb/ copy; the lightbox loads the full web/ copy
-const thumbOf = (src: string) => src.replace("/web/", "/thumb/");
+const images = slides.map((s) => ({ src: s.src, alt: s.caption, thumb: s.src.replace("/web/", "/thumb/") }));
 
+/** Same size slider and masonry as the commercial galleries; the lightbox stops at the first and last photo */
 export default function PortraitsCarousel() {
-  const [lightbox, setLightbox] = useState<{ src: string; caption: string } | null>(null);
-
-  const openLightbox = (src: string, caption: string) => {
-    setLightbox({ src, caption });
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeLightbox = () => {
-    setLightbox(null);
-    document.body.style.overflow = "";
-  };
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (lightbox && e.key === "Escape") closeLightbox();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [lightbox]);
-
-  return (
-    <>
-      <ul className="portraits-grid" role="list" aria-label="Portraits">
-        {slides.map((slide) => (
-          <li
-            key={slide.src}
-            className="portraits-grid__item"
-            onClick={() => openLightbox(slide.src, slide.caption)}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={thumbOf(slide.src)} alt={slide.caption} loading="lazy" decoding="async" />
-            <span className="portraits-caption">{slide.caption}</span>
-          </li>
-        ))}
-      </ul>
-
-      <div
-        className={`portraits-lightbox${lightbox ? " portraits-lightbox--open" : ""}`}
-        role="dialog"
-        aria-modal="true"
-        aria-hidden={!lightbox}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) closeLightbox();
-        }}
-      >
-        {lightbox ? (
-          <div className="portraits-lightbox__inner">
-            <button
-              type="button"
-              className="portraits-lightbox__close"
-              aria-label="Close"
-              onClick={closeLightbox}
-            >
-              &times;
-            </button>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={lightbox.src}
-              alt={lightbox.caption}
-              className="portraits-lightbox__img"
-            />
-            <p className="portraits-lightbox__caption">{lightbox.caption}</p>
-          </div>
-        ) : null}
-      </div>
-    </>
-  );
+  return <CampaignGallery images={images} initialCols={10} maxCols={10} loop={false} />;
 }

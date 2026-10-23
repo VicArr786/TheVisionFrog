@@ -43,7 +43,7 @@ export const verticals: Vertical[] = [
   reel("DXpKONhD4N7", "Homecoming x Nike", "Air Max Plus Takeover"),
   reel("DYxKIFWxbnQ", "The Vision Frog", "Artists Take Notes"),
   reel("DZN5Njzo-Yh", "Kumar", "The Kumar Method"),
-  reel("DHtflOqgpcR", "Def Jam Cafe x Alpha Industries", "PJ Splash"),
+  reel("DHtflOqgpcR", "Def Jam x Alpha Industries", "Def Jam Cafe Activation"),
   reel("DHezvemSTEV", "Def Jam x Alpha Industries", "Def Jam Cafe Activation"),
   reel("DS2gYkJDX5s", "The Vision Frog", "NYU Thesis Film"),
 ];

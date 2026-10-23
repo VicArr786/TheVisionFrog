@@ -8,14 +8,23 @@ export const metadata: Metadata = {
   title: "Contact — The Vision Frog Productions",
 };
 
+const direct = [
+  { label: "Email", value: "thevisionfrog@gmail.com", href: SOCIAL.email },
+  { label: "Instagram", value: "@thevisionfrog", href: SOCIAL.instagram, external: true },
+  { label: "YouTube", value: "@TheVisionFrog", href: SOCIAL.youtube, external: true },
+];
+
+/* hero → form beside direct links, styled like the project pages */
 export default function ContactPage() {
   return (
     <NavLayout
       banner={
-        <header className="vf-banner">
-          <div className="vf-banner__inner">
-            <h1 className="vf-banner__title">Contact</h1>
-            <p className="vf-banner__sub">
+        <header className="contact-hero">
+          <div className="contact-hero__overlay" />
+          <div className="contact-hero__content">
+            <span className="contact-hero__tag">Contact</span>
+            <h1 className="contact-hero__title">Start a project</h1>
+            <p className="contact-hero__sub">
               Tell us what you&apos;re building. We&apos;ll get back to you as soon as possible.
             </p>
           </div>
@@ -23,37 +32,30 @@ export default function ContactPage() {
       }
     >
       <div className="contact-page">
-        <div className="contact-grid">
-          <section className="contact-card">
-            <h2>Send a message</h2>
-            <ContactForm />
-          </section>
+        <section className="contact-section contact-section--form">
+          <h2 className="contact-section__title">Send a message</h2>
+          <ContactForm />
+        </section>
 
-          <aside className="contact-card">
-            <h2>Direct</h2>
-            <p style={{ color: "var(--text-muted)", marginBottom: "1rem" }}>
-              Prefer email or DM? Use these:
-            </p>
-            <div style={{ display: "grid", gap: "0.75rem" }}>
-              <div className="contact-pill">
-                <small>Email</small>
-                <a href={SOCIAL.email}>thevisionfrog@gmail.com</a>
-              </div>
-              <div className="contact-pill">
-                <small>Instagram</small>
-                <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer">
-                  @thevisionfrog
+        <aside className="contact-section">
+          <h2 className="contact-section__title">Direct</h2>
+          <ul className="contact-direct" role="list">
+            {direct.map((d) => (
+              <li key={d.label}>
+                <a
+                  className="contact-direct__row"
+                  href={d.href}
+                  {...(d.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  <span className="contact-direct__label">{d.label}</span>
+                  <span className="contact-direct__value">
+                    {d.value} <span aria-hidden="true">↗</span>
+                  </span>
                 </a>
-              </div>
-              <div className="contact-pill">
-                <small>YouTube</small>
-                <a href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer">
-                  @TheVisionFrog
-                </a>
-              </div>
-            </div>
-          </aside>
-        </div>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </NavLayout>
   );

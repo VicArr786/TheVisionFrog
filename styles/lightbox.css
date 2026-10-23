@@ -75,11 +75,17 @@
 }
 
 .vf-lightbox__close:hover,
-.vf-lightbox__nav:hover {
+.vf-lightbox__nav:hover:not(:disabled) {
   background: rgba(61, 255, 2, 0.15);
   border-color: rgba(61, 255, 2, 0.5);
   color: var(--accent);
   transform: scale(1.08);
+}
+
+/* first / last image of a non-looping set */
+.vf-lightbox__nav:disabled {
+  opacity: 0.25;
+  cursor: default;
 }
 
 /* phones: arrows float over the image instead of squeezing it */

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PageLayout from "@/components/layout/PageLayout";
 import PortraitsCarousel from "@/components/PortraitsCarousel";
-import "@/styles/portraits.css";
+import "@/styles/pages/BapeCommercial.css"; // .bape-gallery
 
 export const metadata: Metadata = {
   title: "Portraits — The Vision Frog Productions",
