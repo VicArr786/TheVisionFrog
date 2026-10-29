@@ -265,6 +265,13 @@
 .home-page .logo-marquee__viewport {
   -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.home-page .logo-marquee__viewport.is-dragging {
+  cursor: grabbing;
 }
 
 .home-page .logo-marquee__track {
@@ -274,11 +281,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: logo-marquee 40s linear infinite;
-}
-
-.home-page .logo-marquee:hover .logo-marquee__track {
-  animation-play-state: paused;
+  will-change: transform;
 }
 
 .home-page .logo-marquee__item {
@@ -305,18 +308,6 @@
 
 .home-page .logo-marquee__item img:hover {
   opacity: 1;
-}
-
-/* the list is doubled, so sliding by half lands exactly on the start */
-@keyframes logo-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-page .logo-marquee__track {
-    animation-duration: 120s;
-  }
 }
 
 @media (max-width: 768px) {
