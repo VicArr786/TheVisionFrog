@@ -101,7 +101,7 @@ export default function GlassPlayer() {
   const [sound, setSound] = useState(true);
   const [audible, setAudible] = useState(false);
   const bgRef = useRef<HTMLDivElement>(null);
-  const [volume, setVolume] = useState(0.8);
+  const [volume, setVolume] = useState(0.35);
 
   // remember the viewer's volume between visits
   useEffect(() => {
