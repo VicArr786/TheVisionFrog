@@ -20,3 +20,6 @@ next-env.d.ts
 
 # web-sized loops made by scripts/optimize-media.mjs (GIF -> mp4)
 !assets/images/**/web/*.mp4
+
+# 8s background loops for the Music Videos player
+!assets/videos/music-videos/*.mp4

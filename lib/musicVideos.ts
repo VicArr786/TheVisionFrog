@@ -6,6 +6,8 @@ export type MusicVideo = {
   artist: string;
   youtubeUrl: string;
   thumbnail: string;
+  /** 8s muted loop played behind the player (assets/videos/music-videos/<slug>.mp4) */
+  clip?: string;
   /** BTS / stills — add paths when images are ready */
   stills: string[];
   /** shown on the back of the record — drag the vinyl to flip it */
@@ -15,6 +17,7 @@ export type MusicVideo = {
 export const musicVideos: MusicVideo[] = [
   {
     slug: "darrow-minute-maid",
+    clip: "/assets/videos/music-videos/darrow-minute-maid.mp4?v=2",
     title: "Minute Maid",
     artist: "DARROW",
     youtubeUrl: "https://www.youtube.com/watch?v=V2-So-lgoZ4",
@@ -32,6 +35,7 @@ export const musicVideos: MusicVideo[] = [
   },
   {
     slug: "chinese-kitty-too-many",
+    clip: "/assets/videos/music-videos/chinese-kitty-too-many.mp4?v=2",
     title: "Too Many",
     artist: "Chinese Kitty",
     youtubeUrl: "https://www.youtube.com/watch?v=Pa0yBciwe1Y",
@@ -40,6 +44,7 @@ export const musicVideos: MusicVideo[] = [
   },
   {
     slug: "jozzy-maybe",
+    clip: "/assets/videos/music-videos/jozzy-maybe.mp4?v=2",
     title: "Maybe",
     artist: "Jozzy",
     youtubeUrl: "https://www.youtube.com/watch?v=c71jSixjWrk",
@@ -65,6 +70,7 @@ export const musicVideos: MusicVideo[] = [
   },
   {
     slug: "yanov-green-mountain",
+    clip: "/assets/videos/music-videos/yanov-green-mountain.mp4?v=2",
     title: "Green Mountain",
     artist: "Yanov",
     youtubeUrl: "https://www.youtube.com/watch?v=758wutLeECc",
@@ -80,6 +86,7 @@ export const musicVideos: MusicVideo[] = [
   },
   {
     slug: "sina-what-we-lost",
+    clip: "/assets/videos/music-videos/sina-what-we-lost.mp4?v=2",
     title: "What We Lost",
     artist: "Sina",
     youtubeUrl: "https://www.youtube.com/watch?v=FMlAGVdvb1Y",
@@ -88,6 +95,7 @@ export const musicVideos: MusicVideo[] = [
   },
   {
     slug: "beno-overthinking",
+    clip: "/assets/videos/music-videos/beno-overthinking.mp4?v=2",
     title: "Overthinking",
     artist: "Beno",
     youtubeUrl: "https://www.youtube.com/watch?v=vF1sCTnGtxI",
@@ -102,6 +110,7 @@ export const musicVideos: MusicVideo[] = [
   },
   {
     slug: "chinese-kitty-pop-shit",
+    clip: "/assets/videos/music-videos/chinese-kitty-pop-shit.mp4?v=2",
     title: "Pop Shit",
     artist: "Chinese Kitty",
     youtubeUrl: "https://www.youtube.com/watch?v=XMDhAA2lZHE",
@@ -119,6 +128,7 @@ export const musicVideos: MusicVideo[] = [
   },
   {
     slug: "yanov-denim",
+    clip: "/assets/videos/music-videos/yanov-denim.mp4?v=2",
     title: "Denim",
     artist: "Yanov",
     youtubeUrl: "https://www.youtube.com/watch?v=pKYv2QjkXco",

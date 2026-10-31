@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 const SECTIONS: HubSection[] = [
   {
     href: "/Commercials/Brands",
-    title: "Commercials",
+    title: "Brands",
     blurb: "Brand campaigns and collaborations.",
     img: "/assets/images/Commercial/BAPE X DEF JAM OFFICIAL CAMPAIGN/web/BapeXDefjam_Lb_Banner_1000x667_9d7e58ea-4c0e-4699-a801-493291db6690.jpg",
   },

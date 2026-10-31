@@ -4,7 +4,7 @@ import CampaignGrid from "@/components/CampaignGrid";
 import "@/styles/pages/Commercials.css";
 
 export const metadata: Metadata = {
-  title: "Commercials — The Vision Frog Productions",
+  title: "Brands — Commercials — The Vision Frog Productions",
 };
 
 export default function BrandsPage() {

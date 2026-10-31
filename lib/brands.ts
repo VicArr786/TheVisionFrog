@@ -13,4 +13,8 @@ export const brands: Brand[] = [
   { src: "/assets/images/logos/web/Awake.png", alt: "Awake NY" },
   { src: "/assets/images/logos/web/NyuProgramBoard.png", alt: "NYU Program Board" },
   { src: "/assets/images/logos/web/Macaroni.png", alt: "Client logo" },
+  { src: "/assets/images/logos/web/Puma.png", alt: "Puma" },
+  { src: "/assets/images/logos/web/AlphaIndustries.png", alt: "Alpha Industries" },
+  { src: "/assets/images/logos/web/Sidetalk.png", alt: "Sidetalk NYC" },
+  { src: "/assets/images/logos/web/BunchOfFriends.png", alt: "Bunch of Friends" },
 ];

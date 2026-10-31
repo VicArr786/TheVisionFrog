@@ -1,24 +1,18 @@
 import type { Metadata } from "next";
-import PageLayout from "@/components/layout/PageLayout";
-import VinylPlayer from "@/components/VinylPlayer";
-import "@/styles/pages/MusicVideos.css";
+import BackLink from "@/components/BackLink";
+import GlassPlayer from "@/components/GlassPlayer";
+import "@/styles/pages/GlassPlayer.css";
 
 export const metadata: Metadata = {
   title: "Music Videos — The Vision Frog Productions",
 };
 
+/** Full-screen glass player — covers the whole page, no header or footer */
 export default function MusicVideosPage() {
   return (
-    <PageLayout
-      className="mv-page"
-      backHref="/"
-      header={{
-        eyebrow: "Music",
-        title: "Music Videos",
-        subtitle: "Pick a record to spin it — open the project for stills and the full video.",
-      }}
-    >
-      <VinylPlayer />
-    </PageLayout>
+    <div className="vf-site mv-page">
+      <BackLink href="/" fixed />
+      <GlassPlayer />
+    </div>
   );
 }
