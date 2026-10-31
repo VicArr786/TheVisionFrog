@@ -475,6 +475,79 @@
   background: rgba(255, 255, 255, 0.25) !important;
 }
 
+/* ---------- sound ---------- */
+
+.gp__unmute {
+  position: absolute;
+  top: 1.4rem;
+  left: 50%;
+  z-index: 40;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem !important;
+  border-radius: 999px;
+  font-size: 0.82rem !important;
+  font-weight: 700;
+  color: #000 !important;
+  background: var(--accent, #3dff02) !important;
+  box-shadow: 0 0 28px rgba(61, 255, 2, 0.5);
+  animation: gp-nudge 2.4s ease-in-out infinite;
+}
+
+.gp__unmute svg {
+  width: 18px;
+  height: 18px;
+}
+
+@keyframes gp-nudge {
+  50% {
+    transform: translateX(-50%) scale(1.06);
+  }
+}
+
+.gp__volume {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-right: 0.35rem;
+}
+
+.gp__vol {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 84px;
+  height: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: linear-gradient(to right, var(--accent, #3dff02) var(--v), rgba(255, 255, 255, 0.2) var(--v));
+}
+
+.gp__vol::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.gp__vol::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* phones control volume with their own buttons (iOS ignores page volume) */
+@media (max-width: 640px) {
+  .gp__vol {
+    display: none;
+  }
+}
+
 /* ---------- list hide / show + see project ---------- */
 
 .gp--nolist {

@@ -1,6 +1,6 @@
 import Redirect from "@/components/Redirect";
 
-// Branded & Music was split into Commercials and Music Videos
+// Branded & Music was split into Campaigns and Music Videos
 export default function WorkPage() {
-  return <Redirect to="/Commercials" />;
+  return <Redirect to="/Campaigns" />;
 }

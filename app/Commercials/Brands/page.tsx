@@ -1,24 +1,6 @@
-import type { Metadata } from "next";
-import PageLayout from "@/components/layout/PageLayout";
-import CampaignGrid from "@/components/CampaignGrid";
-import "@/styles/pages/Commercials.css";
+import Redirect from "@/components/Redirect";
 
-export const metadata: Metadata = {
-  title: "Brands — Commercials — The Vision Frog Productions",
-};
-
-export default function BrandsPage() {
-  return (
-    <PageLayout
-      className="commercials-page"
-      backHref="/Commercials"
-      header={{
-        eyebrow: "Commercials",
-        title: "Brands",
-        subtitle: "Brand campaigns, collaborations, and commercial shoots.",
-      }}
-    >
-      <CampaignGrid category="commercials" />
-    </PageLayout>
-  );
+/** old address — the section was renamed to Campaigns */
+export default function Page() {
+  return <Redirect to="/Campaigns/Brands" />;
 }

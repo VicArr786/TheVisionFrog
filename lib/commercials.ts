@@ -5,7 +5,7 @@ export type Campaign = {
   /** gallery size; omit for video-only pages */
   count?: number;
   cover: string;
-  /** which /Commercials page lists it: Brands or Creators */
+  /** which /Campaigns page lists it: Brands or Creators */
   category: "commercials" | "creators";
 };
 

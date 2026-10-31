@@ -14,8 +14,7 @@ const STEP = 0.6;
 // wheel / trackpad travel (px) per card
 const WHEEL_STEP = 80;
 
-const youtubeId = (url: string) =>
-  url.match(/[?&]v=([^&]+)/)?.[1] ?? url.match(/youtu\.be\/([^?]+)/)?.[1];
+const youtubeId = (url: string) => url.match(/[?&]v=([^&]+)/)?.[1] ?? url.match(/youtu\.be\/([^?]+)/)?.[1];
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -47,6 +46,24 @@ const Icon = {
       <path d="m16 16 4.5 4.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
     </svg>
   ),
+  soundOn: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9h4l5-4v14l-5-4H4V9Z" fill="currentColor" />
+      <path
+        d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  ),
+  soundOff: (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9h4l5-4v14l-5-4H4V9Z" fill="currentColor" />
+      <path d="m16 9.5 5 5m0-5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
   list: (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -54,7 +71,14 @@ const Icon = {
   ),
   external: (
     <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   ),
 };
@@ -71,6 +95,75 @@ export default function GlassPlayer() {
   const [bgs, setBgs] = useState<[number | null, number]>([null, 0]);
   // background clips only play when the viewer hasn't asked for reduced motion
   const [motionOk, setMotionOk] = useState(false);
+  // song audio: `sound` is what the viewer wants, `audible` is whether the browser let it play.
+  // Browsers block unmuted autoplay until the first click / key, so we try, fall back to
+  // muted, and unmute on the first interaction (or the "Tap to unmute" button).
+  const [sound, setSound] = useState(true);
+  const [audible, setAudible] = useState(false);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const [volume, setVolume] = useState(0.8);
+
+  // remember the viewer's volume between visits
+  useEffect(() => {
+    try {
+      const saved = parseFloat(localStorage.getItem("gp-volume") ?? "");
+      if (saved >= 0 && saved <= 1) setVolume(saved);
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    bgRef.current?.querySelectorAll("video").forEach((el) => (el.volume = volume));
+    try {
+      localStorage.setItem("gp-volume", String(volume));
+    } catch {}
+  }, [volume, bgs]);
+  // drive the background clips: only the incoming one may make sound; pause behind the pop-up
+  useEffect(() => {
+    const vids = bgRef.current?.querySelectorAll("video") ?? [];
+    vids.forEach((el) => {
+      if (!el.dataset.current) {
+        el.muted = true;
+        return;
+      }
+      if (playing) {
+        el.pause();
+        return;
+      }
+      el.muted = !sound;
+      el.play()
+        .then(() => setAudible(!el.muted))
+        .catch(() => {
+          // unmuted autoplay refused — keep the picture going silently
+          el.muted = true;
+          setAudible(false);
+          el.play().catch(() => {});
+        });
+    });
+  }, [bgs, sound, playing, motionOk]);
+
+  // first click / tap / key anywhere unlocks the sound
+  useEffect(() => {
+    if (!sound || audible) return;
+    const unlock = (e: Event) => {
+      // the speaker button handles itself
+      if ((e.target as HTMLElement)?.closest?.(".gp__sound")) return;
+      const el = bgRef.current?.querySelector<HTMLVideoElement>("video[data-current]");
+      if (!el || playing) return;
+      el.muted = false;
+      el.play()
+        .then(() => setAudible(true))
+        .catch(() => {
+          el.muted = true;
+        });
+    };
+    window.addEventListener("pointerdown", unlock, true);
+    window.addEventListener("keydown", unlock, true);
+    return () => {
+      window.removeEventListener("pointerdown", unlock, true);
+      window.removeEventListener("keydown", unlock, true);
+    };
+  }, [sound, audible, playing]);
+
   useEffect(() => {
     setMotionOk(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, []);
@@ -78,10 +171,24 @@ export default function GlassPlayer() {
   const [shift, setShift] = useState(0);
   const [dragging, setDragging] = useState(false);
   const flowRef = useRef<HTMLDivElement>(null);
-  const drag = useRef<{ x: number; step: number; moved: boolean; lastX: number; lastT: number; v: number } | null>(null);
+  const drag = useRef<{
+    x: number;
+    step: number;
+    moved: boolean;
+    lastX: number;
+    lastT: number;
+    v: number;
+  } | null>(null);
   const wheel = useRef({ acc: 0, t: 0 });
   // mouse drag-to-scroll for the queue list (touch already scrolls natively)
-  const listDrag = useRef<{ y: number; top: number; moved: boolean; lastY: number; lastT: number; v: number } | null>(null);
+  const listDrag = useRef<{
+    y: number;
+    top: number;
+    moved: boolean;
+    lastY: number;
+    lastT: number;
+    v: number;
+  } | null>(null);
   const listGlide = useRef(0);
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -111,25 +218,33 @@ export default function GlassPlayer() {
         setQuery("");
         return;
       }
-      if (typing) return;
-      if (e.key === "ArrowRight") select(active + 1);
-      else if (e.key === "ArrowLeft") select(active - 1);
-      else if (e.key === "/") {
+      if (typing || playing) return;
+      // ← → move through the cover-flow, ↑ ↓ through the list — same order either way
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        select(active + 1);
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        select(active - 1);
+      } else if (e.key === "/") {
         e.preventDefault();
         searchRef.current?.focus();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, select]);
+  }, [active, playing, select]);
+
+  // keep the playing row in view when stepping through the list with the keys
+  useEffect(() => {
+    document.querySelector(".gp__track.is-active")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [active]);
 
   const q = query.trim().toLowerCase();
   const results = useMemo(
     () =>
       q
-        ? musicVideos
-            .map((v, i) => ({ v, i }))
-            .filter(({ v }) => `${v.artist} ${v.title}`.toLowerCase().includes(q))
+        ? musicVideos.map((v, i) => ({ v, i })).filter(({ v }) => `${v.artist} ${v.title}`.toLowerCase().includes(q))
         : [],
     [q],
   );
@@ -167,8 +282,13 @@ export default function GlassPlayer() {
       }}
     >
       <h1 className="gp__sr">Music Videos</h1>
+      {sound && !audible && motionOk && !playing && video.clip ? (
+        <button type="button" className="gp__unmute">
+          {Icon.soundOff} Tap to unmute
+        </button>
+      ) : null}
       {/* ambient backdrop — the new cover fades in over the old one */}
-      <div className="gp__bg" aria-hidden="true">
+      <div className="gp__bg" aria-hidden="true" ref={bgRef}>
         {bgs.map((i, layer) => {
           if (i === null) return null;
           const v = musicVideos[i];
@@ -177,9 +297,9 @@ export default function GlassPlayer() {
             <video
               key={v.slug}
               className={`${cls} gp__bg-clip`}
+              data-current={layer ? "1" : undefined}
               src={v.clip}
               poster={v.thumbnail}
-              autoPlay
               muted
               loop
               playsInline
@@ -193,7 +313,12 @@ export default function GlassPlayer() {
       </div>
 
       {!listOpen ? (
-        <button type="button" className="gp__list-toggle" onClick={() => setListOpen(true)} aria-label="Show video list">
+        <button
+          type="button"
+          className="gp__list-toggle"
+          onClick={() => setListOpen(true)}
+          aria-label="Show video list"
+        >
           {Icon.list} List
         </button>
       ) : null}
@@ -216,7 +341,14 @@ export default function GlassPlayer() {
             if (e.pointerType !== "mouse" || e.button !== 0) return;
             cancelAnimationFrame(listGlide.current);
             const top = e.currentTarget.scrollTop;
-            listDrag.current = { y: e.clientY, top, moved: false, lastY: e.clientY, lastT: e.timeStamp, v: 0 };
+            listDrag.current = {
+              y: e.clientY,
+              top,
+              moved: false,
+              lastY: e.clientY,
+              lastT: e.timeStamp,
+              v: 0,
+            };
           }}
           onPointerMove={(e) => {
             const d = listDrag.current;
@@ -252,7 +384,10 @@ export default function GlassPlayer() {
               ev.preventDefault();
               ev.stopPropagation();
             };
-            window.addEventListener("click", block, { capture: true, once: true });
+            window.addEventListener("click", block, {
+              capture: true,
+              once: true,
+            });
             setTimeout(() => window.removeEventListener("click", block, { capture: true }), 0);
           }}
           onPointerCancel={(e) => {
@@ -267,7 +402,11 @@ export default function GlassPlayer() {
                 type="button"
                 className={`gp__track${i === active ? " is-active" : ""}`}
                 // distance from the playing video — rows recede into the panel with it
-                style={{ "--d": Math.min(Math.abs(i - active), 6) } as React.CSSProperties}
+                style={
+                  {
+                    "--d": Math.min(Math.abs(i - active), 6),
+                  } as React.CSSProperties
+                }
                 aria-current={i === active}
                 onClick={() => select(i)}
               >
@@ -299,7 +438,14 @@ export default function GlassPlayer() {
           if (e.button !== 0) return;
           const card = flowRef.current?.querySelector<HTMLElement>(".gp__card");
           const step = (card?.offsetWidth ?? 220) * STEP;
-          drag.current = { x: e.clientX, step, moved: false, lastX: e.clientX, lastT: e.timeStamp, v: 0 };
+          drag.current = {
+            x: e.clientX,
+            step,
+            moved: false,
+            lastX: e.clientX,
+            lastT: e.timeStamp,
+            v: 0,
+          };
         }}
         onPointerMove={(e) => {
           const d = drag.current;
@@ -332,7 +478,10 @@ export default function GlassPlayer() {
             ev.preventDefault();
             ev.stopPropagation();
           };
-          window.addEventListener("click", block, { capture: true, once: true });
+          window.addEventListener("click", block, {
+            capture: true,
+            once: true,
+          });
           setTimeout(() => window.removeEventListener("click", block, { capture: true }), 0);
         }}
         onPointerCancel={() => {
@@ -391,7 +540,6 @@ export default function GlassPlayer() {
             </button>
           );
         })}
-
       </div>
 
       {playing && ytId ? (
@@ -437,7 +585,12 @@ export default function GlassPlayer() {
                 <p className="gp__results-label">Artists</p>
                 <div className="gp__results-row">
                   {artists.map(({ v, i, count }) => (
-                    <button key={v.artist} type="button" className="gp__result gp__result--artist" onClick={() => pick(i)}>
+                    <button
+                      key={v.artist}
+                      type="button"
+                      className="gp__result gp__result--artist"
+                      onClick={() => pick(i)}
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={v.thumbnail} alt="" />
                       <span className="gp__result-title">{v.artist}</span>
@@ -505,10 +658,58 @@ export default function GlassPlayer() {
           </div>
 
           <div className="gp__links">
+            <div className="gp__volume">
+              <button
+                type="button"
+                className="gp__icon gp__sound"
+                aria-pressed={sound && audible}
+                aria-label={sound && audible ? "Mute song" : "Play song sound"}
+                onClick={() => {
+                  if (sound && audible) {
+                    setSound(false);
+                    setAudible(false);
+                    return;
+                  }
+                  setSound(true);
+                  const el = bgRef.current?.querySelector<HTMLVideoElement>("video[data-current]");
+                  if (!el) return;
+                  el.muted = false;
+                  el.play()
+                    .then(() => setAudible(true))
+                    .catch(() => {
+                      el.muted = true;
+                    });
+                }}
+              >
+                {sound && audible && volume > 0 ? Icon.soundOn : Icon.soundOff}
+              </button>
+              <input
+                type="range"
+                className="gp__vol"
+                min={0}
+                max={1}
+                step={0.01}
+                value={volume}
+                style={{ "--v": `${volume * 100}%` } as React.CSSProperties}
+                aria-label="Song volume"
+                onChange={(e) => {
+                  const v = parseFloat(e.target.value);
+                  setVolume(v);
+                  // raising the volume while muted turns the sound back on
+                  if (v > 0 && !sound) setSound(true);
+                }}
+              />
+            </div>
             <Link href={href} className="gp__pill">
               Project
             </Link>
-            <a href={video.youtubeUrl} target="_blank" rel="noopener noreferrer" className="gp__icon" aria-label="Watch on YouTube">
+            <a
+              href={video.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gp__icon"
+              aria-label="Watch on YouTube"
+            >
               {Icon.external}
             </a>
           </div>

@@ -19,8 +19,8 @@ const HERO_CARDS: HeroCard[] = [
     loop: "/assets/images/gifs/FinalGifs/web/VIsionFrog-min-2.mp4",
   },
   {
-    label: "Commercials",
-    href: "/Commercials",
+    label: "Campaigns",
+    href: "/Campaigns",
     img: "/assets/images/commercials/WhatsApp Image 2025-09-23 at 14.08.49.jpeg",
     loop: "/assets/images/gifs/FinalGifs/web/Gif_Commercial-min.mp4",
   },
@@ -50,7 +50,7 @@ export default function HomePage() {
         <div className="home-hero__text">
           <p className="home-hero__eyebrow">The Vision Frog</p>
           <h1 className="home-hero__title">A Full Service Film and Production Company</h1>
-          <p className="home-hero__tagline">Music Videos · Commercials · VF Originals · Verticals</p>
+          <p className="home-hero__tagline">Music Videos · Campaigns · VF Originals · Verticals</p>
           <Link href="/About" className="home-hero__cta">
             About Us
           </Link>

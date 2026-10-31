@@ -10,7 +10,7 @@ export default function CampaignGrid({ category }: { category?: Campaign["catego
       {items.map((c) => (
         <Link
           key={c.slug}
-          href={`/Commercials/${c.slug}`}
+          href={`/Campaigns/${c.slug}`}
           className="campaign-card"
           style={{ backgroundImage: `url('${c.cover}')` }}
         >
