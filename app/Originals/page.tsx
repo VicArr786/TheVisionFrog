@@ -16,8 +16,7 @@ const SECTIONS: HubSection[] = [
     href: "/Visions",
     title: "Visions",
     blurb: "Capturing and documenting the next visionaries.",
-    img: "/assets/images/narrative/IMG_3525.jpg",
-    loop: "/assets/images/gifs/FinalGifs/web/VIsionFrog-min-2.mp4",
+    img: "/assets/images/Visions/web/visions-star.jpg",
   },
   {
     href: "/Portraits",

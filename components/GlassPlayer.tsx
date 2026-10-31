@@ -7,8 +7,12 @@ import { musicVideos, type MusicVideo } from "@/lib/musicVideos";
 const N = musicVideos.length;
 // cover-flow cards further than this from the active one are hidden
 const FLOW_RANGE = 3;
-// horizontal swipe distance (px) that counts as next / previous
-const SWIPE = 40;
+// px of pointer travel before a press becomes a drag (so plain clicks still work)
+const DRAG_SLOP = 6;
+// share of a card's width the flow moves per step — matches the CSS spacing
+const STEP = 0.6;
+// wheel / trackpad travel (px) per card
+const WHEEL_STEP = 80;
 
 const youtubeId = (url: string) =>
   url.match(/[?&]v=([^&]+)/)?.[1] ?? url.match(/youtu\.be\/([^?]+)/)?.[1];
@@ -70,7 +74,15 @@ export default function GlassPlayer() {
   useEffect(() => {
     setMotionOk(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }, []);
-  const swipe = useRef<number | null>(null);
+  // live drag offset, in cards (fractional while dragging)
+  const [shift, setShift] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const flowRef = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ x: number; step: number; moved: boolean; lastX: number; lastT: number; v: number } | null>(null);
+  const wheel = useRef({ acc: 0, t: 0 });
+  // mouse drag-to-scroll for the queue list (touch already scrolls natively)
+  const listDrag = useRef<{ y: number; top: number; moved: boolean; lastY: number; lastT: number; v: number } | null>(null);
+  const listGlide = useRef(0);
   const searchRef = useRef<HTMLInputElement>(null);
 
   const select = useCallback((idx: number) => {
@@ -88,6 +100,8 @@ export default function GlassPlayer() {
     const t = setTimeout(() => setBgs(([, cur]) => [null, cur]), 900);
     return () => clearTimeout(t);
   }, [bgs]);
+
+  useEffect(() => () => cancelAnimationFrame(listGlide.current), []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -196,7 +210,57 @@ export default function GlassPlayer() {
             Hide
           </button>
         </header>
-        <ol className="gp__queue-list">
+        <ol
+          className="gp__queue-list"
+          onPointerDown={(e) => {
+            if (e.pointerType !== "mouse" || e.button !== 0) return;
+            cancelAnimationFrame(listGlide.current);
+            const top = e.currentTarget.scrollTop;
+            listDrag.current = { y: e.clientY, top, moved: false, lastY: e.clientY, lastT: e.timeStamp, v: 0 };
+          }}
+          onPointerMove={(e) => {
+            const d = listDrag.current;
+            if (!d) return;
+            const dy = e.clientY - d.y;
+            if (!d.moved) {
+              if (Math.abs(dy) < DRAG_SLOP) return;
+              d.moved = true;
+              e.currentTarget.setPointerCapture(e.pointerId);
+              e.currentTarget.classList.add("is-dragging");
+            }
+            d.v = (e.clientY - d.lastY) / Math.max(1, e.timeStamp - d.lastT);
+            d.lastY = e.clientY;
+            d.lastT = e.timeStamp;
+            e.currentTarget.scrollTop = d.top - dy;
+          }}
+          onPointerUp={(e) => {
+            const d = listDrag.current;
+            listDrag.current = null;
+            if (!d?.moved) return;
+            const el = e.currentTarget;
+            el.classList.remove("is-dragging");
+            // let it coast after a flick
+            let v = -d.v * 16; // px per frame
+            const glide = () => {
+              if (Math.abs(v) < 0.3) return;
+              el.scrollTop += v;
+              v *= 0.92;
+              listGlide.current = requestAnimationFrame(glide);
+            };
+            glide();
+            const block = (ev: MouseEvent) => {
+              ev.preventDefault();
+              ev.stopPropagation();
+            };
+            window.addEventListener("click", block, { capture: true, once: true });
+            setTimeout(() => window.removeEventListener("click", block, { capture: true }), 0);
+          }}
+          onPointerCancel={(e) => {
+            listDrag.current = null;
+            e.currentTarget.classList.remove("is-dragging");
+          }}
+          onDragStart={(e) => e.preventDefault()}
+        >
           {musicVideos.map((v, i) => (
             <li key={v.slug}>
               <button
@@ -229,37 +293,86 @@ export default function GlassPlayer() {
       </aside>
 
       <div
-        className={`gp__flow${playing ? " is-playing" : ""}`}
+        ref={flowRef}
+        className={`gp__flow${dragging ? " is-dragging" : ""}`}
         onPointerDown={(e) => {
-          swipe.current = e.clientX;
+          if (e.button !== 0) return;
+          const card = flowRef.current?.querySelector<HTMLElement>(".gp__card");
+          const step = (card?.offsetWidth ?? 220) * STEP;
+          drag.current = { x: e.clientX, step, moved: false, lastX: e.clientX, lastT: e.timeStamp, v: 0 };
         }}
-        onPointerUp={(e) => {
-          const start = swipe.current;
-          swipe.current = null;
-          if (start === null || playing) return;
-          const dx = e.clientX - start;
-          if (Math.abs(dx) > SWIPE) select(active + (dx < 0 ? 1 : -1));
+        onPointerMove={(e) => {
+          const d = drag.current;
+          if (!d) return;
+          const dx = e.clientX - d.x;
+          if (!d.moved) {
+            if (Math.abs(dx) < DRAG_SLOP) return;
+            d.moved = true;
+            e.currentTarget.setPointerCapture(e.pointerId);
+            setDragging(true);
+          }
+          const dt = Math.max(1, e.timeStamp - d.lastT);
+          d.v = (e.clientX - d.lastX) / dt; // px per ms
+          d.lastX = e.clientX;
+          d.lastT = e.timeStamp;
+          setShift(-dx / d.step);
         }}
+        onPointerUp={() => {
+          const d = drag.current;
+          drag.current = null;
+          if (!d?.moved) return;
+          // a flick carries on a little further than where the finger stopped
+          const fling = (-d.v * 180) / d.step;
+          const by = Math.round(shift + Math.max(-3, Math.min(3, fling)));
+          setDragging(false);
+          setShift(0);
+          if (by) select(active + by);
+          // swallow the click that follows a drag
+          const block = (ev: MouseEvent) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+          };
+          window.addEventListener("click", block, { capture: true, once: true });
+          setTimeout(() => window.removeEventListener("click", block, { capture: true }), 0);
+        }}
+        onPointerCancel={() => {
+          drag.current = null;
+          setDragging(false);
+          setShift(0);
+        }}
+        onWheel={(e) => {
+          const w = wheel.current;
+          if (e.timeStamp - w.t > 250) w.acc = 0;
+          w.t = e.timeStamp;
+          w.acc += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+          if (Math.abs(w.acc) >= WHEEL_STEP) {
+            select(active + Math.sign(w.acc));
+            w.acc = 0;
+          }
+        }}
+        onDragStart={(e) => e.preventDefault()}
       >
         {musicVideos.map((v, i) => {
           // shortest way round the loop, so the flow wraps both directions
-          let off = i - active;
+          let off = i - active - shift;
           if (off > N / 2) off -= N;
           if (off < -N / 2) off += N;
           const abs = Math.abs(off);
-          const isActive = off === 0;
+          const isActive = i === active && !dragging;
+          const centered = abs < 0.5;
           // far cards aren't rendered at all; one extra stays mounted (invisible) so it can slide in
           if (abs > FLOW_RANGE + 1) return null;
           return (
             <button
               key={v.slug}
               type="button"
-              className={`gp__card${isActive ? " is-active" : ""}`}
+              className={`gp__card${centered ? " is-active" : ""}`}
               style={
                 {
                   "--off": off,
                   "--abs": abs,
-                  zIndex: 10 - abs,
+                  "--lift": Math.max(0, 1 - abs),
+                  zIndex: Math.round(100 - abs * 10),
                   opacity: abs > FLOW_RANGE ? 0 : 1,
                   pointerEvents: abs > FLOW_RANGE ? "none" : undefined,
                 } as React.CSSProperties

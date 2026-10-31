@@ -185,6 +185,20 @@
   scrollbar-width: none;
 }
 
+.gp__queue-list {
+  cursor: grab;
+  user-select: none;
+  overscroll-behavior: contain;
+}
+
+.gp__queue-list.is-dragging {
+  cursor: grabbing;
+}
+
+.gp__queue-list.is-dragging .gp__track {
+  pointer-events: none;
+}
+
 .gp__queue-list::-webkit-scrollbar {
   display: none;
 }
@@ -284,7 +298,7 @@
   text-align: left;
   transform: translate(-50%, -46%)
     translateX(calc(var(--off) * var(--cw) * 0.6))
-    translateZ(calc(var(--abs) * -150px))
+    translateZ(calc(var(--abs) * -150px + var(--lift, 0) * 70px))
     rotateY(calc(clamp(-1, var(--off), 1) * -40deg));
   transition:
     transform 0.65s var(--ease),
@@ -301,8 +315,20 @@
 }
 
 .gp__card.is-active {
-  transform: translate(-50%, -46%) translateZ(70px);
   filter: none;
+}
+
+/* cards follow the pointer 1:1 while dragging, then glide to the snap point */
+.gp__flow {
+  cursor: grab;
+}
+
+.gp__flow.is-dragging {
+  cursor: grabbing;
+}
+
+.gp__flow.is-dragging .gp__card {
+  transition: none;
 }
 
 .gp__card:not(.is-active):hover {

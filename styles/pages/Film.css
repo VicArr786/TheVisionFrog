@@ -391,3 +391,11 @@
     justify-self: start;
   }
 }
+
+/* Visions index — the script wordmark stands in for the text title */
+.visions-logo {
+  display: block;
+  width: clamp(220px, 34vw, 440px);
+  height: auto;
+  margin: 0.25rem 0 0.5rem;
+}

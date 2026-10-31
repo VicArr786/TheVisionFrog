@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
 
 type PageHeaderProps = {
   eyebrow?: string;
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
 };
 

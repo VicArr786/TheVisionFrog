@@ -15,7 +15,10 @@ export default function VisionsPage() {
       backHref="/Originals"
       header={{
         eyebrow: "VF Originals",
-        title: "Visions",
+        title: (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img className="visions-logo" src="/assets/images/Visions/web/visions-logo-white.png" alt="Visions" />
+        ),
         subtitle: "Capturing and documenting the next visionaries.",
       }}
     >
