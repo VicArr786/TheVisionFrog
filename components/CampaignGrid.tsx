@@ -3,7 +3,8 @@ import { campaigns, type Campaign } from "@/lib/commercials";
 
 /** Commercial campaign cards — styled by Commercials.css (.commercials-page) */
 export default function CampaignGrid({ category }: { category?: Campaign["category"] }) {
-  const items = category ? campaigns.filter((c) => c.category === category) : campaigns;
+  const visible = campaigns.filter((c) => !c.hidden);
+  const items = category ? visible.filter((c) => c.category === category) : visible;
 
   return (
     <section className="campaigns-grid">

@@ -7,6 +7,8 @@ export type Campaign = {
   cover: string;
   /** which /Campaigns page lists it: Brands or Creators */
   category: "commercials" | "creators";
+  /** off the site for now: no card, and its page sends visitors back to the list */
+  hidden?: boolean;
 };
 
 export const campaigns: Campaign[] = [
@@ -50,6 +52,7 @@ export const campaigns: Campaign[] = [
     label: "Chris Brickley x Puma - Race to Evolve",
     cover: "/assets/videos/Campaigns/web/brickley-cover.jpg",
     category: "commercials",
+    hidden: true,
   },
   {
     slug: "AmVibes",

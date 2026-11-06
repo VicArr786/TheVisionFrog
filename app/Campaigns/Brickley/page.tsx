@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import BackLink from "@/components/BackLink";
 import SiteFooter from "@/components/SiteFooter";
 import CampaignVideoHeader from "@/components/CampaignVideoHeader";
+import Redirect from "@/components/Redirect";
+import { campaigns } from "@/lib/commercials";
 import "@/styles/pages/BapeCommercial.css";
 
 export const metadata: Metadata = {
   title: "Chris Brickley x Puma — Race to Evolve — The Vision Frog Productions",
+  robots: { index: false },
 };
 
 const credits = [
@@ -16,6 +19,8 @@ const credits = [
 
 /* stills to come: add a CampaignGallery under the header, and `count` in lib/commercials.ts */
 export default function BrickleyPage() {
+  if (campaigns.find((c) => c.slug === "Brickley")?.hidden) return <Redirect to="/Campaigns/Brands" />;
+
   return (
     <div className="vf-site bape-page">
       <BackLink href="/Campaigns/Brands" fixed />
