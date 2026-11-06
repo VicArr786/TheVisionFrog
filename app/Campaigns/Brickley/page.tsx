@@ -5,7 +5,7 @@ import CampaignVideoHeader from "@/components/CampaignVideoHeader";
 import "@/styles/pages/BapeCommercial.css";
 
 export const metadata: Metadata = {
-  title: "Brickley — Race to Evolve — The Vision Frog Productions",
+  title: "Chris Brickley x Puma — Race to Evolve — The Vision Frog Productions",
 };
 
 const credits = [
@@ -25,7 +25,7 @@ export default function BrickleyPage() {
       <main className="bape-body">
         <header className="bape-header">
           <span className="bape-header__eyebrow">Commercial</span>
-          <h1 className="bape-header__title">Brickley - Race to Evolve</h1>
+          <h1 className="bape-header__title">Chris Brickley x Puma - Race to Evolve</h1>
         </header>
 
         <dl className="bape-credits">
