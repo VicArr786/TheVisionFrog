@@ -21,8 +21,8 @@ const HERO_CARDS: HeroCard[] = [
   {
     label: "Campaigns",
     href: "/Campaigns",
-    img: "/assets/videos/home/campaigns.jpg",
-    loop: "/assets/videos/home/campaigns.mp4",
+    img: "/assets/videos/home/campaigns.jpg?v=2",
+    loop: "/assets/videos/home/campaigns.mp4?v=2",
   },
   {
     label: "VF Originals",
