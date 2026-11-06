@@ -12,9 +12,6 @@ export type HeroCard = {
   loop?: string;
 };
 
-const AUTO_ADVANCE_MS = 5000;
-const IDLE_BEFORE_RESUME_MS = 7000;
-
 export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
   const n = cards.length;
   const [pos, setPos] = useState(0);
@@ -26,7 +23,6 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
   const startPos = useRef(0);
   const moved = useRef(0);
   const captured = useRef(false);
-  const lastInteract = useRef(0);
 
   // responsive card size
   useEffect(() => {
@@ -51,21 +47,7 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
     [pos, n]
   );
 
-  const touch = () => {
-    lastInteract.current = Date.now();
-  };
-
-  // auto-advance when idle
-  useEffect(() => {
-    const id = setInterval(() => {
-      if (Date.now() - lastInteract.current < IDLE_BEFORE_RESUME_MS) return;
-      setPos((p) => Math.round(p) + 1);
-    }, AUTO_ADVANCE_MS);
-    return () => clearInterval(id);
-  }, []);
-
   const onPointerDown = (e: React.PointerEvent) => {
-    touch();
     setDragging(true);
     startX.current = e.clientX;
     startPos.current = pos;
@@ -90,14 +72,12 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
 
   const endDrag = () => {
     if (!dragging) return;
-    touch();
     setDragging(false);
     captured.current = false;
     setPos((p) => Math.round(p));
   };
 
   const step = (dir: number) => {
-    touch();
     setPos((p) => Math.round(p) + dir);
   };
 
@@ -108,7 +88,6 @@ export default function HeroCarousel({ cards }: { cards: HeroCard[] }) {
     }
     if (Math.abs(off) > 0.5) {
       e.preventDefault();
-      touch();
       setPos((p) => Math.round(p + off));
     }
   };

@@ -13,6 +13,8 @@
   border-radius: 0;
   overflow: hidden;
   background: var(--surface) center/cover no-repeat;
+  /* stop the photo at the border — past it the overlay can't shade it and it shows as a bright line */
+  background-clip: padding-box;
   text-decoration: none;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-soft);
@@ -192,4 +194,49 @@
   .commercials-page .item::after {
     opacity: 1;
   }
+}
+
+/* Brands | Creators switch — sits in the page title's spot, with the header centred around it */
+.commercials-page .page-header {
+  text-align: center;
+}
+
+.commercials-page .page-header__sub {
+  margin-inline: auto;
+}
+
+.commercials-page .campaign-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2.5vw, 1.5rem);
+}
+
+/* drawn rather than typed — NHG Titles is missing a lot of punctuation */
+.commercials-page .campaign-switch__bar {
+  width: 2px;
+  height: 0.9em;
+  background: var(--text-muted);
+}
+
+.commercials-page .campaign-switch a {
+  padding: 0.2rem 0.25rem;
+  color: var(--text-muted);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.commercials-page .campaign-switch a:hover {
+  color: var(--text);
+}
+
+.commercials-page .campaign-switch a.is-active {
+  color: var(--accent);
+}
+
+.commercials-page .campaign-switch a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

@@ -146,6 +146,31 @@ export const musicVideos: MusicVideo[] = [
       { role: "Model", name: "Callie Boehm" },
     ],
   },
+  {
+    slug: "chris-dayes-graduation",
+    clip: "/assets/videos/music-videos/chris-dayes-graduation.mp4?v=3",
+    title: "Graduation",
+    artist: "Chris Dayes",
+    youtubeUrl: "https://www.youtube.com/watch?v=GFIyivpHbsE",
+    thumbnail: "/assets/images/music-videos/web/chris-dayes-graduation.jpg",
+    stills: [],
+    credits: [
+      { role: "Directed + Edited by", name: "Oliver Stemmler" },
+      { role: "Shot by", name: "Jishnu Chowdhury" },
+      { role: "Produced by", name: "Reterik" },
+      { role: "Creative Directed by", name: "Blame Xone" },
+    ],
+  },
+  {
+    slug: "sina-money-song",
+    clip: "/assets/videos/music-videos/sina-money-song.mp4?v=3",
+    title: "Money Song",
+    artist: "SINA ft. Twan Haywood",
+    youtubeUrl: "https://www.youtube.com/watch?v=pOavQsQFnws",
+    thumbnail: "/assets/images/music-videos/web/sina-money-song.jpg",
+    stills: [],
+    credits: [{ role: "Directed + Shot + Edited by", name: "Oliver Stemmler" }],
+  },
 ];
 
 export function getMusicVideo(slug: string): MusicVideo | undefined {

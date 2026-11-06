@@ -46,6 +46,12 @@ export const campaigns: Campaign[] = [
     category: "commercials",
   },
   {
+    slug: "Brickley",
+    label: "Brickley - Race to Evolve",
+    cover: "/assets/videos/Campaigns/web/brickley-cover.jpg",
+    category: "commercials",
+  },
+  {
     slug: "AmVibes",
     label: "AM Vibes - “Gems” EP Trailer",
     count: 4,

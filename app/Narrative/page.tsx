@@ -1,19 +1,32 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import PageLayout from "@/components/layout/PageLayout";
+import TapeShelf, { type Tape } from "@/components/TapeShelf";
 import { films } from "@/lib/narrative";
-import "@/styles/pages/Film.css";
 
 export const metadata: Metadata = {
   title: "Narrative — VF Originals",
 };
 
-const pad = (n: number) => String(n).padStart(2, "0");
+// label stickers, in film order
+const COLORS = ["#ef3b2f", "#f5ea3b"];
+
+const tapes: Tape[] = films.map((f, i) => ({
+  slug: f.slug,
+  href: `/Narrative/${f.slug}`,
+  code: `VFN-${String(i + 1).padStart(2, "0")}`,
+  title: f.title,
+  format: f.format,
+  blurb: f.logline ?? `${f.format} written and directed by Oliver Stemmler.`,
+  art: f.hero,
+  color: COLORS[i % COLORS.length],
+  youtubeId: f.youtubeId,
+  cta: f.cta,
+}));
 
 export default function NarrativePage() {
   return (
     <PageLayout
-      className="film-page"
+      className="tapes-page"
       backHref="/Originals"
       header={{
         eyebrow: "VF Originals",
@@ -21,24 +34,7 @@ export default function NarrativePage() {
         subtitle: "Short films written and directed by Oliver Stemmler.",
       }}
     >
-      <ul className="film__more film__more--index" role="list">
-        {films.map((f, idx) => (
-          <li key={f.slug}>
-            <Link href={`/Narrative/${f.slug}`} className="film-card">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={f.hero} alt="" />
-              <span className="film-card__cta" aria-hidden="true">
-                Explore the vision →
-              </span>
-              <span className="film-card__meta">
-                <span className="film-card__index">{pad(idx + 1)}</span>
-                <span className="film-card__title">{f.title}</span>
-                <span className="film-card__format">{f.format}</span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <TapeShelf tapes={tapes} blanks={3} />
     </PageLayout>
   );
 }

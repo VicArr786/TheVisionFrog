@@ -1,0 +1,1027 @@
+/* Narrative — isometric VHS rack, and the TV the tapes feed into.
+   Everything on a tape is sized in em so the whole rack scales with its stage. */
+
+/* —— Layout: rack left, list right; stacked with a pinned rack on phones —— */
+.shelf {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.shelf__rack {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: max(30rem, calc(100vh - 16rem));
+  height: max(30rem, calc(100svh - 16rem));
+  padding-bottom: 1rem;
+}
+
+.shelf__list {
+  margin: 0;
+  padding: 1rem 0 0;
+  list-style: none;
+}
+
+.shelf__pager {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.shelf__pager button {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.shelf__pager button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.shelf__pager button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.shelf__pager button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* —— The 3D stage —— */
+.rack {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  container-type: size;
+  perspective: 170em;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.rack--dragging {
+  cursor: grabbing;
+}
+
+.rack__scene,
+.tape-fly {
+  --w: 24em;
+  --h: 13.4em;
+  --t: 2.7em;
+}
+
+.rack__scene {
+  --gap: 3.3em;
+  --open: 1em;
+  --lift: 8.5em;
+  --lean: 86deg;
+
+  position: absolute;
+  top: 69%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  font-size: min(2.3cqw, 2.9cqh);
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(-36deg);
+}
+
+.rack__floor {
+  position: absolute;
+  top: -13em;
+  left: -17em;
+  width: 34em;
+  height: 26em;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transform: translateZ(-0.05em);
+}
+
+.rack__slot {
+  --pos: calc((var(--slot) - (var(--slots) - 1) / 2) * var(--gap));
+  --shift: 0em;
+
+  position: absolute;
+  top: calc(var(--h) * -1);
+  left: calc(var(--w) / -2);
+  width: var(--w);
+  height: var(--h);
+  transform-style: preserve-3d;
+  transform: translateY(calc(var(--pos) + var(--shift)));
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* everything in front of the active tape slides forward to make room */
+.rack__slot.is-front {
+  --shift: var(--open);
+}
+
+/* the tape is in the VCR — its copy is flying */
+.rack__slot.is-out {
+  visibility: hidden;
+}
+
+.unit {
+  --c: #55524b;
+
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transform-style: preserve-3d;
+  transform-origin: 50% 100%;
+  transform: rotateX(calc(var(--lean) * -1));
+  transition: transform 0.6s cubic-bezier(0.22, 1.25, 0.36, 1);
+  animation: unit-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--slot) * 40ms);
+  -webkit-tap-highlight-color: transparent;
+}
+
+a.unit {
+  cursor: pointer;
+}
+
+.is-active > .unit {
+  transform: translateZ(var(--lift)) rotateX(calc(var(--lean) * -1 + 4deg));
+}
+
+@keyframes unit-in {
+  from {
+    transform: translateZ(calc(var(--h) * -0.7)) rotateX(calc(var(--lean) * -1));
+    visibility: hidden;
+  }
+  1% {
+    visibility: visible;
+  }
+}
+
+.unit__box {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.unit__face {
+  position: absolute;
+  display: block;
+  background: #171717;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  backface-visibility: hidden;
+}
+
+.unit__face--front,
+.unit__face--back {
+  inset: 0;
+}
+
+.unit__face--front {
+  overflow: hidden;
+  transform: translateZ(calc(var(--t) / 2));
+}
+
+.unit__face--back {
+  /* flipped over X so the shell reads upright when the tape is tipped flat */
+  transform: rotateX(180deg) translateZ(calc(var(--t) / 2));
+}
+
+.unit__face--top {
+  top: calc(50% - var(--t) / 2);
+  left: 0;
+  width: 100%;
+  height: var(--t);
+  transform: rotateX(90deg) translateZ(calc(var(--h) / 2));
+}
+
+.unit__face--left,
+.unit__face--right {
+  top: 0;
+  left: calc(50% - var(--t) / 2);
+  width: var(--t);
+  height: 100%;
+  background: repeating-linear-gradient(0deg, #101010 0 0.3em, #1c1c1c 0.3em 0.6em);
+}
+
+.unit__face--left {
+  transform: rotateY(-90deg) translateZ(calc(var(--w) / 2));
+}
+
+.unit__face--right {
+  transform: rotateY(90deg) translateZ(calc(var(--w) / 2));
+}
+
+/* —— VHS tape —— */
+.tape {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.55em 0.7em 0;
+  border-radius: 0.28em;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 30%),
+    #151515;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  color: #111;
+  line-height: 1;
+}
+
+.tape__label {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 9.5em minmax(0, 1fr);
+  min-height: 0;
+  border-top: 0.42em solid var(--c);
+  background: #f2ead8;
+}
+
+.tape__label img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+}
+
+.tape__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4em;
+  min-width: 0;
+  padding: 0.5em 0.7em;
+}
+
+.tape__brand,
+.tape__sub {
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tape__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.32em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* the side you see when the tape lies flat */
+.tape--shell {
+  justify-content: flex-end;
+  padding-bottom: 2.3em;
+}
+
+/* blank label: ruled lines to write on */
+.tape__ruled {
+  grid-column: 1 / -1;
+  background: repeating-linear-gradient(180deg, transparent 0 1em, rgba(0, 0, 0, 0.16) 1em calc(1em + 1px));
+}
+
+.unit--blank .tape__label {
+  border-top-color: #55524b;
+  background: #8f8a7e;
+}
+
+.tape__well {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  height: 5em;
+}
+
+.tape__screw {
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: #2b2b2b;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.tape__window {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 14em;
+  height: 3.9em;
+  padding: 0 1.1em;
+  border: 0.14em solid #000;
+  border-radius: 0.3em;
+  background: linear-gradient(170deg, #2a2d30, #0c0d0e 55%);
+  overflow: hidden;
+}
+
+.tape__ribbon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7em;
+  height: 0.5em;
+  background: #2c1c12;
+  transform: translate(-50%, -50%);
+}
+
+.tape__reel {
+  position: relative;
+  z-index: 1;
+  width: 3.1em;
+  height: 3.1em;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #d8d4c8 0 28%, transparent 29%),
+    repeating-conic-gradient(#1a1a1a 0 20deg, #e7e2d4 20deg 40deg);
+  box-shadow: 0 0 0 0.55em #2c1c12;
+}
+
+.tape__reel--take {
+  box-shadow: 0 0 0 0.16em #2c1c12;
+}
+
+.is-active .tape__reel {
+  animation: reel-spin 2.4s linear infinite;
+}
+
+@keyframes reel-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/* camcorder readout that switches on when the tape is pulled */
+.tape__osd {
+  position: absolute;
+  top: 1.2em;
+  left: 0.9em;
+  display: flex;
+  justify-content: space-between;
+  width: 8.5em;
+  color: #fff;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72em;
+  font-weight: 700;
+  text-shadow: 0.08em 0 #ff2bd0, -0.08em 0 #24e0ff;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.is-active .tape__osd {
+  opacity: 1;
+  animation: osd-blink 1.6s steps(1) infinite;
+}
+
+@keyframes osd-blink {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* the sticker along the tape's top edge */
+.tape__spine {
+  position: absolute;
+  inset: 0.45em 1.1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0 0.7em;
+  background: #f2ead8;
+  border-left: 0.5em solid var(--c);
+  color: #111;
+  line-height: 1;
+}
+
+.tape__spine span:first-child {
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.82em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tape__spine span:last-child {
+  flex: none;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.5em;
+}
+
+.unit--blank .tape__spine {
+  background: #8f8a7e;
+  color: #3a372f;
+}
+
+/* —— List beside / under the rack —— */
+.shelf-row {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.shelf-row__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  mask-image: linear-gradient(90deg, transparent 15%, #000);
+  -webkit-mask-image: linear-gradient(90deg, transparent 15%, #000);
+  transition: opacity 0.35s;
+}
+
+/* scanlines over the picture, and shade so the text keeps its contrast */
+.shelf-row::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.28) 0 1px, transparent 1px 3px),
+    linear-gradient(90deg, rgba(3, 3, 3, 0.9) 35%, rgba(3, 3, 3, 0.45));
+}
+
+.shelf-row.is-active .shelf-row__art {
+  opacity: 0.75;
+}
+
+.shelf-row__play {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  padding: 1.25rem 1rem 0.25rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.shelf-row__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.shelf-row__mark {
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: var(--c);
+}
+
+.shelf-row__code,
+.shelf-row__cta,
+.shelf-row__page {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.shelf-row__code {
+  flex: none;
+  color: var(--text-muted);
+}
+
+.shelf-row__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.15;
+  text-transform: uppercase;
+  transition: color var(--transition);
+}
+
+.shelf-row.is-active .shelf-row__title {
+  color: var(--c);
+}
+
+.shelf-row__blurb,
+.shelf-row__cta {
+  display: block;
+}
+
+.shelf-row__blurb {
+  margin-top: 0.5rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.shelf-row__cta {
+  margin-top: 0.7rem;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+
+.shelf-row.is-active .shelf-row__cta {
+  color: var(--c);
+}
+
+.shelf-row__page {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 0.4rem 1rem 1.1rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.shelf-row__page:hover {
+  color: var(--text);
+}
+
+.shelf-row__play:focus-visible,
+.shelf-row__page:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* —— The TV ——
+   One real 3D scene: the set and VCR sit at z = 0 and the VCR is built around an actual gap,
+   so the browser's depth sorting hides the tape as it slides through. Nothing between
+   .tv-stage and the tape may set opacity, overflow or filter — they flatten the scene. */
+.tv-room {
+  --slot-w: min(22rem, 46vw);
+  --slot-h: calc(var(--slot-w) * 0.1125 + 0.6rem);
+
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+}
+
+.tv-room__dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 3, 3, 0.93);
+}
+
+.tv-stage {
+  position: absolute;
+  inset: 0;
+  perspective: 1500px;
+}
+
+.tv-scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  transform-style: preserve-3d;
+}
+
+.tv-room__dim,
+.tv-fade {
+  animation: tv-fade 0.35s ease both;
+}
+
+@keyframes tv-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* the tape clears the slot first, and stays solid on its way back to the rack */
+.tv-room--eject .tv-room__dim,
+.tv-room--eject .tv-fade {
+  animation: tv-out 0.6s ease 0.6s both;
+}
+
+@keyframes tv-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.tv {
+  --screen: min(calc(100vw - 2rem - 1.8rem - 10.8rem), calc((100svh - 15rem) * 16 / 9), 60rem);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: fit-content;
+  transform-style: preserve-3d;
+}
+
+.tv__set {
+  display: flex;
+  gap: 0.9rem;
+  padding: 0.9rem;
+  border-radius: 1.1rem 1.1rem 0.4rem 0.4rem;
+  background: linear-gradient(160deg, #2b2826, #171514 60%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 2rem 5rem rgba(0, 0, 0, 0.7);
+}
+
+.tv__screen {
+  position: relative;
+  flex: none;
+  width: var(--screen);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 1.2rem / 1.6rem;
+  background: #050605;
+  box-shadow: inset 0 0 0 0.3rem #0b0b0b;
+}
+
+.tv__screen iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* snow while the set warms up */
+.tv__static {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.tv-room--static .tv__static {
+  opacity: 1;
+  animation:
+    tv-snow 0.25s steps(4) infinite,
+    tv-warm 0.6s ease-out both;
+}
+
+@keyframes tv-snow {
+  to {
+    background-position: 180px 90px;
+  }
+}
+
+@keyframes tv-warm {
+  from {
+    transform: scaleY(0.01);
+    filter: brightness(4);
+  }
+  40% {
+    transform: scaleY(1);
+  }
+}
+
+.tv__glass {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(0, 0, 0, 0.35));
+  box-shadow: inset 0 0 2.5rem rgba(0, 0, 0, 0.5);
+}
+
+/* a tape with nothing to play yet */
+.tv__card {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #555 center/cover no-repeat;
+  background-blend-mode: multiply;
+  text-align: center;
+}
+
+.tv__card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 5vw, 3rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.tv__card-note {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.tv__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  /* one each side of the screen, equal widths, so the picture sits dead centre */
+  flex: none;
+  width: 4.5rem;
+  padding-top: 0.6rem;
+}
+
+.tv__knob {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: conic-gradient(#3c3836, #111, #3c3836, #111, #3c3836);
+  box-shadow: 0 0 0 0.2rem #0c0b0b;
+}
+
+.tv__knob--small {
+  width: 2rem;
+  height: 2rem;
+}
+
+.tv__grill {
+  flex: 1;
+  width: 100%;
+  margin-top: 0.4rem;
+  background: repeating-linear-gradient(0deg, #0b0a0a 0 0.2rem, transparent 0.2rem 0.45rem);
+}
+
+/* VCR: a faceplate in five pieces around a real gap, so it has no background of its own */
+.tv__vcr {
+  --plate: #2a2826;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--slot-w) minmax(0, 1fr);
+  grid-template-rows: 1fr var(--slot-h) 1fr;
+  height: 5.75rem;
+  /* flush against the set: any gap would show the tape's back end once it's inside */
+  margin: 0 0.9rem;
+  transform-style: preserve-3d;
+}
+
+.tv__plate {
+  background: var(--plate);
+}
+
+.tv__plate--left,
+.tv__plate--right {
+  display: flex;
+  grid-row: 1 / -1;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+}
+
+.tv__plate--left {
+  grid-column: 1;
+  border-radius: 0.35rem 0 0 0.35rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.tv__plate--right {
+  grid-column: 3;
+  justify-content: flex-end;
+  border-radius: 0 0.35rem 0.35rem 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.tv__plate--top {
+  grid-column: 2;
+  grid-row: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.tv__plate--bottom {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.tv__display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6.25rem;
+  height: 2.2rem;
+  padding: 0 0.6rem;
+  border-radius: 0.2rem;
+  background: #040604;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  color: var(--accent);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  text-shadow: 0 0 0.5rem var(--accent-glow);
+  white-space: nowrap;
+}
+
+.tv__keys {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.tv__keys i {
+  display: block;
+  width: 1.5rem;
+  height: 0.7rem;
+  border-radius: 0.12rem;
+  background: linear-gradient(180deg, #383634, #1a1918);
+  box-shadow: 0 1px 0 #000;
+}
+
+.tv__eject {
+  flex: none;
+  min-height: 2.75rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.3rem;
+  background: #161514;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.tv__eject:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tv__eject:focus-visible,
+.tv__page:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* the slot: a dark throat set back from the plate, and a door hinged at the top that swings in */
+.tv__mouth {
+  position: relative;
+  grid-column: 2;
+  grid-row: 2;
+  transform-style: preserve-3d;
+}
+
+.tv__throat {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #000 30%, #141312);
+  transform: translateZ(-1.5rem);
+}
+
+.tv__flap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.1rem;
+  background: linear-gradient(180deg, #2b2927, #201f1e);
+  box-shadow:
+    inset 0 0 0 1px #000,
+    inset 0 1px 0 1px rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.28);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transform-origin: 50% 0;
+  transform: translateZ(-0.2rem);
+  backface-visibility: hidden;
+}
+
+.tv__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0.9rem 0;
+}
+
+.tv__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.tv__page {
+  flex: none;
+  color: var(--text-muted);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.tv__page:hover {
+  color: var(--text);
+}
+
+/* the tape itself, as a solid box, on its way from the rack to the slot */
+.tape-fly {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--w);
+  height: var(--h);
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+/* —— Phones: rack pins to the top, list scrolls underneath and drives it —— */
+@media (max-width: 860px) {
+  .shelf {
+    display: block;
+  }
+
+  .shelf__rack {
+    z-index: 5;
+    height: 56vh;
+    height: 56svh;
+    margin: 0 -1.25rem;
+    padding: 4.4rem 1.25rem 0.5rem;
+    background: linear-gradient(180deg, var(--bg) 92%, transparent);
+  }
+
+  .shelf__list {
+    /* room for the last row to reach the rack's reading line */
+    padding: 0.5rem 0 35vh;
+  }
+
+  .shelf-row {
+    scroll-margin-top: 58svh;
+    scroll-margin-bottom: 1rem;
+  }
+
+  .tv {
+    --screen: min(calc(100vw - 2rem - 1.2rem), calc((100svh - 15rem) * 16 / 9));
+  }
+
+  .tv__set {
+    padding: 0.6rem;
+  }
+
+  .tv__panel,
+  .tv__keys {
+    display: none;
+  }
+
+  .tv__vcr {
+    margin-inline: 0.6rem;
+  }
+
+  .tv__plate--left,
+  .tv__plate--right {
+    padding: 0 0.3rem;
+  }
+
+  .tv__display {
+    min-width: 0;
+    width: 100%;
+    font-size: 0.68rem;
+  }
+
+  .tv__eject {
+    width: 100%;
+    padding: 0;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rack__slot,
+  .unit,
+  .tv-fade,
+  .tv-room__dim,
+  .tv__static {
+    transition: none;
+    animation: none;
+  }
+
+  .is-active .tape__reel,
+  .is-active .tape__osd {
+    animation: none;
+  }
+}

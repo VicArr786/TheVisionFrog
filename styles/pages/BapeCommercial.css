@@ -242,3 +242,35 @@
     columns: 1;
   }
 }
+
+/* credits under the title, for campaigns without a gallery write-up */
+.bape-credits {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.bape-credits div {
+  display: grid;
+  grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.bape-credits dt {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.bape-credits dd {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+  .bape-credits div {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}

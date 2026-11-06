@@ -15,26 +15,26 @@ const HERO_CARDS: HeroCard[] = [
   {
     label: "Music Videos",
     href: "/MusicVideos",
-    img: "/assets/images/music-videos/web/JozzyPic.jpg",
-    loop: "/assets/images/gifs/FinalGifs/web/VIsionFrog-min-2.mp4",
+    img: "/assets/videos/home/music-videos.jpg",
+    loop: "/assets/videos/home/music-videos.mp4",
   },
   {
     label: "Campaigns",
     href: "/Campaigns",
-    img: "/assets/images/commercials/WhatsApp Image 2025-09-23 at 14.08.49.jpeg",
-    loop: "/assets/images/gifs/FinalGifs/web/Gif_Commercial-min.mp4",
+    img: "/assets/videos/home/campaigns.jpg",
+    loop: "/assets/videos/home/campaigns.mp4",
   },
   {
     label: "VF Originals",
     href: "/Originals",
-    img: "/assets/images/narrative/IMG_3525.jpg",
-    loop: "/assets/images/gifs/FinalGifs/web/Gif_.mp4",
+    img: "/assets/videos/home/vf-originals.jpg",
+    loop: "/assets/videos/home/vf-originals.mp4",
   },
   {
-    label: "Portraits",
-    href: "/Portraits",
-    img: "/assets/images/portraits/web/Shakira FINALS - 4.jpg",
-    loop: "/assets/images/gifs/FinalGifs/web/Gif_Portraits_1-min.mp4",
+    label: "Verticals",
+    href: "/Verticals",
+    img: "/assets/videos/home/verticals.jpg",
+    loop: "/assets/videos/home/verticals.mp4",
   },
 ];
 

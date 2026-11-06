@@ -23,3 +23,9 @@ next-env.d.ts
 
 # 8s background loops for the Music Videos player
 !assets/videos/music-videos/*.mp4
+
+# web copies of the home tile thumbnails (sources in assets/videos/Thumbnails stay local)
+!assets/videos/home/*.mp4
+
+# campaign videos played on the site — keep each under 25 MiB (Cloudflare Pages file limit)
+!assets/videos/Campaigns/*.mp4

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageLayout from "@/components/layout/PageLayout";
 import CampaignGrid from "@/components/CampaignGrid";
+import CampaignSwitch from "@/components/CampaignSwitch";
 import "@/styles/pages/Commercials.css";
 
 export const metadata: Metadata = {
@@ -14,7 +15,7 @@ export default function BrandsPage() {
       backHref="/Campaigns"
       header={{
         eyebrow: "Campaigns",
-        title: "Brands",
+        title: <CampaignSwitch current="commercials" />,
         subtitle: "Brand campaigns, collaborations, and commercial shoots.",
       }}
     >
