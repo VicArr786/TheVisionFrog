@@ -577,7 +577,10 @@ a.unit {
 .tv-room__dim {
   position: absolute;
   inset: 0;
-  background: rgba(3, 3, 3, 0.93);
+  /* a soft pool of light behind the set so its edges read against the dark */
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 42%, rgba(70, 64, 58, 0.35), transparent 72%),
+    rgba(3, 3, 3, 0.94);
 }
 
 .tv-stage {
@@ -619,8 +622,9 @@ a.unit {
   }
 }
 
+/* An early-90s CRT on top of a silver VCR. The tube is 4:3, so widescreen films letterbox like they did. */
 .tv {
-  --screen: min(calc(100vw - 2rem - 1.8rem - 10.8rem), calc((100svh - 15rem) * 16 / 9), 60rem);
+  --screen: min(calc((100svh - 18rem) * 4 / 3), calc(100vw - 2rem - 5rem), 54rem);
 
   position: relative;
   display: flex;
@@ -630,34 +634,66 @@ a.unit {
   transform-style: preserve-3d;
 }
 
+/* cabinet: textured charcoal plastic, softly rounded, lit from above */
 .tv__set {
   display: flex;
-  gap: 0.9rem;
-  padding: 0.9rem;
-  border-radius: 1.1rem 1.1rem 0.4rem 0.4rem;
-  background: linear-gradient(160deg, #2b2826, #171514 60%);
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 0;
+  border-radius: 1.5rem 1.5rem 0.7rem 0.7rem;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #2f2e2d, #222120 30%, #1b1a1a 85%, #141313);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 2rem 5rem rgba(0, 0, 0, 0.7);
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 1px 0 0 rgba(255, 255, 255, 0.05),
+    inset -1px 0 0 rgba(0, 0, 0, 0.5),
+    inset 0 -0.25rem 0 rgba(0, 0, 0, 0.5),
+    0 0 0 1px #090909,
+    0 2.5rem 5rem rgba(0, 0, 0, 0.8);
+}
+
+/* the bezel slopes down into the tube: shadowed at the top lip, catching light at the bottom */
+.tv__bezel {
+  padding: 1rem;
+  border-radius: 1.9rem;
+  background: linear-gradient(180deg, #0c0c0c, #171615 55%, #232120);
+  box-shadow:
+    inset 0 0.7rem 1rem rgba(0, 0, 0, 0.75),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
 .tv__screen {
   position: relative;
   flex: none;
   width: var(--screen);
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 1.2rem / 1.6rem;
-  background: #050605;
-  box-shadow: inset 0 0 0 0.3rem #0b0b0b;
+  /* a CRT tube: wider than it is tall, corners rounder on the vertical */
+  border-radius: 1.6rem / 2.2rem;
+  background: radial-gradient(ellipse at 50% 45%, #1b1f1d, #070807 75%);
+  box-shadow:
+    0 0 0 2px #050505,
+    inset 0 0 4rem rgba(0, 0, 0, 0.85);
+  transition: background 0.6s ease;
 }
 
+.tv-room--play .tv__screen,
+.tv-room--static .tv__screen {
+  background: #000;
+}
+
+/* widescreen video, letterboxed in the middle of the tube */
 .tv__screen iframe {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 0;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
   border: 0;
+  transform: translateY(-50%);
 }
 
 /* snow while the set warms up */
@@ -692,14 +728,18 @@ a.unit {
   }
 }
 
+/* curved glass: a broad reflection up top, a bright window glint, scanlines, darker edges */
 .tv__glass {
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   pointer-events: none;
   background:
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0 1px, transparent 1px 3px),
-    radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(0, 0, 0, 0.35));
-  box-shadow: inset 0 0 2.5rem rgba(0, 0, 0, 0.5);
+    radial-gradient(ellipse 22% 9% at 22% 10%, rgba(255, 255, 255, 0.09), transparent 70%),
+    radial-gradient(ellipse 80% 50% at 40% 0%, rgba(255, 255, 255, 0.06), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.14) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at 50% 50%, transparent 58%, rgba(0, 0, 0, 0.55));
+  box-shadow: inset 0 0 3rem rgba(0, 0, 0, 0.6);
 }
 
 /* a tape with nothing to play yet */
@@ -732,52 +772,134 @@ a.unit {
   text-transform: uppercase;
 }
 
-.tv__panel {
+/* strip under the tube: badge, speaker slots, front controls */
+.tv__strip {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.9rem;
-  /* one each side of the screen, equal widths, so the picture sits dead centre */
+  gap: 1.1rem;
+  height: 3.4rem;
+  padding: 0 0.5rem;
+}
+
+.tv__badge {
   flex: none;
-  width: 4.5rem;
-  padding-top: 0.6rem;
-}
-
-.tv__knob {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  background: conic-gradient(#3c3836, #111, #3c3836, #111, #3c3836);
-  box-shadow: 0 0 0 0.2rem #0c0b0b;
-}
-
-.tv__knob--small {
-  width: 2rem;
-  height: 2rem;
+  color: #a9a7a3;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-shadow: 0 -1px 0 #000;
+  white-space: nowrap;
 }
 
 .tv__grill {
   flex: 1;
-  width: 100%;
-  margin-top: 0.4rem;
-  background: repeating-linear-gradient(0deg, #0b0a0a 0 0.2rem, transparent 0.2rem 0.45rem);
+  height: 1.4rem;
+  border-radius: 0.2rem;
+  background: repeating-linear-gradient(90deg, #070707 0 0.18rem, transparent 0.18rem 0.42rem);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* VCR: a faceplate in five pieces around a real gap, so it has no background of its own */
+.tv__controls {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.tv__ch {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tv__ch-label {
+  margin: 0 0.1rem 0 0.35rem;
+  color: #807d79;
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tv__ch i,
+.tv__power i {
+  display: block;
+  width: 0.95rem;
+  height: 0.55rem;
+  border-radius: 0.1rem;
+  background: linear-gradient(180deg, #3a3938, #1b1b1a);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px #080808;
+}
+
+/* power light: dim red when idle, green once the tape is running */
+.tv__led {
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #4a1512;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tv__led.is-on {
+  background: var(--accent);
+  box-shadow: 0 0 0.5rem var(--accent-glow), 0 0 0.15rem var(--accent);
+}
+
+.tv__power {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  color: #807d79;
+  font-size: 0.45rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tv__power i {
+  width: 1.6rem;
+  height: 0.8rem;
+}
+
+/* VCR: a brushed-silver faceplate in five pieces around a real gap, so it has no background of its own */
 .tv__vcr {
-  --plate: #2a2826;
+  --vcr-h: 5.75rem;
+  /* one gradient for the whole faceplate; the top and bottom pieces pin to their end of it so it runs unbroken */
+  --plate:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, rgba(0, 0, 0, 0.03) 1px 2px, transparent 2px 4px),
+    linear-gradient(180deg, #d4d3d0, #b3b2ae 14%, #9c9b97 60%, #7f7e7a 92%, #5d5c59);
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--slot-w) minmax(0, 1fr);
   grid-template-rows: 1fr var(--slot-h) 1fr;
-  height: 5.75rem;
+  height: var(--vcr-h);
   /* flush against the set: any gap would show the tape's back end once it's inside */
-  margin: 0 0.9rem;
+  margin: 0 auto;
   transform-style: preserve-3d;
 }
 
 .tv__plate {
   background: var(--plate);
+  background-size: 100% var(--vcr-h);
+}
+
+/* the tube sets the width: these fit to it rather than pushing the set wider */
+.tv__vcr,
+.tv__meta {
+  width: 0;
+  min-width: calc(100% - 2.5rem);
+}
+
+.tv__meta {
+  min-width: 100%;
 }
 
 .tv__plate--left,
@@ -785,85 +907,167 @@ a.unit {
   display: flex;
   grid-row: 1 / -1;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.9rem;
   padding: 0 1rem;
 }
 
 .tv__plate--left {
   grid-column: 1;
-  border-radius: 0.35rem 0 0 0.35rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  border-radius: 0 0 0 0.4rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 1px 0 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
 .tv__plate--right {
   grid-column: 3;
   justify-content: flex-end;
-  border-radius: 0 0.35rem 0.35rem 0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  border-radius: 0 0 0.4rem 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset -1px 0 0 rgba(0, 0, 0, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6);
+  container-type: inline-size;
 }
 
 .tv__plate--top {
+  display: flex;
   grid-column: 2;
   grid-row: 1;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  align-items: center;
+  justify-content: center;
+  margin: 0 -1px;
+  background-position: top;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .tv__plate--bottom {
   grid-column: 2;
   grid-row: 3;
+  margin: 0 -1px;
+  background-position: bottom;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
+.tv__brand {
+  color: #2b2a29;
+  font-size: 0.45rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tv__brand b {
+  margin-right: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+/* a narrow deck drops its transport keys and keeps Eject */
+@container (max-width: 15rem) {
+  .tv__plate .tv__keys {
+    display: none;
+  }
+}
+
+/* vacuum-fluorescent display behind smoked glass */
 .tv__display {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 6.25rem;
-  height: 2.2rem;
-  padding: 0 0.6rem;
+  gap: 0.5rem;
+  min-width: 0;
+  height: 2.1rem;
+  padding: 0 0.7rem;
   border-radius: 0.2rem;
-  background: #040604;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  color: var(--accent);
+  background: linear-gradient(180deg, #050807, #0b1110);
+  box-shadow:
+    inset 0 1px 4px rgba(0, 0, 0, 0.9),
+    0 0 0 1px #2e2d2b,
+    0 1px 0 1px rgba(255, 255, 255, 0.35);
+  color: #74f2e2;
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.8rem;
-  text-shadow: 0 0 0.5rem var(--accent-glow);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 0.45rem rgba(116, 242, 226, 0.7);
   white-space: nowrap;
+}
+
+.tv__display small {
+  font-size: 0.5rem;
+  opacity: 0.8;
 }
 
 .tv__keys {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
-.tv__keys i {
+.tv__key {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  color: #2b2a29;
+  font-size: 0.45rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tv__key i {
   display: block;
   width: 1.5rem;
-  height: 0.7rem;
+  height: 0.75rem;
   border-radius: 0.12rem;
-  background: linear-gradient(180deg, #383634, #1a1918);
-  box-shadow: 0 1px 0 #000;
+  background: linear-gradient(180deg, #3d3c3b, #151514);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1px #1a1a19,
+    0 1px 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.tv__key.is-on i {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1px #1a1a19,
+    0 0 0.4rem var(--accent-glow);
 }
 
 .tv__eject {
   flex: none;
   min-height: 2.75rem;
   padding: 0 0.9rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 0.3rem;
-  background: #161514;
-  color: var(--text);
+  border: 1px solid #111;
+  border-radius: 0.25rem;
+  background: linear-gradient(180deg, #3a3938, #161615);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 2px 0 #0a0a0a,
+    0 3px 4px rgba(0, 0, 0, 0.45);
+  color: #e8e6e2;
   font: inherit;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: border-color var(--transition), color var(--transition);
+  transition: color var(--transition);
 }
 
 .tv__eject:hover {
-  border-color: var(--accent);
   color: var(--accent);
+}
+
+.tv__eject:active {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+  transform: translateY(2px);
 }
 
 .tv__eject:focus-visible,
@@ -880,6 +1084,21 @@ a.unit {
   transform-style: preserve-3d;
 }
 
+/* black recess around the slot; transparent in the middle so the tape passes through */
+.tv__mouth::after {
+  content: "";
+  position: absolute;
+  inset: -0.3rem -0.45rem;
+  border-radius: 0.25rem;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 0.3rem #151515,
+    inset 0 1px 0 0.3rem #000,
+    0 1px 0 rgba(255, 255, 255, 0.45),
+    0 -1px 0 rgba(0, 0, 0, 0.35);
+  transform: translateZ(1px);
+}
+
 .tv__throat {
   position: absolute;
   inset: 0;
@@ -894,12 +1113,12 @@ a.unit {
   align-items: center;
   justify-content: center;
   border-radius: 0.1rem;
-  background: linear-gradient(180deg, #2b2927, #201f1e);
+  background: linear-gradient(180deg, #242424, #161616);
   box-shadow:
     inset 0 0 0 1px #000,
     inset 0 1px 0 1px rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.28);
-  font-size: 0.55rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.5rem;
   font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -913,7 +1132,7 @@ a.unit {
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.9rem 0.9rem 0;
+  padding: 0.9rem 1.25rem 0;
 }
 
 .tv__title {
@@ -975,20 +1194,31 @@ a.unit {
   }
 
   .tv {
-    --screen: min(calc(100vw - 2rem - 1.2rem), calc((100svh - 15rem) * 16 / 9));
+    --screen: min(calc(100vw - 2rem - 2.4rem), calc((100svh - 17rem) * 4 / 3));
   }
 
   .tv__set {
-    padding: 0.6rem;
+    padding: 0.6rem 0.6rem 0;
   }
 
-  .tv__panel,
-  .tv__keys {
+  .tv__bezel {
+    padding: 0.6rem;
+    border-radius: 1.4rem;
+  }
+
+  .tv__strip {
+    height: 2.4rem;
+    gap: 0.6rem;
+  }
+
+  .tv__ch,
+  .tv__keys,
+  .tv__brand {
     display: none;
   }
 
   .tv__vcr {
-    margin-inline: 0.6rem;
+    min-width: calc(100% - 1.2rem);
   }
 
   .tv__plate--left,
@@ -999,7 +1229,12 @@ a.unit {
   .tv__display {
     min-width: 0;
     width: 100%;
+    padding: 0 0.3rem;
     font-size: 0.68rem;
+  }
+
+  .tv__display small {
+    display: none;
   }
 
   .tv__eject {

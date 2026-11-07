@@ -157,10 +157,7 @@ export default function TapeTV({
         <div className="tv-scene" ref={sceneRef}>
           <div className="tv">
             <div className="tv__set tv-fade">
-              <div className="tv__panel" aria-hidden="true">
-                <span className="tv__grill" />
-              </div>
-
+              <div className="tv__bezel">
               <div className="tv__screen">
                 {phase === "play" ? (
                   tape.youtubeId ? (
@@ -185,36 +182,56 @@ export default function TapeTV({
                 <span className="tv__static" aria-hidden="true" />
                 <span className="tv__glass" aria-hidden="true" />
               </div>
+              </div>
 
-              <div className="tv__panel" aria-hidden="true">
-                <span className="tv__knob" />
-                <span className="tv__knob tv__knob--small" />
+              <div className="tv__strip" aria-hidden="true">
+                <span className="tv__badge">Vision Frog</span>
                 <span className="tv__grill" />
+                <span className="tv__controls">
+                  <span className="tv__ch">
+                    <span className="tv__ch-label">Ch</span>
+                    <i />
+                    <i />
+                    <span className="tv__ch-label">Vol</span>
+                    <i />
+                    <i />
+                  </span>
+                  <span className={`tv__led${running ? " is-on" : ""}`} />
+                  <span className="tv__power">
+                    <i />
+                    Power
+                  </span>
+                </span>
               </div>
             </div>
 
             <div className="tv__vcr">
               <div className="tv__plate tv__plate--left tv-fade">
                 <span className="tv__display" aria-hidden="true">
-                  {running ? `▶ ${tape.code}` : "--:--"}
-                </span>
-                <span className="tv__keys" aria-hidden="true">
-                  <i />
-                  <i />
+                  <small>{running ? "PLAY" : "STOP"}</small>
+                  {running ? tape.code : "12:00"}
                 </span>
               </div>
-              <div className="tv__plate tv__plate--top tv-fade" />
+              <div className="tv__plate tv__plate--top tv-fade">
+                <span className="tv__brand" aria-hidden="true">
+                  <b>VF</b> Video Cassette Recorder
+                </span>
+              </div>
               <div className="tv__mouth" ref={mouthRef} aria-hidden="true">
                 <span className="tv__throat tv-fade" />
                 <span className="tv__flap tv-fade" ref={flapRef}>
-                  Video
+                  Video Cassette
                 </span>
               </div>
               <div className="tv__plate tv__plate--bottom tv-fade" />
               <div className="tv__plate tv__plate--right tv-fade">
                 <span className="tv__keys" aria-hidden="true">
-                  <i />
-                  <i />
+                  {["Rew", "Play", "FF"].map((k) => (
+                    <span key={k} className={`tv__key${k === "Play" && running ? " is-on" : ""}`}>
+                      <i />
+                      {k}
+                    </span>
+                  ))}
                 </span>
                 <button type="button" className="tv__eject" onClick={close} ref={ejectRef}>
                   ⏏ Eject
