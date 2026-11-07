@@ -52,7 +52,6 @@ export const campaigns: Campaign[] = [
     label: "Chris Brickley x Puma - Race to Evolve",
     cover: "/assets/videos/Campaigns/web/brickley-cover.jpg",
     category: "commercials",
-    hidden: true,
   },
   {
     slug: "AmVibes",
