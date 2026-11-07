@@ -1,7 +1,6 @@
-/* Visions — night on a lake. The cosmos is the sky; a frog on a lily pad holds up each vision. */
+/* Visions — the Vision Frog on a real night lake. The background is a photograph; the frogs sit on its water. */
 
 .pond {
-  --lake: 38%;
   --frog-green: #7dc443;
 
   position: relative;
@@ -12,190 +11,28 @@
   min-height: 100svh;
   overflow: hidden;
   padding: 5.25rem 0 0;
-  background: #05040d;
+  background: #070b10;
 }
 
-/* —— sky —— */
-.pond__sky {
-  position: absolute;
-  inset: 0 0 var(--lake);
-  z-index: -2;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse 45% 60% at 16% 30%, rgba(122, 64, 214, 0.45), transparent 70%),
-    radial-gradient(ellipse 45% 55% at 84% 55%, rgba(34, 118, 214, 0.38), transparent 70%),
-    radial-gradient(ellipse 30% 40% at 62% 18%, rgba(214, 64, 160, 0.22), transparent 70%),
-    linear-gradient(180deg, #05040d, #0b0a22 70%, #141a3a);
-}
-
-.pond__stars {
+/* "Starry night sky over a calm lake" by Stephen Crane on Unsplash (Unsplash License: free, commercial use OK,
+   no attribution required). Horizon sits about 65% down the photo, so the frogs land on the water. */
+.pond__photo {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-}
-
-.pond__stars--far {
-  background:
-    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
-    radial-gradient(1px 1px at 90px 140px, rgba(255, 255, 255, 0.8), transparent),
-    radial-gradient(1px 1px at 160px 60px, rgba(255, 255, 255, 0.7), transparent),
-    radial-gradient(1px 1px at 210px 190px, #fff, transparent),
-    radial-gradient(1px 1px at 50px 210px, rgba(200, 220, 255, 0.8), transparent),
-    radial-gradient(1px 1px at 130px 100px, rgba(255, 255, 255, 0.6), transparent);
-  background-size: 240px 240px;
-  animation: pond-twinkle 5s ease-in-out infinite alternate;
-}
-
-.pond__stars--near {
-  background:
-    radial-gradient(1.5px 1.5px at 40px 70px, #fff, transparent),
-    radial-gradient(2px 2px at 250px 40px, rgba(220, 235, 255, 0.95), transparent),
-    radial-gradient(1.5px 1.5px at 300px 260px, #fff, transparent),
-    radial-gradient(2px 2px at 120px 300px, rgba(255, 240, 220, 0.9), transparent),
-    radial-gradient(1.5px 1.5px at 190px 170px, rgba(255, 255, 255, 0.85), transparent);
-  background-size: 360px 360px;
-  animation: pond-twinkle 3.2s ease-in-out 1s infinite alternate;
-}
-
-@keyframes pond-twinkle {
-  to {
-    opacity: 0.5;
-  }
-}
-
-.pond__comet {
-  position: absolute;
-  top: 10%;
-  left: -20%;
-  width: 9rem;
-  height: 2px;
-  border-radius: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9));
-  transform: rotate(16deg);
-  opacity: 0;
-  animation: pond-comet 10s ease-in 3s infinite;
-}
-
-@keyframes pond-comet {
-  0% {
-    opacity: 0;
-    translate: 0 0;
-  }
-  3% {
-    opacity: 1;
-  }
-  12%,
-  100% {
-    opacity: 0;
-    translate: 90vw 28vw;
-  }
-}
-
-.pond__moon {
-  position: absolute;
-  top: 14%;
-  right: 12%;
-  width: clamp(3rem, 6vw, 5rem);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 40%, rgba(0, 0, 0, 0.08) 0 12%, transparent 13%),
-    radial-gradient(circle at 62% 62%, rgba(0, 0, 0, 0.07) 0 9%, transparent 10%),
-    radial-gradient(circle at 40% 35%, #fffbea, #e9e2c6);
-  box-shadow:
-    0 0 2rem rgba(255, 248, 220, 0.45),
-    0 0 6rem rgba(255, 248, 220, 0.2);
-}
-
-/* —— lake —— */
-.pond__lake {
-  position: absolute;
-  inset: calc(100% - var(--lake)) 0 0;
   z-index: -1;
-  background: linear-gradient(180deg, #141a3a, #0a0e24 30%, #05060f);
-}
-
-/* the sky, mirrored and smeared across the water, with slow ripples */
-.pond__reflection {
-  position: absolute;
-  inset: 0;
   background:
-    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 9px),
-    radial-gradient(ellipse 45% 70% at 16% 10%, rgba(122, 64, 214, 0.28), transparent 70%),
-    radial-gradient(ellipse 45% 60% at 84% 0%, rgba(34, 118, 214, 0.25), transparent 70%);
-  animation: pond-ripple 6s linear infinite;
+    linear-gradient(180deg, rgba(4, 6, 10, 0.55), rgba(4, 6, 10, 0) 30%),
+    url("/assets/images/Visions/web/night-lake.jpg") center 65% / cover no-repeat;
 }
 
-@keyframes pond-ripple {
-  to {
-    background-position: 0 18px, 0 0, 0 0;
+@media (max-width: 1280px) {
+  .pond__photo {
+    background:
+      linear-gradient(180deg, rgba(4, 6, 10, 0.55), rgba(4, 6, 10, 0) 30%),
+      url("/assets/images/Visions/web/night-lake-1280.jpg") center 65% / cover no-repeat;
   }
 }
 
-/* moonlight on the water */
-.pond__moonpath {
-  position: absolute;
-  top: 0;
-  right: calc(12% + clamp(1.5rem, 3vw, 2.5rem) - 2.5rem);
-  width: 5rem;
-  height: 70%;
-  background: repeating-linear-gradient(
-    180deg,
-    rgba(255, 248, 220, 0.35) 0 2px,
-    transparent 2px 7px
-  );
-  -webkit-mask-image: radial-gradient(ellipse 50% 100% at 50% 0, #000, transparent);
-  mask-image: radial-gradient(ellipse 50% 100% at 50% 0, #000, transparent);
-  animation: pond-shimmer 3s ease-in-out infinite alternate;
-}
-
-@keyframes pond-shimmer {
-  to {
-    opacity: 0.6;
-    transform: scaleX(1.3);
-  }
-}
-
-/* the far bank, a dark wavy line along the horizon */
-.pond__shore {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: clamp(1.6rem, 3vw, 2.6rem);
-  fill: #04050c;
-  transform: translateY(-100%);
-}
-
-.pond__firefly {
-  position: absolute;
-  width: 0.3rem;
-  height: 0.3rem;
-  border-radius: 50%;
-  background: #e8ff8a;
-  box-shadow: 0 0 0.6rem 0.2rem rgba(220, 255, 120, 0.6);
-  opacity: 0;
-  animation: pond-firefly 6s ease-in-out infinite;
-}
-
-@keyframes pond-firefly {
-  0%,
-  100% {
-    opacity: 0;
-    transform: translate(0, 0);
-  }
-  30% {
-    opacity: 1;
-  }
-  60% {
-    opacity: 0.8;
-    transform: translate(1.5rem, -1.5rem);
-  }
-  80% {
-    opacity: 0;
-    transform: translate(2.5rem, -0.5rem);
-  }
-}
 
 /* —— intro, up in the sky —— */
 .pond__intro {
@@ -250,7 +87,7 @@
   justify-content: center;
   gap: clamp(1rem, 4vw, 3.5rem);
   margin: 0;
-  padding: 2rem clamp(1rem, 4vw, 3rem) clamp(1.5rem, 5vh, 3.5rem);
+  padding: 2rem clamp(1rem, 4vw, 3rem) clamp(2.5rem, 8vh, 5rem);
   overflow-x: auto;
   list-style: none;
   scroll-snap-type: x mandatory;
@@ -362,8 +199,7 @@
   z-index: 2;
   display: block;
   width: var(--w);
-  margin-bottom: calc(var(--w) * -0.12);
-  filter: drop-shadow(0 0.5rem 0.5rem rgba(0, 0, 0, 0.4));
+  filter: brightness(0.88) drop-shadow(0 0.4rem 0.5rem rgba(0, 0, 0, 0.45));
   transition: transform 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
 }
 
@@ -371,6 +207,37 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* the real lily pad, toned down to sit in the night photo, the frog sitting in its middle */
+.lily-pad {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: calc(var(--w) * 1.45);
+  margin-top: calc(var(--w) * -0.3);
+}
+
+.lily-pad img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* flattened to match the low camera angle of the lake photo */
+  aspect-ratio: 1 / 0.34;
+  filter: brightness(0.5) saturate(0.8) contrast(1.05) drop-shadow(0 0.3rem 0.4rem rgba(0, 0, 0, 0.5));
+}
+
+/* its reflection on the still water */
+.lily-pad img.lily-pad__reflection {
+  position: absolute;
+  top: 92%;
+  left: 0;
+  opacity: 0.35;
+  filter: brightness(0.3) saturate(0.6) blur(1.5px);
+  transform: scaleY(-0.8);
+  transform-origin: top;
+  -webkit-mask-image: linear-gradient(0deg, transparent 10%, #000);
+  mask-image: linear-gradient(0deg, transparent 10%, #000);
 }
 
 /* lamps sit over the logo's eyes; they light up while it projects */
@@ -394,40 +261,6 @@
   left: 61.7%;
 }
 
-.lily-pad {
-  position: relative;
-  z-index: 0;
-  display: block;
-  width: calc(var(--w) * 1.25);
-  height: auto;
-  filter: drop-shadow(0 0.3rem 0.5rem rgba(0, 0, 0, 0.5));
-}
-
-/* a ring spreading out on the water under each pad */
-.frog-sit::after {
-  content: "";
-  position: absolute;
-  bottom: -0.2rem;
-  left: 50%;
-  z-index: -1;
-  width: calc(var(--w) * 1.8);
-  height: calc(var(--w) * 0.45);
-  margin-left: calc(var(--w) * -0.9);
-  border: 1px solid rgba(180, 200, 255, 0.35);
-  border-radius: 50%;
-  animation: pond-ring 4s ease-out var(--bob, 0s) infinite;
-}
-
-@keyframes pond-ring {
-  from {
-    opacity: 0.8;
-    transform: scale(0.7);
-  }
-  to {
-    opacity: 0;
-    transform: scale(1.4);
-  }
-}
 
 /* hover: the frog lifts its card up and leans in */
 .frog-sit--vision {
@@ -610,10 +443,6 @@
 
 /* phones: line scrolls sideways, starting from the left so the first frog is in view */
 @media (max-width: 640px) {
-  .pond {
-    --lake: 34%;
-  }
-
   .pond__line {
     justify-content: flex-start;
     padding-inline: 12vw;
@@ -631,13 +460,7 @@
 @media (prefers-reduced-motion: reduce) {
   .projection__beams,
   .projection__screen,
-  .pond__stars,
-  .pond__comet,
-  .pond__reflection,
-  .pond__moonpath,
-  .pond__firefly,
-  .pond__spot,
-  .frog-sit::after {
+  .pond__spot {
     animation: none;
   }
 }

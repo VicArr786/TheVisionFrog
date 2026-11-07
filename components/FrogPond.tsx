@@ -16,7 +16,7 @@ export type PondItem = {
   youtubeId?: string;
 };
 
-// at least this many lily pads on the lake; the spares hold dim frogs until a new vision moves in
+// at least this many frogs on the lake; the spares are dim until a new vision moves in
 const MIN_PADS = 3;
 const DIVE_MS = 650;
 
@@ -31,24 +31,12 @@ type Show = {
 
 // wait this long on a frog before it starts projecting, so sweeping past doesn't flash the sky
 const PROJECT_DELAY = 180;
-// share of the scene the lake takes up, matching --lake in FrogPond.css
-const LAKE = 0.38;
+// share of the scene below the horizon in the lake photo (see .pond__photo in FrogPond.css)
+const LAKE = 0.35;
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-// a handful of fireflies over the water: left %, top %, delay s
-const FIREFLIES = [
-  [8, 62, 0],
-  [18, 78, 2.1],
-  [31, 68, 4.3],
-  [46, 84, 1.2],
-  [58, 66, 3.4],
-  [71, 80, 0.6],
-  [83, 64, 2.8],
-  [93, 76, 5],
-];
-
-/** Night on the lake: the cosmos for a sky, and the Vision Frog on a lily pad for each vision, its still
+/** Night on a real lake under the Milky Way, and the Vision Frog on the water for each vision, its still
     and title on a card above it. Hover and its eyes project the film onto the sky; click to dive in. */
 export default function FrogPond({ items, intro }: { items: PondItem[]; intro?: React.ReactNode }) {
   const router = useRouter();
@@ -115,27 +103,9 @@ export default function FrogPond({ items, intro }: { items: PondItem[]; intro?: 
 
   return (
     <div className={`pond${show ? " is-projecting" : ""}`} ref={pondRef}>
-      <div className="pond__sky" aria-hidden="true">
-        <span className="pond__stars pond__stars--far" />
-        <span className="pond__stars pond__stars--near" />
-        <span className="pond__comet" />
-        <span className="pond__moon" />
-      </div>
-
-      <div className="pond__lake" aria-hidden="true">
-        <span className="pond__reflection" />
-        <span className="pond__moonpath" />
-        <svg className="pond__shore" viewBox="0 0 1200 60" preserveAspectRatio="none">
-          <path d="M0 60 L0 30 C40 20 70 8 110 14 C150 20 170 34 220 32 C270 30 300 10 350 6 C400 2 430 22 470 30 C520 40 560 36 600 28 C650 18 690 4 740 8 C790 12 820 30 870 34 C920 38 960 24 1000 16 C1040 8 1080 12 1120 22 C1160 32 1185 30 1200 28 L1200 60 Z" />
-        </svg>
-        {FIREFLIES.map(([x, y, d], i) => (
-          <span
-            key={i}
-            className="pond__firefly"
-            style={{ left: `${x}%`, top: `${y - 55}%`, animationDelay: `${d}s` } as React.CSSProperties}
-          />
-        ))}
-      </div>
+      {/* real photo: "Starry night sky over a calm lake" by Stephen Crane, Unsplash License (free for commercial
+          use, no attribution required) — https://unsplash.com/photos/Wq_P3SEpqH0 */}
+      <div className="pond__photo" aria-hidden="true" />
 
       <header className="pond__intro">
         {intro}
@@ -258,8 +228,11 @@ function Projection({ show }: { show: Show }) {
 }
 
 const FROG = "/assets/images/Visions/web/vision-frog.png";
+// cut from "pink lotus flower on water" by Photo Mania on Unsplash (Unsplash License: free, commercial use OK,
+// no attribution required) — https://unsplash.com/photos/pink-lotus-flower-on-water-OOh6bdr5od4
+const PAD = "/assets/images/Visions/web/lily-pad.png";
 
-/** The Vision Frog logo itself, sitting on its pad. Its eyes carry lamps that light up when it projects. */
+/** The Vision Frog logo itself, sitting on a real lily pad. Its eyes carry lamps that light up when it projects. */
 function FrogArt({ lamps = false }: { lamps?: boolean }) {
   return (
     <span className="frog-art" aria-hidden="true">
@@ -275,24 +248,14 @@ function FrogArt({ lamps = false }: { lamps?: boolean }) {
   );
 }
 
-/** a lily pad, notched, with a few veins */
+/** the lily pad, with its reflection on the still water */
 function LilyPad() {
   return (
-    <svg className="lily-pad" viewBox="0 0 200 60" aria-hidden="true">
-      <path
-        d="M100 30 L186 18.6 A95 27 0 1 0 194.6 27.6 Z"
-        fill="#2f6e33"
-        stroke="#0d1f10"
-        strokeWidth="3"
-        strokeLinejoin="round"
-      />
-      <g stroke="#4f9a4c" strokeWidth="1.6" strokeLinecap="round" opacity="0.8">
-        <path d="M100 30 L30 22" />
-        <path d="M100 30 L40 46" />
-        <path d="M100 30 L110 54" />
-        <path d="M100 30 L160 48" />
-        <path d="M100 30 L100 5" />
-      </g>
-    </svg>
+    <span className="lily-pad" aria-hidden="true">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={PAD} alt="" draggable={false} />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="lily-pad__reflection" src={PAD} alt="" draggable={false} />
+    </span>
   );
 }
