@@ -50,6 +50,7 @@ export const campaigns: Campaign[] = [
   {
     slug: "Brickley",
     label: "Chris Brickley x Puma - Race to Evolve",
+    count: 11,
     cover: "/assets/videos/Campaigns/web/brickley-cover.jpg",
     category: "commercials",
   },
